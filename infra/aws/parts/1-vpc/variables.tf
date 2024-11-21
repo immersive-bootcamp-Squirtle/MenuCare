@@ -12,7 +12,7 @@ locals {
             # VPC CIDR
             "vpc_cidr" =  "192.168.224.0/21",
             # 対象AZ
-            "target_azs" = ["ap-northeast-1a", "ap-northeast-1c", "ap-northeast-1d"],
+            "target_azs" = ["use1-az1", "use1-az2", "use1-az3"],
             # private subnets cidrs
             "private_subnets_cidrs" =  ["192.168.224.0/25", "192.168.224.128/25", "192.168.225.0/25"],
             # public subnets cidrs
