@@ -107,7 +107,7 @@ locals {
       
       // performance_insights
       performance_insights_enabled = false
-      performance_insights_retention_period = 1
+      performance_insights_retention_period = 7
       
       // 拡張モニタリング
       create_monitoring_role = false
