@@ -62,7 +62,7 @@ locals {
       instances = {
         1 = {
           instance_class    = "db.r6g.medium"
-          availability_zone = "us-east-1"
+          availability_zone = "use1-az1"
         }
       }
 
