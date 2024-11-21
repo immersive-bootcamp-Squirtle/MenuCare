@@ -81,7 +81,7 @@ locals {
       # description
       "description" = "Lambda Function for API",
       # handler
-      "handler" = "dist/src/lambda.handler",
+      "handler" = "index.handler",
       # runtime
       "runtime" = "nodejs20.x",
       # メモリサイズ
