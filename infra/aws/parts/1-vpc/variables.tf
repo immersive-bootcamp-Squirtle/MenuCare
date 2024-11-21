@@ -23,8 +23,6 @@ locals {
             "single_nat_gateway" = false,
             # azごとに1つづず、Nat Gateawyを作成するか否か
             "one_nat_gateway_per_az" = true
-            // フローログ設定
-            "enable_flow_log" = false
         }
     ]
 } 
