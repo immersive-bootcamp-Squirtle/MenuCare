@@ -83,30 +83,30 @@ resource "aws_api_gateway_rest_api" "api_gateway" {
   }
 }
 
-# # API Gatewayデプロイ定義
-# resource "aws_api_gateway_deployment" "api_gateway_deployment" {
-#   depends_on = [
-#     aws_api_gateway_rest_api.api_gateway,
-#   ]
+# API Gatewayデプロイ定義
+resource "aws_api_gateway_deployment" "api_gateway_deployment" {
+  depends_on = [
+    aws_api_gateway_rest_api.api_gateway,
+  ]
 
-#   triggers = {
-#     redeployment = sha1(
-#       jsonencode(
-#         [
-#           aws_api_gateway_rest_api.api_gateway.body,
-#         ]
-#       )
-#     )
-#   }
+  triggers = {
+    redeployment = sha1(
+      jsonencode(
+        [
+          aws_api_gateway_rest_api.api_gateway.body,
+        ]
+      )
+    )
+  }
 
-#   lifecycle {
-#     replace_triggered_by = [
-#       aws_api_gateway_rest_api.api_gateway.body,
-#     ]
-#   }
+  lifecycle {
+    replace_triggered_by = [
+      aws_api_gateway_rest_api.api_gateway.body,
+    ]
+  }
 
-#   rest_api_id = aws_api_gateway_rest_api.api_gateway.id
-# }
+  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+}
 
 # stage構築(origin)
 resource "aws_api_gateway_stage" "api_gateway_stage_origin" {
