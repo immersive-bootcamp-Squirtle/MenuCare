@@ -86,7 +86,8 @@ resource "aws_api_gateway_rest_api" "api_gateway" {
 # API Gatewayデプロイ定義
 resource "aws_api_gateway_deployment" "api_gateway_deployment" {
   depends_on = [
-    aws_api_gateway_rest_api.api_gateway
+    aws_api_gateway_rest_api.api_gateway,
+    aws_api_gateway_stage.api_gateway_stage_origin
   ]
 
   triggers = {
