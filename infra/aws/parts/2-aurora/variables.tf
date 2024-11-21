@@ -111,7 +111,7 @@ locals {
       
       // 拡張モニタリング
       create_monitoring_role = false
-      monitoring_interval = 60
+      monitoring_interval = 0
       monitoring_role_arn = null
       
       // DB情報
