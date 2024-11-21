@@ -156,5 +156,4 @@ resource "aws_lambda_permission" "permission_for_api_gateway_origin" {
   function_name = data.aws_lambda_function.lambda_function.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_api_gateway_rest_api.api_gateway.execution_arn}/*/*/*"
-  qualifier     = "origin"
 }
