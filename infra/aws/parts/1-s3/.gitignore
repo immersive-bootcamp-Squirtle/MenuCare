@@ -1,0 +1,3 @@
+# ignore terraform init ourput
+.terraform/
+.terraform.lock.hcl
