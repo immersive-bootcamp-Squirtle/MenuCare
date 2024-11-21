@@ -1,6 +1,3 @@
-# 組織情報取得
-data "aws_organizations_organization" "organization" {}
-
 # Account ID取得
 data "aws_caller_identity" "identity" {}
 
@@ -127,9 +124,7 @@ module "lambda_function" {
   number_of_policies = each.value.number_of_policies
   attach_policies = each.value.attach_policies
   policies = each.value.policies
-  # logグループ
-  logging_log_group = each.value.logging_log_group
-
+  
   # リソースベースのポリシー
   allowed_triggers = {}
   

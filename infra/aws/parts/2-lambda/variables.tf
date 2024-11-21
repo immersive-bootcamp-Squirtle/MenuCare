@@ -23,7 +23,7 @@ locals {
 locals {
   security_group_definition = [
     {
-      sg_name = "SG-${local.system}--LAMBDA-API"
+      sg_name = "SG-${local.system}-LAMBDA-API"
       usage = "API"
       inbound_rules = [
         {
