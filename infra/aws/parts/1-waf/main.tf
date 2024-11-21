@@ -1,6 +1,6 @@
 # create aws waf for cloudfront
 module aws_waf_for_cloudfront {
-  source = "../../modules/waf_for_cloudfront"
+  source = "../../modules/waf"
   for_each = {for i in local.waf_list : i.name_of_waf => i}
 
   # scopeの設定
