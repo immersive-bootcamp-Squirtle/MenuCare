@@ -53,7 +53,7 @@ locals {
       engine             = "aurora-postgresql"
       engine_version     = "15.4"
       instance_class     = "db.r6g.large"
-      availability_zones = ["use1-az1"]
+      availability_zones = ["us-east-1b", "us-east-1c", "us-east-1e"]
       master_username    = "administrator"
       master_password    = "temp_password"
       auto_minor_version_upgrade = false
@@ -62,7 +62,7 @@ locals {
       instances = {
         1 = {
           instance_class    = "db.r6g.medium"
-          availability_zone = "use1-az1"
+          availability_zone = "us-east-1b"
         }
       }
 
