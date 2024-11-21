@@ -1,0 +1,23 @@
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Effect": "Allow",
+			"Action": [
+				"rds:*",
+				"s3:*",
+				"sqs:*",
+				"elasticache:*",
+				"secretsmanager:*"
+			],
+			"Resource": [
+				"arn:aws:sqs:*:${account_id}:*",
+				"arn:aws:elasticache:*:${account_id}:cluster:*",
+				"arn:aws:s3:::*",
+				"arn:aws:rds:*:${account_id}:db:*",
+				"arn:aws:rds:*:${account_id}:cluster:*",
+				"arn:aws:secretsmanager:*:${account_id}:*"
+			]
+		}
+	]
+}
