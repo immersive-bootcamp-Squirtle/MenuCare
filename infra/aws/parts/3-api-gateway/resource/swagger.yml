@@ -32,7 +32,6 @@ paths:
                 format: "int64"
               name:
                 type: "string"
-                example: "doggie"
       x-amazon-apigateway-integration:
         responses:
           default:
