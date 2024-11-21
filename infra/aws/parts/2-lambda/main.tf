@@ -90,9 +90,6 @@ module security_group_for_lambda_function {
 
 # Lambda Function構築
 module "lambda_function" {
-  depends_on = [
-    aws_cloudwatch_log_group.log_group_for_lambda,
-  ]
   
   source  = "terraform-aws-modules/lambda/aws"
   version = "7.2.1"
