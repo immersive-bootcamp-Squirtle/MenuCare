@@ -61,7 +61,7 @@ locals {
       // インスタンスの作成
       instances = {
         1 = {
-          instance_class    = "db.r6g.medium"
+          instance_class    = "db.r6g.large"
           availability_zone = "us-east-1b"
         }
       }
