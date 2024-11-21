@@ -67,9 +67,9 @@ data "aws_subnets" "private_subnets" {
 }
 
 # security group取得
-# data "aws_security_group" "security_group_for_aurora" {
-#   name = "SG-${local.system}-aurora"
-# }
+data "aws_security_group" "security_group_for_aurora" {
+  name = "SG-${local.system}-aurora"
+}
 
 # security group構築
 module security_group_for_lambda_function {

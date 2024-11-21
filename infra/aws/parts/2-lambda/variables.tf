@@ -39,17 +39,17 @@ locals {
         }
       ]
       outbound_rules = [
-        # {
-        #   description = "to aurora port 5432 for tls"
-        #   from_port = 5432
-        #   to_port = 5432
-        #   protocol = "tcp"
-        #   cidr_blocks = null
-        #   ipv6_cidr_blocks = null
-        #   prefix_list_ids = null
-        #   self = null
-        #   source_security_gorup_id = data.aws_security_group.security_group_for_aurora.id
-        # }
+        {
+          description = "to aurora port 5432 for tls"
+          from_port = 5432
+          to_port = 5432
+          protocol = "tcp"
+          cidr_blocks = null
+          ipv6_cidr_blocks = null
+          prefix_list_ids = null
+          self = null
+          source_security_gorup_id = data.aws_security_group.security_group_for_aurora.id
+        }
       ]
     },
   ]
