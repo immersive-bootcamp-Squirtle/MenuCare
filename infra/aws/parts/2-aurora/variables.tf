@@ -106,7 +106,7 @@ locals {
       cloudwatch_log_group_retention_in_days = 30
       
       // performance_insights
-      performance_insights_enabled = false
+      performance_insights_enabled = true
       performance_insights_retention_period = 7
       
       // 拡張モニタリング
