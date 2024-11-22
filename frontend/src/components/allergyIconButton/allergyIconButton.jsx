@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Box from "@mui/material/Box";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
+// 実装方針
+// 1. アレルギー情報を引数として、該当のアイコンを生成したいです。※ 今は卵とピーナッツを2つ書いてますが、一つにし、内容は引数から取るイメージです。
 function AllergyIconButton() {
   return (
     <>
