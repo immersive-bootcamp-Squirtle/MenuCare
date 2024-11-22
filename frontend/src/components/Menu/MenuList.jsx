@@ -1,25 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import MenuItem from "./MenuItem";
-import styled from "styled-components";
+import { Box, Typography } from "@mui/material";
 
-const MenuList = ({items}) => {
+const MenuList = ({ items }) => {
   return (
-    <>
-      <h1>Menu List</h1>
-      <MenuListFrame>
-      {items.map((item) =>(
-        <MenuItem key={item.id} item={item}/>
-      ))}
-      </MenuListFrame>
-    </>
+    <Box sx={{ padding: 2, margin: "0 auto" }}>
+      <Typography variant="h4">
+        Menu
+      </Typography>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "repeat(2, 1fr)", 
+          gap: 2,
+          gridAutoRows: "minmax(auto, auto)", 
+        }}
+      >
+        {items.map((item) => (
+          <Box key={item.menu_id}>
+            <MenuItem item={item} />
+          </Box>
+        ))}
+      </Box>
+    </Box>
   );
 };
-
-
-const MenuListFrame = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  justify-items: center;
-`;
 
 export default MenuList;
