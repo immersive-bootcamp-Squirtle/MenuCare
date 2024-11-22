@@ -17,9 +17,7 @@ locals {
         # IPセットの名前
         "name_of_ip_restrict" = "${local.system}-IPSET-FOR-CLOUDFRONT",
         # 許可するIPアドレスのリスト
-        "allowed_ip_address_list" = [
-          "49.109.16.79/32"
-        ],
+        "allowed_ip_address_list" = [],
         # cloudwatchメトリクスの取得有無
         "cloudwatch_metrics_enabled" = false,
         # サンプルリクエストの有効化有無
@@ -56,9 +54,7 @@ locals {
         # IPセットの名前
         "name_of_ip_restrict" = "${local.system}-IPSET-FOR-APIGATEWAY",
         # 許可するIPアドレスのリスト
-        "allowed_ip_address_list" = [
-          "49.109.16.79/32"
-        ],
+        "allowed_ip_address_list" = [],
         # cloudwatchメトリクスの取得有無
         "cloudwatch_metrics_enabled" = false,
         # サンプルリクエストの有効化有無
