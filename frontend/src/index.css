@@ -13,7 +13,16 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
+html, body {
+  margin: 0;/* 余白をリセットして黒い余白を防ぐ */
+  padding: 0;/* 同上 */
+  width: 100%;/* 幅を画面いっぱいに設定 */
+  height: 100%;/* 高さを画面いっぱいに設定 */
+  overflow: hidden; /* スクロールバーを隠す */
+}
+
+
+/* a {
   font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
@@ -65,4 +74,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
