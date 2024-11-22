@@ -27,22 +27,11 @@ function Menu() {
     }
   }, [])
 
-  function toggleTodo(id, completed) {
-    setTodos((currentTodos) => {
-      return currentTodos.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, completed: completed };
-        }
-        return todo;
-      });
-    });
-  }
-
   console.log("menuItems:",menuItems)
   return (
     <>
       <Frame>
-        <NavBar toggleTodo={toggleTodo}/>
+        <NavBar />
         <MenuList 
         items={menuItems}
         />
