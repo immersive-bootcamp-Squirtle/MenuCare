@@ -6,7 +6,7 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Toolbar from "@mui/material/Toolbar";
 
-const NavBar = () => {
+const NavBar = ({ openModal }) => {  // openModalを受け取る　　
   const categoryButtons = [
     { id: 1, label: "すべて" },
     { id: 2, label: "フード" },
@@ -66,11 +66,15 @@ const NavBar = () => {
   };
 
   const handleFilterClick = (id) => {
-    setSelectedFilters((prevSelected) =>
-      prevSelected.includes(id)
-        ? prevSelected.filter((filterId) => filterId !== id)
-        : [...prevSelected, id]
-    );
+    if (id === 4) {
+      openModal(); // アレルギーボタンをクリックしたときにモーダルを開きたい
+    } else {
+      setSelectedFilters((prevSelected) =>
+        prevSelected.includes(id)
+          ? prevSelected.filter((filterId) => filterId !== id)
+          : [...prevSelected, id]
+      );
+    }
   };
 
   return (
