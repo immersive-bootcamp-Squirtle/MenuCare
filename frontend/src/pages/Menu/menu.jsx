@@ -19,8 +19,33 @@ function Menu() {
   useEffect(() => {
     try {
       const fetchMenuItems = async () => {
-        const res = await axios.get(`${baseUrl}/restaurants/1/menus`);
-        setMenuItems(res.data);
+        // const res = await axios.get(`${baseUrl}/restaurants/1/menus`);
+        // setMenuItems(res.data);
+        // backendを繋げていない環境では以下を利用してください。
+        const testData = [
+          {
+            menu_id: 1,
+            name: "Sample Menu 1",
+            price: "1000.00",
+            image_url: "sample/path",
+            allergies: ["卵", "小麦"],
+          },
+          {
+            menu_id: 2,
+            name: "Sample Menu 2",
+            price: "1500.00",
+            image_url: "sample/path",
+            allergies: ["小麦"],
+          },
+          {
+            menu_id: 3,
+            name: "Sample Menu 3",
+            price: "800.00",
+            image_url: "sample/path",
+            allergies: ["乳（牛乳）"],
+          },
+        ];
+        setMenuItems(testData);
       };
       fetchMenuItems();
     } catch (err) {
