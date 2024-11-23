@@ -20,7 +20,7 @@ locals {
 
   
   # API Gateway定義
-  domain_name = "api.menu_care.com"
+  domain_name = "api.menu-care.com"
   description = "API Gateway for API"
   retention_in_days = 400
 
