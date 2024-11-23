@@ -1,42 +1,63 @@
 swagger: "2.0"
 info:
-  description: "これはペットストアに関するAPIです。"
+  description: "menucare backend api"
   version: "1.0.0"
-  title: "Petstore API"
-  termsOfService: "http://swagger.io/terms/"
+  title: "menucare backend API"
+  termsOfService: "https://xxxx.com/terms/"
   contact:
-    email: "apiteam@swagger.io"
+    email: "xxxx@gmail.com"
   license:
-    name: "Apache 2.0"
-    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    name: "XXXX"
+    url: "http://www.xxxx.org/licenses/LICENSE-2.0.html"
 paths:
-  /pet/{petId}:
+  /api/health_check:
     get:
-      summary: "ペット情報API"
-      description: "指定されたpetIdの情報を返します"
-      parameters:
-        - name: "petId"
-          in: "path"
-          description: "取得したいペットのID"
-          required: true
-          type: "integer"
-          format: "int64"
+      summary: "healthcheck"
+      description: "Health checkレスポンスを返却します"
       responses:
         200:
           description: "成功時のレスポンス"
           schema:
             type: "object"
-            properties:
-              id:
-                type: "integer"
-                format: "int64"
-              name:
-                type: "string"
       x-amazon-apigateway-integration:
-        responses:
-          default:
-            statusCode: "200"
-        requestTemplates:
-          application/json: '{"statusCode": 200}'
-        passthroughBehavior: when_no_match
-        type: mock
+        httpMethod : POST
+        type : "aws_proxy"
+        uri: arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:222634373866:function:LMD-MENUCARE-API/invocations
+        passthroughBehavior: "when_no_match"
+        
+  /api/allergies:
+    get:
+      summary: "get allergies list"
+      description: "アレルギー情報の一覧を返却します"
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            type: "object"
+      x-amazon-apigateway-integration:
+        httpMethod : POST
+        type : "aws_proxy"
+        uri: arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:222634373866:function:LMD-MENUCARE-API/invocations
+        passthroughBehavior: "when_no_match"
+        
+  /api/restaurants/{restaurantId}/menus:
+    get:
+      summary: "get menus of a restaurant"
+      description: "特定店舗のアレルギー情報一覧を返却します"
+      parameters:
+      - name: "restaurantId"
+        in: "path"
+        description: "メニュー情報を取得したい店舗のID"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            type: "object"
+      x-amazon-apigateway-integration:
+        httpMethod : POST
+        type : "aws_proxy"
+        uri: arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:222634373866:function:LMD-MENUCARE-API/invocations
+        passthroughBehavior: "when_no_match"
