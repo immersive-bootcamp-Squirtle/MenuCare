@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* background-color: #242424; */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,14 +13,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-html, body {
-  margin: 0;/* 余白をリセットして黒い余白を防ぐ */
-  padding: 0;/* 同上 */
-  width: 100%;/* 幅を画面いっぱいに設定 */
-  height: 100%;/* 高さを画面いっぱいに設定 */
+html,
+body {
+  margin: 0; /* 余白をリセットして黒い余白を防ぐ */
+  padding: 0; /* 同上 */
+  width: 100%; /* 幅を画面いっぱいに設定 */
+  height: 100%; /* 高さを画面いっぱいに設定 */
   overflow: hidden; /* スクロールバーを隠す */
 }
-
 
 /* a {
   font-weight: 500;

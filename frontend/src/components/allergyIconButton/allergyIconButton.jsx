@@ -12,7 +12,7 @@ function AllergyIconButton({ label, isSelected, onClick }) {
         <div>{label}</div>
         <CheckCircleOutlineIcon
           style={{
-            color: isSelected ? "green" : "gray", // 選択状態に応じてアイコンの色を変更
+            color: isSelected ? "#a2845e" : "#dbd6cd", // 選択状態に応じてアイコンの色を変更
           }}
         />
       </AllergyIconContent>
@@ -25,32 +25,33 @@ const AllergyIcon = styled(Box)`
   align-items: center;
   justify-content: center;
   background-color: ${(props) =>
-    props.isSelected ? "#f2c94c" : "white"}; /* 選択時の背景色 */
-  border: 2px solid
-    ${(props) => (props.isSelected ? "#f2994a" : "#ddd")}; /* 選択時の枠線色 */
-  color: ${(props) => (props.isSelected ? "black" : "#555")};
+    props.isSelected ? "#ff9500" : "white"}; /* 選択時の背景色 */
+  border: 2px solid ${(props) => (props.isSelected ? "#fff" : "#dbd6cd")}; /* 選択時の枠線色 */
+  color: ${(props) => (props.isSelected ? "#fff" : "#a3978c")};
   width: 24%;
   padding: 5px;
   margin: 5px;
-  border-radius: 20px; 
+  border-radius: 10px;
   cursor: pointer;
   text-align: center;
-  font-size: 12px; 
+  font-size: 12px;
   font-weight: bold;
 
   @media (max-width: 768px) {
-    width: 30%; 
-    font-size: 10px; 
+    width: 30%;
+    font-size: 10px;
   }
 `;
 
-
 const AllergyIconContent = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   width: 90%;
   margin: 0 auto;
-  font-size: 12px; 
+  font-size: 12px;
+  font-weight: 700;
+  font-family: "Noto Sans JP", sans-serif;
   text-align: center;
   word-wrap: break-word;
 `;
