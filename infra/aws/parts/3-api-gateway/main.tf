@@ -167,7 +167,7 @@ data "aws_acm_certificate" "acm_for_apigateway" {
 
 resource "aws_api_gateway_domain_name" "my_domain" {
   domain_name              = local.domain_name
-  regional_certificate_arn = data.aws_acm_certificate.acm_for_apigateway
+  regional_certificate_arn = data.aws_acm_certificate.acm_for_apigateway.arn
 
   endpoint_configuration {
     types = ["REGIONAL"]
