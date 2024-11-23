@@ -31,7 +31,7 @@ locals {
         source_security_gorup_id = data.aws_security_group.sg_for_api_lambda.id
       },
       {
-        description = "Allow DB access from api lambda"
+        description = "Allow DB access from dev server"
         from_port = 5432
         to_port = 5432
         protocol = "tcp"
