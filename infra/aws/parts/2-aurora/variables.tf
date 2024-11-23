@@ -29,6 +29,17 @@ locals {
         prefix_list_ids = null
         self = null
         source_security_gorup_id = data.aws_security_group.sg_for_api_lambda.id
+      },
+      {
+        description = "Allow DB access from api lambda"
+        from_port = 5432
+        to_port = 5432
+        protocol = "tcp"
+        cidr_blocks = null
+        ipv6_cidr_blocks = null
+        prefix_list_ids = null
+        self = null
+        source_security_gorup_id = "sg-09678dbcd7b23f20a"
       }    
     ]
     outbound_rules = [
