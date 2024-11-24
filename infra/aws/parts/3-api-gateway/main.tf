@@ -157,3 +157,44 @@ resource "aws_lambda_permission" "permission_for_api_gateway_origin" {
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_api_gateway_rest_api.api_gateway.execution_arn}/*/*/*"
 }
+
+
+################# CloudFrontにアタッチするACMの情報 #####################
+# Find a certificate that is issued
+data "aws_acm_certificate" "acm_for_apigateway" {
+  domain   = local.custom_domain_for_acm
+}
+
+resource "aws_api_gateway_domain_name" "my_domain" {
+  domain_name              = local.domain_name
+  regional_certificate_arn = data.aws_acm_certificate.acm_for_apigateway.arn
+
+  endpoint_configuration {
+    types = ["REGIONAL"]
+  }
+}
+
+resource "aws_api_gateway_base_path_mapping" "my_domain" {
+  api_id      = aws_api_gateway_rest_api.api_gateway.id
+  stage_name  = aws_api_gateway_stage.api_gateway_stage_origin.stage_name
+  domain_name = aws_api_gateway_domain_name.my_domain.domain_name
+}
+
+################# Route53のゾーン情報 #####################
+ # 購入済み済みドメイン情報の取得
+ data aws_route53_zone route53-zone {
+   name         = local.custom_root_domain
+   private_zone = false
+ }
+
+resource "aws_route53_record" "api_gateway_alias" {
+  name    = aws_api_gateway_domain_name.my_domain.domain_name
+  type    = "A"
+  zone_id = data.aws_route53_zone.route53-zone.id
+
+  alias {
+    evaluate_target_health = true
+    name                   = aws_api_gateway_domain_name.my_domain.regional_domain_name
+    zone_id                = aws_api_gateway_domain_name.my_domain.regional_zone_id
+  }
+}

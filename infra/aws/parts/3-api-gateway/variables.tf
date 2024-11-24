@@ -12,10 +12,16 @@ locals {
 locals {
   # 各AWSアカウント内における代表の1面でのみtrueとする
   main_env = true
+
+  # custom ドメイン情報 for ACM
+  custom_domain_for_acm = "*.menu-care.com"
+  # custom rootドメイン情報
+  custom_root_domain = "menu-care.com."
+
   
   # API Gateway定義
+  domain_name = "api.menu-care.com"
   description = "API Gateway for API"
-
   retention_in_days = 400
 
   http_method   = "ANY"
