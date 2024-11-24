@@ -2,9 +2,33 @@ import React from "react";
 import MenuItem from "./MenuItem";
 import { Box, Typography } from "@mui/material";
 
-const MenuList = ({ items }) => {
+const MenuList = ({ items, selectedAllergies = [] }) => {
+  const defaultAllergies = ["小麦","えび"];
+  const activeAllergies = selectedAllergies.length === 0 ? defaultAllergies : selectedAllergies;
+
+  // アレルギーに基づいてソート
+  const sortedItems = [...items].sort((a, b) => {
+    const aHasAllergy = a.allergies.some((allergy) =>
+      activeAllergies.includes(allergy)
+    );
+    const bHasAllergy = b.allergies.some((allergy) =>
+      activeAllergies.includes(allergy)
+    );
+
+    // アレルギーが一致する場合は後ろに移動
+    if (aHasAllergy && !bHasAllergy) return 1;
+    if (!aHasAllergy && bHasAllergy) return -1;
+    return 0;
+  });
+
   return (
-    <Box sx={{ padding: 0, margin: "0 auto" }}>
+    <Box
+      sx={{
+        padding: 0,
+        margin: "0 auto",
+        overflowY: "auto",
+      }}
+    >
       <Typography
         variant="h4"
         fontWeight={700}
@@ -28,11 +52,22 @@ const MenuList = ({ items }) => {
           padding: "15px 10px",
         }}
       >
-        {items.map((item) => (
-          <Box key={item.menu_id}>
-            <MenuItem item={item} />
-          </Box>
-        ))}
+        {sortedItems.map((item) => {
+          const isGrayout = item.allergies.some((allergy) =>
+            activeAllergies.includes(allergy)
+          ); // 一致するアレルギーがあるか
+
+          return (
+            <Box
+              key={item.menu_id}
+              sx={{
+                opacity: isGrayout ? 0.5 : 1, // グレーアウト
+              }}
+            >
+              <MenuItem item={item} />
+            </Box>
+          );
+        })}
       </Box>
     </Box>
   );

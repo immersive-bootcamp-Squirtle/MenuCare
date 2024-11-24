@@ -9,7 +9,7 @@ import {
   Collapse,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import sampleImage from "../../assets/image.png";
+import sampleImage from "../../assets/egg.png";
 import Stack from "@mui/material/Stack";
 
 const MenuItem = ({ item }) => {
@@ -29,14 +29,14 @@ const MenuItem = ({ item }) => {
             borderRadius: 3,
             overflow: "hidden",
             textAlign: "left",
-            height: "100%",
+            // height: "100%",
           }}
         >
           <CardMedia
             component="img"
             alt={item.name}
             height="140"
-            image={sampleImage}
+            image={item.image_url}
             sx={{
               objectFit: "cover",
             }}
@@ -89,7 +89,8 @@ const MenuItem = ({ item }) => {
             timeout="auto"
             unmountOnExit
             sx={{
-              position: "absolute",
+              //   position: "absolute",
+              position: "relative",
               width: "100%",
               zIndex: 1,
             }}
@@ -108,7 +109,9 @@ const MenuItem = ({ item }) => {
                   fontSize: "18px",
                 }}
               >
-                {item.allergies ? `${item.allergies}` : "アレルギー情報なし"}
+                {item.allergies && item.allergies.length > 0
+                  ? item.allergies.join(", ") // リストの要素をカンマ区切りで表示
+                  : "アレルギー情報なし"}
               </Typography>
               <Typography
                 variant="body2"
