@@ -86,14 +86,15 @@ function Menu() {
     }
   }, []);
 
-  console.log("menuItems:", menuItems);
+  // console.log("menuItems:", menuItems);
 
   // アレルギー情報を取得する関数
   useEffect(() => {
     const fetchAllergies = async () => {
       try {
         // local上での実行の際はこちら
-        const res = await axios.get(`${baseUrl}/api/allergies`);
+        const res = await axios.get(`${baseUrl}/allergies`);
+        console.log("alg:",res.data);
         setAllergies(res.data);
 
         // lambda上での実行の際はこちら
@@ -146,7 +147,7 @@ function Menu() {
     <Frame>
       <ThemeProvider theme={theme}>
         <NavBar openModal={openModal} /> {/* NavBar にモーダル開閉状態を渡す */}
-        <MenuList items={menuItems} />
+        <MenuList items={menuItems} selectedAllergies={[]}/>
         {isModalOpen && (
           <AllergyFilterModal
             onClose={closeModal}
@@ -161,9 +162,8 @@ function Menu() {
 }
 
 const Frame = styled.div`
-  // border: 2px solid #000000;
-  // width: min(98vw, 98vh * 0.75);
-  overflow: hidden;
+  height: 100vh; // 全画面の高さを確保
+  overflow: auto;
 `;
 
 export default Menu;
