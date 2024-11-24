@@ -6,8 +6,27 @@ function AllergyFilterModal({
   onClose,
   allergies,
   selectedAllergies,
+  selectedAllergiesOnFilter,
   onToggle,
+  onClick
 }) {
+
+  // 配列要素比較 (共通部品にしたい)
+  const arraysHaveSameElements = (arr1, arr2) => {
+    if (arr1.length !== arr2.length) {
+        return false;
+    }
+    const sortedArr1 = arr1.slice().sort();
+    const sortedArr2 = arr2.slice().sort();
+    
+    for (let i = 0; i < sortedArr1.length; i++) {
+        if (sortedArr1[i] !== sortedArr2[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
   //onClose のみだと上手くいかない
   return (
     <ModalWrapper>
@@ -27,6 +46,7 @@ function AllergyFilterModal({
           <AllergyList
             allergies={allergies}
             selectedAllergies={selectedAllergies}
+            selectedAllergiesOnFilter={selectedAllergiesOnFilter}
             onToggle={onToggle}
           />
         </Section>
@@ -37,7 +57,7 @@ function AllergyFilterModal({
       </Section> */}
 
         <Footer>
-          <Button>メニューを絞り込む</Button>
+          {arraysHaveSameElements(selectedAllergies, selectedAllergiesOnFilter) ? <InactiveButton disabled={true}>メニューを絞り込む</InactiveButton> : <ActiveButton onClick={onClick}>メニューを絞り込む</ActiveButton>}
         </Footer>
       </ModalContent>
     </ModalWrapper>
@@ -144,13 +164,25 @@ const Footer = styled.div`
   margin-top: 16px;
 `;
 
-const Button = styled.button`
+const ActiveButton = styled.button`
   padding: 10px 80px;
   font-size: 14px;
   font-weight: 500;
   font-family: "Noto Sans JP", sans-serif;
   color: white;
   background: linear-gradient(90deg, #f2994a, #f2c94c);
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+`;
+
+const InactiveButton = styled.button`
+  padding: 10px 80px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Noto Sans JP", sans-serif;
+  color: white;
+  background: gray
   border: none;
   border-radius: 30px;
   cursor: pointer;

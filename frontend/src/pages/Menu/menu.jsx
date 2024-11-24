@@ -13,26 +13,39 @@ function Menu() {
   // Global Stateの利用例です
   const [test, setTest] = useRecoilState(globalStateTest);
   const [menuItems, setMenuItems] = useState([]);
-
+  
+  // Local Stateを定義
   const [allergies, setAllergies] = useState([]); // アレルギー情報を管理
   const [selectedAllergies, setSelectedAllergies] = useState([]); // 選択されたアレルギーを管理
+  const [selectedAllergiesOnFilter, setSelectedAllergiesOnFilter] = useState([]); // filter上で選択中のアレルギー情報を管理
 
   // モーダルの開閉状態を管理
   const [isModalOpen, setModalOpen] = useState(false);
   const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
+  const closeModal = () => {
+    // modalを閉じる
+    setModalOpen(false);
+    // selectedAllergiesOnFilterをselectedAllergiesの値にリセットする ※ modalを開いた際の初期値を選択中のアレルギー情報にするため
+    setSelectedAllergiesOnFilter(selectedAllergies);
+  }
 
   // アレルギーの選択状態を管理
   const handleToggleAllergy = (allergyId) => {
-    setSelectedAllergies((prev) =>
+    setSelectedAllergiesOnFilter((prev) =>
       prev.includes(allergyId)
         ? prev.filter((id) => id !== allergyId)
         : [...prev, allergyId]
     );
   };
 
-  console.log("Global State Testです。");
-  console.log(test);
+  // アレルギーのフィルタ上での選択状態を管理
+  const handleConfirmAllergy = (e) => {
+    e.preventDefault();
+    // filter上で選択された値である selectedAllergiesOnFilter を selectedAllergies に入れる
+    setSelectedAllergies(selectedAllergiesOnFilter);
+    // modalを閉じる
+    setModalOpen(false);
+  };
 
   // Menuページ全体のフォントを管理
   const theme = createTheme({
@@ -152,7 +165,9 @@ function Menu() {
             onClose={closeModal}
             allergies={allergies}
             selectedAllergies={selectedAllergies}
+            selectedAllergiesOnFilter={selectedAllergiesOnFilter}
             onToggle={handleToggleAllergy} // onToggleとして渡す
+            onClick={handleConfirmAllergy}
           />
         )}
       </ThemeProvider>
