@@ -47,38 +47,38 @@ function Menu() {
     try {
       const fetchMenuItems = async () => {
         // local実行の際はこちら
-        const res = await axios.get(`${baseUrl}/restaurants/1/menus`);
-        setMenuItems(res.data);
+        // const res = await axios.get(`${baseUrl}/restaurants/1/menus`);
+        // setMenuItems(res.data);
 
         // lambda上での実行の際はこちら
         // const res = await axios.get(`https://api.menu-care.com/api/restaurants/1/menus`);
         // setMenuItems(res.data);
 
         // backendを繋げていない環境ではこちら
-        // const testData = [
-        //   {
-        //     menu_id: 1,
-        //     name: "Sample Menu 1",
-        //     price: "1000.00",
-        //     image_url: "sample/path",
-        //     allergies: ["卵", "小麦"],
-        //   },
-        //   {
-        //     menu_id: 2,
-        //     name: "Sample Menu 2",
-        //     price: "1500.00",
-        //     image_url: "sample/path",
-        //     allergies: ["小麦"],
-        //   },
-        //   {
-        //     menu_id: 3,
-        //     name: "Sample Menu 3",
-        //     price: "800.00",
-        //     image_url: "sample/path",
-        //     allergies: ["乳（牛乳）"],
-        //   },
-        // ];
-        // setMenuItems(testData);
+        const testData = [
+          {
+            menu_id: 1,
+            name: "Sample Menu 1",
+            price: "1000.00",
+            image_url: "sample/path",
+            allergies: ["卵", "小麦"],
+          },
+          {
+            menu_id: 2,
+            name: "Sample Menu 2",
+            price: "1500.00",
+            image_url: "sample/path",
+            allergies: ["小麦"],
+          },
+          {
+            menu_id: 3,
+            name: "Sample Menu 3",
+            price: "800.00",
+            image_url: "sample/path",
+            allergies: ["乳（牛乳）"],
+          },
+        ];
+        setMenuItems(testData);
       };
       fetchMenuItems();
     } catch (err) {
@@ -93,14 +93,12 @@ function Menu() {
     const fetchAllergies = async () => {
       try {
         // local上での実行の際はこちら
-        const res = await axios.get(`${baseUrl}/api/allergies`);
-        setAllergies(res.data);
+        // const res = await axios.get(`${baseUrl}/api/allergies`);
+        // setAllergies(res.data);
 
         // lambda上での実行の際はこちら
         // const res = await axios.get(`https://api.menu-care.com/api/allergies`);
         // setAllergies(res.data);
-      } catch (err) {
-        console.error("Error fetching allergies:", err);
 
         // backendを繋げていない環境ではこちら
         const testAllergies = [
@@ -134,6 +132,8 @@ function Menu() {
           { allergy_id: 28, allergy_name: "ゼラチン" },
         ];
         setAllergies(testAllergies);
+      } catch (err) {
+        console.error("Error fetching allergies:", err);
       }
     };
 
