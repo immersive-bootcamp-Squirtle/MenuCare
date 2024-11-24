@@ -5,8 +5,11 @@ import AppBar from "@mui/material/AppBar";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Toolbar from "@mui/material/Toolbar";
+import Box from "@mui/material/Box";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-const NavBar = ({ openModal }) => {  // openModalを受け取る　　
+const NavBar = ({ openModal }) => {
+  // openModalを受け取る
   const categoryButtons = [
     { id: 1, label: "すべて" },
     { id: 2, label: "フード" },
@@ -22,40 +25,42 @@ const NavBar = ({ openModal }) => {  // openModalを受け取る　　
   const [selectedFilters, setSelectedFilters] = useState([]);
 
   const selectedStyle = {
-    padding: "12px 24px",
-    fontSize: "18px",
+    padding: "0.8em 1.4em",
+    fontSize: "clamp(14px, 2vw, 18px)",
     color: "#fff",
     background: "linear-gradient(90deg, #f2994a, #f2c94c)",
-    border: "2px solid #f2ede5",
-    borderRadius: "30px",
+    border: "0.15em solid #f2ede5",
+    borderRadius: "2em",
     cursor: "pointer",
-    fontWeight: "bold",
+    fontWeight: 700,
+    fontFamily: "'Noto Sans JP', sans-serif",
     transition: "transform 0.2s ease, box-shadow 0.2s ease",
     "&:hover": {
       transform: "translateY(-2px)",
       boxShadow: "0 4px 6px rgba(0, 0, 0, 0.3)",
     },
-    "@media (max-width: 768px)": {
+    "@media (maxWidth: 768px)": {
       fontSize: "16px",
       padding: "10px 20px",
     },
   };
 
   const unselectedStyle = {
-    padding: "12px 24px",
-    fontSize: "18px",
+    padding: "0.8em 1.4em",
+    fontSize: "clamp(14px, 2vw, 18px)",
     color: "#dbd6cd",
     background: "#fff",
-    border: "2px solid #dbd6cd",
-    borderRadius: "30px",
+    border: "0.15em solid #dbd6cd",
+    borderRadius: "2em",
     cursor: "pointer",
-    fontWeight: "bold",
+    fontWeight: 700,
+    fontFamily: "'Noto Sans JP', sans-serif",
     transition: "transform 0.2s ease, box-shadow 0.2s ease",
     "&:hover": {
       transform: "translateY(-2px)",
       boxShadow: "0 4px 6px rgba(0, 0, 0, 0.3)",
     },
-    "@media (max-width: 768px)": {
+    "@media (maxWidth: 768px)": {
       fontSize: "16px",
       padding: "10px 20px",
     },
@@ -79,12 +84,30 @@ const NavBar = ({ openModal }) => {  // openModalを受け取る　　
 
   return (
     <>
-      <AppBar sx={{ backgroundColor: "#f2ede5" }}>
+      <AppBar
+        position="sticky"
+        sx={{
+          backgroundColor: "#f2ede5",
+          height: "clamp(184px, 25vh, 236px)",
+          zIndex: 900,
+        }}
+      >
+        <Box
+          sx={{
+            height: "clamp(30px, 4vh, 50px)", // 上部スペースを調整
+            backgroundColor: "#f2ede5",
+          }}
+        />
         <Toolbar sx={{ justifyContent: "center" }}>
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 0, color: "black" }}
+            fontWeight={700}
+            sx={{
+              flexGrow: 0,
+              color: "#3c3a37",
+              fontSize: "clamp(18px, 4vw, 28px)",
+            }}
           >
             メニュー一覧
           </Typography>
