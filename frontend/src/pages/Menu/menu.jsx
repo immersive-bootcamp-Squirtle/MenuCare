@@ -30,11 +30,11 @@ function Menu() {
   }
 
   // アレルギーの選択状態を管理
-  const handleToggleAllergy = (allergyId) => {
+  const handleToggleAllergy = (allergyName) => {
     setSelectedAllergiesOnFilter((prev) =>
-      prev.includes(allergyId)
-        ? prev.filter((id) => id !== allergyId)
-        : [...prev, allergyId]
+      prev.includes(allergyName)
+        ? prev.filter((name) => name !== allergyName)
+        : [...prev, allergyName]
     );
   };
 
@@ -68,29 +68,7 @@ function Menu() {
         // setMenuItems(res.data);
 
         // backendを繋げていない環境ではこちら
-        const testData = [
-          {
-            menu_id: 1,
-            name: "Sample Menu 1",
-            price: "1000.00",
-            image_url: "sample/path",
-            allergies: ["卵", "小麦"],
-          },
-          {
-            menu_id: 2,
-            name: "Sample Menu 2",
-            price: "1500.00",
-            image_url: "sample/path",
-            allergies: ["小麦"],
-          },
-          {
-            menu_id: 3,
-            name: "Sample Menu 3",
-            price: "800.00",
-            image_url: "sample/path",
-            allergies: ["乳（牛乳）"],
-          },
-        ];
+        const testData = [{"menu_id":1,"name":"目玉焼き","price":"1000.00","image_url":"src/assets/egg.png","allergies":["卵"]},{"menu_id":2,"name":"ガトーショコラ","price":"1500.00","image_url":"src/assets/cake.png","allergies":["卵","小麦","乳（牛乳）"]},{"menu_id":3,"name":"生ハムのサラダ","price":"800.00","image_url":"src/assets/salad.png","allergies":["卵","乳（牛乳）"]},{"menu_id":4,"name":"鶏肉のごま味噌焼き","price":"800.00","image_url":"src/assets/chicken.png","allergies":["ごま","鶏肉"]},{"menu_id":5,"name":"トマトパスタ","price":"1000.00","image_url":"src/assets/pasta.png","allergies":["小麦"]},{"menu_id":6,"name":"エビチリ","price":"700.00","image_url":"src/assets/ebichiri.png","allergies":["えび"]}];
         setMenuItems(testData);
       };
       fetchMenuItems();
@@ -160,7 +138,7 @@ function Menu() {
     <Frame>
       <ThemeProvider theme={theme}>
         <NavBar openModal={openModal} /> {/* NavBar にモーダル開閉状態を渡す */}
-        <MenuList items={menuItems} selectedAllergies={[]}/>
+        <MenuList items={menuItems} selectedAllergies={selectedAllergies}/>
         {isModalOpen && (
           <AllergyFilterModal
             onClose={closeModal}

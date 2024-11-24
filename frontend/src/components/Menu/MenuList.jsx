@@ -2,17 +2,14 @@ import React from "react";
 import MenuItem from "./MenuItem";
 import { Box, Typography } from "@mui/material";
 
-const MenuList = ({ items, selectedAllergies = [] }) => {
-  const defaultAllergies = ["小麦","えび"];
-  const activeAllergies = selectedAllergies.length === 0 ? defaultAllergies : selectedAllergies;
-
+const MenuList = ({ items, selectedAllergies}) => {
   // アレルギーに基づいてソート
   const sortedItems = [...items].sort((a, b) => {
     const aHasAllergy = a.allergies.some((allergy) =>
-      activeAllergies.includes(allergy)
+      selectedAllergies.includes(allergy)
     );
     const bHasAllergy = b.allergies.some((allergy) =>
-      activeAllergies.includes(allergy)
+      selectedAllergies.includes(allergy)
     );
 
     // アレルギーが一致する場合は後ろに移動
@@ -54,7 +51,7 @@ const MenuList = ({ items, selectedAllergies = [] }) => {
       >
         {sortedItems.map((item) => {
           const isGrayout = item.allergies.some((allergy) =>
-            activeAllergies.includes(allergy)
+            selectedAllergies.includes(allergy)
           ); // 一致するアレルギーがあるか
 
           return (
