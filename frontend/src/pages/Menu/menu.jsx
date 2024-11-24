@@ -13,26 +13,39 @@ function Menu() {
   // Global Stateの利用例です
   const [test, setTest] = useRecoilState(globalStateTest);
   const [menuItems, setMenuItems] = useState([]);
-
+  
+  // Local Stateを定義
   const [allergies, setAllergies] = useState([]); // アレルギー情報を管理
   const [selectedAllergies, setSelectedAllergies] = useState([]); // 選択されたアレルギーを管理
+  const [selectedAllergiesOnFilter, setSelectedAllergiesOnFilter] = useState([]); // filter上で選択中のアレルギー情報を管理
 
   // モーダルの開閉状態を管理
   const [isModalOpen, setModalOpen] = useState(false);
   const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
+  const closeModal = () => {
+    // modalを閉じる
+    setModalOpen(false);
+    // selectedAllergiesOnFilterをselectedAllergiesの値にリセットする ※ modalを開いた際の初期値を選択中のアレルギー情報にするため
+    setSelectedAllergiesOnFilter(selectedAllergies);
+  }
 
   // アレルギーの選択状態を管理
-  const handleToggleAllergy = (allergyId) => {
-    setSelectedAllergies((prev) =>
-      prev.includes(allergyId)
-        ? prev.filter((id) => id !== allergyId)
-        : [...prev, allergyId]
+  const handleToggleAllergy = (allergyName) => {
+    setSelectedAllergiesOnFilter((prev) =>
+      prev.includes(allergyName)
+        ? prev.filter((name) => name !== allergyName)
+        : [...prev, allergyName]
     );
   };
 
-  console.log("Global State Testです。");
-  console.log(test);
+  // アレルギーのフィルタ上での選択状態を管理
+  const handleConfirmAllergy = (e) => {
+    e.preventDefault();
+    // filter上で選択された値である selectedAllergiesOnFilter を selectedAllergies に入れる
+    setSelectedAllergies(selectedAllergiesOnFilter);
+    // modalを閉じる
+    setModalOpen(false);
+  };
 
   // Menuページ全体のフォントを管理
   const theme = createTheme({
@@ -47,38 +60,16 @@ function Menu() {
     try {
       const fetchMenuItems = async () => {
         // local実行の際はこちら
-        const res = await axios.get(`${baseUrl}/restaurants/1/menus`);
-        setMenuItems(res.data);
+        // const res = await axios.get(`${baseUrl}/restaurants/1/menus`);
+        // setMenuItems(res.data);
 
         // lambda上での実行の際はこちら
         // const res = await axios.get(`https://api.menu-care.com/api/restaurants/1/menus`);
         // setMenuItems(res.data);
 
         // backendを繋げていない環境ではこちら
-        // const testData = [
-        //   {
-        //     menu_id: 1,
-        //     name: "Sample Menu 1",
-        //     price: "1000.00",
-        //     image_url: "sample/path",
-        //     allergies: ["卵", "小麦"],
-        //   },
-        //   {
-        //     menu_id: 2,
-        //     name: "Sample Menu 2",
-        //     price: "1500.00",
-        //     image_url: "sample/path",
-        //     allergies: ["小麦"],
-        //   },
-        //   {
-        //     menu_id: 3,
-        //     name: "Sample Menu 3",
-        //     price: "800.00",
-        //     image_url: "sample/path",
-        //     allergies: ["乳（牛乳）"],
-        //   },
-        // ];
-        // setMenuItems(testData);
+        const testData = [{"menu_id":1,"name":"目玉焼き","price":"1000.00","image_url":"src/assets/egg.png","allergies":["卵"]},{"menu_id":2,"name":"ガトーショコラ","price":"1500.00","image_url":"src/assets/cake.png","allergies":["卵","小麦","乳（牛乳）"]},{"menu_id":3,"name":"生ハムのサラダ","price":"800.00","image_url":"src/assets/salad.png","allergies":["卵","乳（牛乳）"]},{"menu_id":4,"name":"鶏肉のごま味噌焼き","price":"800.00","image_url":"src/assets/chicken.png","allergies":["ごま","鶏肉"]},{"menu_id":5,"name":"トマトパスタ","price":"1000.00","image_url":"src/assets/pasta.png","allergies":["小麦"]},{"menu_id":6,"name":"エビチリ","price":"700.00","image_url":"src/assets/ebichiri.png","allergies":["えび"]}];
+        setMenuItems(testData);
       };
       fetchMenuItems();
     } catch (err) {
@@ -100,8 +91,6 @@ function Menu() {
         // lambda上での実行の際はこちら
         // const res = await axios.get(`https://api.menu-care.com/api/allergies`);
         // setAllergies(res.data);
-      } catch (err) {
-        console.error("Error fetching allergies:", err);
 
         // backendを繋げていない環境ではこちら
         const testAllergies = [
@@ -135,6 +124,8 @@ function Menu() {
           { allergy_id: 28, allergy_name: "ゼラチン" },
         ];
         setAllergies(testAllergies);
+      } catch (err) {
+        console.error("Error fetching allergies:", err);
       }
     };
 
@@ -147,13 +138,15 @@ function Menu() {
     <Frame>
       <ThemeProvider theme={theme}>
         <NavBar openModal={openModal} /> {/* NavBar にモーダル開閉状態を渡す */}
-        <MenuList items={menuItems} selectedAllergies={[]}/>
+        <MenuList items={menuItems} selectedAllergies={selectedAllergies}/>
         {isModalOpen && (
           <AllergyFilterModal
             onClose={closeModal}
             allergies={allergies}
             selectedAllergies={selectedAllergies}
+            selectedAllergiesOnFilter={selectedAllergiesOnFilter}
             onToggle={handleToggleAllergy} // onToggleとして渡す
+            onClick={handleConfirmAllergy}
           />
         )}
       </ThemeProvider>
