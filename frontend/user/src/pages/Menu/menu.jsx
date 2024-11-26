@@ -13,11 +13,13 @@ function Menu() {
   // Global Stateの利用例です
   const [test, setTest] = useRecoilState(globalStateTest);
   const [menuItems, setMenuItems] = useState([]);
-  
+
   // Local Stateを定義
   const [allergies, setAllergies] = useState([]); // アレルギー情報を管理
   const [selectedAllergies, setSelectedAllergies] = useState([]); // 選択されたアレルギーを管理
-  const [selectedAllergiesOnFilter, setSelectedAllergiesOnFilter] = useState([]); // filter上で選択中のアレルギー情報を管理
+  const [selectedAllergiesOnFilter, setSelectedAllergiesOnFilter] = useState(
+    []
+  ); // filter上で選択中のアレルギー情報を管理
 
   // モーダルの開閉状態を管理
   const [isModalOpen, setModalOpen] = useState(false);
@@ -27,7 +29,7 @@ function Menu() {
     setModalOpen(false);
     // selectedAllergiesOnFilterをselectedAllergiesの値にリセットする ※ modalを開いた際の初期値を選択中のアレルギー情報にするため
     setSelectedAllergiesOnFilter(selectedAllergies);
-  }
+  };
 
   // アレルギーの選択状態を管理
   const handleToggleAllergy = (allergyName) => {
@@ -60,16 +62,16 @@ function Menu() {
     try {
       const fetchMenuItems = async () => {
         // local実行の際はこちら
-        // const res = await axios.get(`${baseUrl}/restaurants/1/menus`);
-        // setMenuItems(res.data);
+        const res = await axios.get(`${baseUrl}/restaurants/1/menus`);
+        setMenuItems(res.data);
 
         // lambda上での実行の際はこちら
         // const res = await axios.get(`https://api.menu-care.com/api/restaurants/1/menus`);
         // setMenuItems(res.data);
 
         // backendを繋げていない環境ではこちら
-        const testData = [{"menu_id":1,"name":"目玉焼き","price":"1000.00","image_url":"src/assets/egg.png","allergies":["卵"]},{"menu_id":2,"name":"ガトーショコラ","price":"1500.00","image_url":"src/assets/cake.png","allergies":["卵","小麦","乳（牛乳）"]},{"menu_id":3,"name":"生ハムのサラダ","price":"800.00","image_url":"src/assets/salad.png","allergies":["卵","乳（牛乳）"]},{"menu_id":4,"name":"鶏肉のごま味噌焼き","price":"800.00","image_url":"src/assets/chicken.png","allergies":["ごま","鶏肉"]},{"menu_id":5,"name":"トマトパスタ","price":"1000.00","image_url":"src/assets/pasta.png","allergies":["小麦"]},{"menu_id":6,"name":"エビチリ","price":"700.00","image_url":"src/assets/ebichiri.png","allergies":["えび"]}];
-        setMenuItems(testData);
+        // const testData = [{"menu_id":1,"name":"目玉焼き","price":"1000.00","image_url":"src/assets/egg.png","allergies":["卵"]},{"menu_id":2,"name":"ガトーショコラ","price":"1500.00","image_url":"src/assets/cake.png","allergies":["卵","小麦","乳（牛乳）"]},{"menu_id":3,"name":"生ハムのサラダ","price":"800.00","image_url":"src/assets/salad.png","allergies":["卵","乳（牛乳）"]},{"menu_id":4,"name":"鶏肉のごま味噌焼き","price":"800.00","image_url":"src/assets/chicken.png","allergies":["ごま","鶏肉"]},{"menu_id":5,"name":"トマトパスタ","price":"1000.00","image_url":"src/assets/pasta.png","allergies":["小麦"]},{"menu_id":6,"name":"エビチリ","price":"700.00","image_url":"src/assets/ebichiri.png","allergies":["えび"]}];
+        // setMenuItems(testData);
       };
       fetchMenuItems();
     } catch (err) {
@@ -85,7 +87,7 @@ function Menu() {
       try {
         // local上での実行の際はこちら
         const res = await axios.get(`${baseUrl}/allergies`);
-        console.log("alg:",res.data);
+        console.log("alg:", res.data);
         setAllergies(res.data);
 
         // lambda上での実行の際はこちら
@@ -138,7 +140,7 @@ function Menu() {
     <Frame>
       <ThemeProvider theme={theme}>
         <NavBar openModal={openModal} /> {/* NavBar にモーダル開閉状態を渡す */}
-        <MenuList items={menuItems} selectedAllergies={selectedAllergies}/>
+        <MenuList items={menuItems} selectedAllergies={selectedAllergies} />
         {isModalOpen && (
           <AllergyFilterModal
             onClose={closeModal}

@@ -9,8 +9,6 @@ import {
   Collapse,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import sampleImage from "../../assets/egg.png";
-import Stack from "@mui/material/Stack";
 
 const MenuItem = ({ item }) => {
   const price = Math.trunc(item.price);
