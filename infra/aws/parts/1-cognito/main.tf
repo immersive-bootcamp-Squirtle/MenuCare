@@ -9,5 +9,5 @@ resource "aws_cognito_user_pool" "pool" {
 resource "aws_cognito_user_pool_client" "client" {
   name = local.system
 
-  user_pool_id = resource.aws_cognito_user_pool.pool
+  user_pool_id = resource.aws_cognito_user_pool.pool.id
 }
