@@ -10,5 +10,5 @@ locals {
 
 # definition of cognito user pool
 locals {
-  alias_attributes = "email"
+  alias_attributes = ["email"]
 }
