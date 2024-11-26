@@ -16,6 +16,7 @@ function Login() {
       <Header>
         <Logo src={logo} alt="MenuCare Logo" />
       </Header>
+      <Title>管理者ログイン画面</Title>
       <LoginForm>
         <InputFiled
             required
@@ -62,13 +63,25 @@ const Header = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 100px; /* ロゴの幅 */
-  height: 100px;
+  width: 200px; /* ロゴの幅 */
+  height: 200px;
 
   @media (max-width: 768px) {
-    width: 100px; /* スマホでの幅調整 */
-    height: 100px;
+    width: 150px; /* スマホでの幅調整 */
+    height: 150px;
   }
+`;
+
+const Title = styled.h1`
+  font-size: 20px;
+  font-weight: 700;
+  font-family: "Jost", sans-serif;
+  color: #5a380c;
+  margin-bottom: 0px;
+  letter-spacing: 0.07em;
+  margin-bottom: 10px;
+
+  @media (max-width: 768px) {}
 `;
 
 const LoginForm = styled.form`
@@ -112,5 +125,5 @@ const Button = styled.button`
 `;
 
 const EmptyDiv = styled.div`
-  height: 30%;
+  height: 50%;
 `
