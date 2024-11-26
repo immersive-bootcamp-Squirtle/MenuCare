@@ -24,6 +24,38 @@ paths:
         type : "aws_proxy"
         uri: arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:222634373866:function:LMD-MENUCARE-API/invocations
         passthroughBehavior: "when_no_match"
+    
+    options : 
+      summary: CORS support
+      description: |
+        Enable CORS by returning correct headers
+      tags:
+      - CORS
+      responses:
+        200:
+          description: Default response for CORS method
+          headers:
+            Access-Control-Allow-Origin:
+                type: "string"
+            Access-Control-Allow-Methods:
+                type: "string"
+            Access-Control-Allow-Headers:
+                type: "string"
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "never"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
+              method.response.header.Access-Control-Allow-Methods: "'GET, OPTOINS'"
+              method.response.header.Access-Control-Allow-Origin: "'https://www.menu-care.com, https://admin.menu-care.com'"
+
+
+      
         
   /api/allergies:
     get:
@@ -39,6 +71,35 @@ paths:
         type : "aws_proxy"
         uri: arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:222634373866:function:LMD-MENUCARE-API/invocations
         passthroughBehavior: "when_no_match"
+        
+    options : 
+      summary: CORS support
+      description: |
+        Enable CORS by returning correct headers
+      tags:
+      - CORS
+      responses:
+        200:
+          description: Default response for CORS method
+          headers:
+            Access-Control-Allow-Origin:
+                type: "string"
+            Access-Control-Allow-Methods:
+                type: "string"
+            Access-Control-Allow-Headers:
+                type: "string"
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "never"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
+              method.response.header.Access-Control-Allow-Methods: "'GET, OPTOINS'"
+              method.response.header.Access-Control-Allow-Origin: "'https://www.menu-care.com, https://admin.menu-care.com'"
         
   /api/restaurants/{restaurantId}/menus:
     get:
@@ -61,3 +122,39 @@ paths:
         type : "aws_proxy"
         uri: arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:222634373866:function:LMD-MENUCARE-API/invocations
         passthroughBehavior: "when_no_match"
+        
+    options : 
+      summary: CORS support
+      description: |
+        Enable CORS by returning correct headers
+      parameters:
+        - name: "restaurantId"
+          in: "path"
+          description: "メニュー情報を取得したい店舗のID"
+          required: true
+          type: "integer"
+          format: "int64"
+      tags:
+      - CORS
+      responses:
+        200:
+          description: Default response for CORS method
+          headers:
+            Access-Control-Allow-Origin:
+                type: "string"
+            Access-Control-Allow-Methods:
+                type: "string"
+            Access-Control-Allow-Headers:
+                type: "string"
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "never"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
+              method.response.header.Access-Control-Allow-Methods: "'GET, OPTOINS'"
+              method.response.header.Access-Control-Allow-Origin: "'https://www.menu-care.com, https://admin.menu-care.com'"
