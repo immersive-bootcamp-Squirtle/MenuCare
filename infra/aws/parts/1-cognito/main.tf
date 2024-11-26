@@ -10,4 +10,5 @@ resource "aws_cognito_user_pool_client" "client" {
   name = local.system
 
   user_pool_id = resource.aws_cognito_user_pool.pool.id
+  explicit_auth_flows = local.explicit_auth_flows
 }

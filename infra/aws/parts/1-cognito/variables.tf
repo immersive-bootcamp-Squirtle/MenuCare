@@ -11,4 +11,5 @@ locals {
 # definition of cognito user pool
 locals {
   alias_attributes = ["preferred_username", "email"]
+  explicit_auth_flows = ["USER_PASSWORD_AUTH"]
 }
