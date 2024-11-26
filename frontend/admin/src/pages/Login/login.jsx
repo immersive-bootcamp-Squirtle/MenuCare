@@ -1,14 +1,45 @@
 import styled from "styled-components";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "/vite.svg"; // ロゴのパス
 import backgroundImage from "../../assets/background.jpg"; // 背景画像
 import TextField from '@mui/material/TextField';
+import {signUp, signIn} from "../../modules/authService";
 
 function Login() {
+  // React上の画面遷移
   const navigate = useNavigate();
 
-  const handleStartOrder = () => {
-    navigate("/menu");
+  // ユーザ情報を保持するstateを定義
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSignIn = async (e) => {
+    // ボタン押下時のreloadを抑止
+    e.preventDefault();
+    try {
+      // signInを実行し、session storageにtokenを保持
+      const session = await signIn(email, password);
+      console.log(email)
+      console.log(password)
+      console.log("Sign in successful", session);
+      if (session && typeof session.AccessToken !== "undefined") {
+        // 以下の1行は不要ではないか
+        sessionStorage.setItem("accessToken", session.AccessToken);
+        // sessionStorageにaccessTokenがある場合、/admin/homeへ画面遷移する
+        if (sessionStorage.getItem("accessToken")) {  
+          navigate("/admin/home")
+          // window.location.href = "/admin/home";
+        } else {
+          console.error("Session token was not set properly.");
+        }
+      } else {
+        console.error("SignIn session or AccessToken is undefined.");
+      }
+    } catch (error) {
+      alert(`Sign in failed: ${error}`);
+    }
+
   };
 
   return (
@@ -24,6 +55,8 @@ function Login() {
             label="Email"
             type="email"
             placeholder="exmample@gmail.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
         />
         <InputFiled
             required
@@ -31,8 +64,10 @@ function Login() {
             label="Password"
             type="password"
             placeholder="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
         />
-        <Button onClick={handleStartOrder}>LOGIN</Button>
+        <Button onClick={handleSignIn}>LOGIN</Button>
       </LoginForm>
      <EmptyDiv/>
     </Frame>
