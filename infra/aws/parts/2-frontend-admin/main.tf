@@ -29,7 +29,7 @@ data "aws_acm_certificate" "acm_for_cloudfront" {
 ################# OACの作成 #####################
 resource "aws_cloudfront_origin_access_control" "oai_for_react_bucket" {
   # OAC名
-  name                              = "OAC-${local.system}-S3"
+  name                              = "OAC-${local.system}-ADMIN-S3"
   # 説明
   description                       = "OAC for S3."
   # OACタイプ
