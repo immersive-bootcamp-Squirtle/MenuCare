@@ -9,7 +9,7 @@ const healthCheckRoutes = require('./src/routes/healthCheckRoutes')
 //ミドルウェア
 app.use(express.json());
 app.use(cors({
-    origin: "https://www.menu-care.com",
+    origin: ["https://www.menu-care.com", "https://admin.menu-care.com"],
     methods: "GET",
     allowedHeaders: "Content-Type,Authorization"
 }))
