@@ -9,7 +9,7 @@ import Login from "./pages/Login/login";
 
 const router = createBrowserRouter([
   {
-    path: "/admin",
+    path: "/login",
     element: <Login />,
   },
   {
