@@ -23,6 +23,9 @@ jobs:
 
       - name: check directory
         run: pwd
+
+      - name: get cognito-config
+        run: aws secretsmanager get-secret-value --secret-id MENUCARE-COGNITO-CONFIG
         
       - name: Install dependencies
         run: npm install
