@@ -6,6 +6,8 @@ import "./index.css";
 import Home from "./pages/Home/home";
 import Register from "./pages/Register/register";
 import Login from "./pages/Login/login";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
 
 const router = createBrowserRouter([
   {
@@ -26,10 +28,26 @@ const router = createBrowserRouter([
   },
 ]);
 
+const theme = createTheme({
+  palette: {
+    background: {
+      default: "#f9f7f2", // 背景色を指定
+    },
+  },
+  typography: {
+    fontFamily: ['"Noto Sans JP"', '"Open Sans"', "Arial", "sans-serif"].join(
+      ","
+    ),
+  },
+});
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <RecoilRoot>
-      <RouterProvider router={router} />
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </RecoilRoot>
   </StrictMode>
 );
