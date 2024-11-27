@@ -4,8 +4,14 @@ import logo from "../../../public/logo.svg"; // ロゴのパス
 import styled from "styled-components";
 import Stack from "@mui/material/Stack";
 import AccountCircleSharpIcon from "@mui/icons-material/AccountCircleSharp";
+import { useNavigate } from "react-router-dom";
 
 function NavBar() {
+  // ロゴクリックでホーム画面に遷移
+  const navigate = useNavigate();
+  const handleGoBackHome = () => {
+    navigate("/admin/home");
+  };
   return (
     <>
       <AppBar
@@ -29,7 +35,25 @@ function NavBar() {
             paddingRight: "clamp(0.25rem, 0.036rem + 1.07vw, 1rem)",
           }}
         >
-          <Logo src={logo} alt="MenuCare Logo" />
+          <Logo
+            src={logo}
+            alt="MenuCare Logo"
+            sx={{
+              //   position: "fixed",
+              //   bottom: "20px",
+              //   right: "20px",
+              //   width: "clamp(3.75rem, 3.214rem + 2.68vw, 5.625rem)",
+              //   height: "clamp(3.75rem, 3.214rem + 2.68vw, 5.625rem)",
+              //   backgroundColor: "#f2a24a",
+              //   borderRadius: "50%",
+              //   boxShadow: "5px 6px 6px rgba(0, 0, 0, 0.2)",
+              //   display: "flex",
+              //   alignItems: "center",
+              //   justifyContent: "center",
+              cursor: "pointer",
+            }}
+            onClick={handleGoBackHome}
+          />
           <Typography
             variant="h6"
             component="div"

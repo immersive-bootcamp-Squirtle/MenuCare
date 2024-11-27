@@ -1,7 +1,6 @@
 import React from "react";
 import MenuItem from "./MenuItem";
 import { Box, Typography } from "@mui/material";
-import NavBar from "../GlobalComponents/NavBar";
 
 const MenuList = ({ items, selectedAllergies }) => {
   // アレルギーに基づいてソート
@@ -21,14 +20,16 @@ const MenuList = ({ items, selectedAllergies }) => {
 
   return (
     <>
-      <NavBar />
       <Box
         sx={{
           padding: 0,
           margin: "0 auto",
           overflowY: "auto",
-          // backgroundColor: "#f9f7f2",
           minHeight: "100vh",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
         }}
       >
         <Typography
@@ -38,7 +39,8 @@ const MenuList = ({ items, selectedAllergies }) => {
             textAlign: "left",
             color: "#3c3a37",
             fontSize: "clamp(22px, 4vw, 28px)",
-            padding: "15px 10px",
+            padding:
+              "clamp(0.625rem, 0.511rem + 0.57vw, 0.938rem) clamp(0.625rem, 0.398rem + 1.14vw, 1.25rem)",
           }}
         >
           メニュー一覧
@@ -51,9 +53,11 @@ const MenuList = ({ items, selectedAllergies }) => {
               sm: "repeat(2, 1fr)", // タブレットでは2列
               md: "repeat(3, 1fr)", // PCでは3列
             },
-            gap: 1,
+            gap: "min(1rem, 3vw)",
             gridAutoRows: "minmax(auto, auto)",
-            padding: "10px 5px",
+            padding: "10px 50px",
+            width: "clamp(20rem, 100vw, 75rem)",
+            margin: "0 auto",
           }}
         >
           {sortedItems.map((item) => {

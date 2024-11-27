@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 import MenuList from "../../components/Menu/MenuList";
 import { useEffect, useState } from "react";
@@ -6,7 +7,9 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL;
 import AllergyFilterModal from "../../components/allergyFilterModal/allergyFilterModal";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Box, CssBaseline } from "@mui/material";
-import AddCircleSharpIcon from "@mui/icons-material/AddCircleSharp";
+import AddButton from "../../components/Button/AddButton";
+import { useNavigate } from "react-router-dom";
+import NavBar from "../../components/GlobalComponents/NavBar";
 
 function Home() {
   const [menuItems, setMenuItems] = useState([]);
@@ -44,6 +47,12 @@ function Home() {
     setSelectedAllergies(selectedAllergiesOnFilter);
     // modalを閉じる
     setModalOpen(false);
+  };
+
+  // プラスボタンクリックで新規登録画面に遷移
+  const navigate = useNavigate();
+  const handleStartRegister = () => {
+    navigate("/admin/register");
   };
 
   useEffect(() => {
@@ -169,6 +178,7 @@ function Home() {
 
   return (
     <Frame>
+      <NavBar />
       <MenuList items={menuItems} selectedAllergies={selectedAllergies} />
       {isModalOpen && (
         <AllergyFilterModal
@@ -180,30 +190,7 @@ function Home() {
           onClick={handleConfirmAllergy}
         />
       )}
-      <Box
-        sx={{
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          zIndex: 1000,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "clamp(3.75rem, 3.214rem + 2.68vw, 5.625rem)",
-          height: "clamp(3.75rem, 3.214rem + 2.68vw, 5.625rem)",
-          borderRadius: "50%",
-          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
-        }}
-      >
-        <AddCircleSharpIcon
-          alt="Account Icon"
-          sx={{
-            color: "#f2a24a",
-            width: "100%",
-            height: "100%",
-          }}
-        />
-      </Box>
+      <AddButton onClick={handleStartRegister}></AddButton>
     </Frame>
   );
 }
