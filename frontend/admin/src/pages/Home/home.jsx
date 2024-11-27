@@ -60,16 +60,16 @@ function Home() {
       const fetchMenuItems = async () => {
         try {
           // local実行の際はこちら
-          // const res = await axios.get(`${baseUrl}/restaurants/1/menus`);
-          // setMenuItems(res.data);
+          const res = await axios.get(`${baseUrl}/restaurants/1/menus`);
+          setMenuItems(res.data);
 
           // lambda上での実行の際はこちら
-          const res = await axios.get(`https://api.menu-care.com/api/restaurants/1/menus`, {
-            headers: {
-              Authorization: sessionStorage.getItem("idToken"),
-            }
-          });
-          setMenuItems(res.data);
+          // const res = await axios.get(`https://api.menu-care.com/api/restaurants/1/menus`, {
+          //   headers: {
+          //     Authorization: sessionStorage.getItem("idToken"),
+          //   }
+          // });
+          // setMenuItems(res.data);
 
           // backendを繋げていない環境ではこちら
           // const testData = [
@@ -139,17 +139,17 @@ function Home() {
     const fetchAllergies = async () => {
       try {
         // local上での実行の際はこちら
-        // const res = await axios.get(`${baseUrl}/allergies`);
-        // console.log("alg:", res.data);
-        // setAllergies(res.data);
+        const res = await axios.get(`${baseUrl}/allergies`);
+        console.log("alg:", res.data);
+        setAllergies(res.data);
 
         // lambda上での実行の際はこちら
-        const res = await axios.get(`https://api.menu-care.com/api/allergies`, {
-          headers: {
-            Authorization: sessionStorage.getItem("idToken"),
-          }
-        });
-        setAllergies(res.data);
+        // const res = await axios.get(`https://api.menu-care.com/api/allergies`, {
+        //   headers: {
+        //     Authorization: sessionStorage.getItem("idToken"),
+        //   }
+        // });
+        // setAllergies(res.data);
 
         // backendを繋げていない環境ではこちら
         // const testAllergies = [

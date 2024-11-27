@@ -82,14 +82,14 @@ const AddMenuForm = () => {
       console.log("Request Body:", reqBody);
 
       // local実行時はこちら
-      // const res = await axios.post(`${baseUrl}/restaurants/1/menus`, reqBody);
+      const res = await axios.post(`${baseUrl}/restaurants/1/menus`, reqBody);
 
       // lambda実行時はこちら
-      const res = await axios.post(`https://api.menu-care.com/api/restaurants/1/menus`, reqBody, {
-        headers: {
-          Authorization: sessionStorage.getItem("idToken"),
-        }
-      });
+      // const res = await axios.post(`https://api.menu-care.com/api/restaurants/1/menus`, reqBody, {
+      //   headers: {
+      //     Authorization: sessionStorage.getItem("idToken"),
+      //   }
+      // });
 
       console.log("Response:", res.data);
       alert("メニューが登録されました");
@@ -108,17 +108,17 @@ const AddMenuForm = () => {
     const fetchAllergies = async () => {
       try {
         // local上での実行の際はこちら
-        // const res = await axios.get(`${baseUrl}/allergies`);
-        // console.log("alg:", res.data);
-        // setAllergies(res.data);
+        const res = await axios.get(`${baseUrl}/allergies`);
+        console.log("alg:", res.data);
+        setAllergies(res.data);
 
         // lambda上での実行の際はこちら
-        const res = await axios.get(`https://api.menu-care.com/api/allergies`, {
-          headers: {
-            Authorization: sessionStorage.getItem("idToken"),
-          }
-        });
-        setAllergies(res.data);
+        // const res = await axios.get(`https://api.menu-care.com/api/allergies`, {
+        //   headers: {
+        //     Authorization: sessionStorage.getItem("idToken"),
+        //   }
+        // });
+        // setAllergies(res.data);
 
         // backendを繋げていない環境ではこちら
         // const testAllergies = [
