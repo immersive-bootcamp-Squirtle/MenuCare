@@ -68,9 +68,7 @@ paths:
         type : "aws_proxy"
         uri: arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:222634373866:function:LMD-MENUCARE-API/invocations
         passthroughBehavior: "when_no_match"
-      security:
-        - cognitoAuth: [] 
-        
+
     options : 
       summary: CORS support
       description: |
@@ -157,11 +155,3 @@ paths:
               method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
               method.response.header.Access-Control-Allow-Methods: "'GET, OPTOINS'"
               method.response.header.Access-Control-Allow-Origin: "'https://www.menu-care.com, https://admin.menu-care.com'"
-
-securityDefinitions:
-  cognitoAuth:
-    type: 'apiKey'
-    x-amazon-apigateway-authtype: 'cognito_user_pools'  # Cognito Authorizerを指定
-    x-amazon-apigateway-authorizer:
-      authorizerUri: arn:aws:apigateway:us-east-1:authorizer:2czhge  # AuthorizerのARNを指定
-      identitySource: 'method.request.header.Authorization'  # Authorizationヘッダーを使う
