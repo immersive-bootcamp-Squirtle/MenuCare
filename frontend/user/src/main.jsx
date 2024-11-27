@@ -6,6 +6,7 @@ import "./index.css";
 import App from "./App.jsx";
 import Welcome from "./pages/Welcome/welcome.jsx";
 import Menu from "./pages/Menu/menu.jsx";
+import Cart from "./pages/Cart/cart.jsx";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "/menu",
     element: <Menu />,
+  },
+  {
+    path: "/cart", // Cartのルートを追加
+    element: <Cart />,
   },
   {
     path: "not_available",

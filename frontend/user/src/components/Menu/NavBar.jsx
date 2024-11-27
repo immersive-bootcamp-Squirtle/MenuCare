@@ -7,8 +7,11 @@ import Typography from "@mui/material/Typography";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { useNavigate } from "react-router-dom"; 
 
-const NavBar = ({ openModal }) => {
+const NavBar = ({ openModal, cartItemCount }) => {
+  const navigate = useNavigate();
   // openModalを受け取る
   const categoryButtons = [
     { id: 1, label: "すべて" },
@@ -98,7 +101,7 @@ const NavBar = ({ openModal }) => {
             backgroundColor: "#f2ede5",
           }}
         />
-        <Toolbar sx={{ justifyContent: "center" }}>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
           <Typography
             variant="h6"
             component="div"
@@ -111,8 +114,12 @@ const NavBar = ({ openModal }) => {
           >
             メニュー一覧
           </Typography>
+          {/* カートアイコン */}
+        <CartButton onClick={() => navigate("/cart")}> 
+          <ShoppingCartIcon />
+          {cartItemCount > 0 && <CartCount>{cartItemCount}</CartCount>}
+        </CartButton>
         </Toolbar>
-
         <Container>
           <Stack spacing={2} direction="row">
             {categoryButtons.map((button) => (
@@ -150,5 +157,27 @@ const NavBar = ({ openModal }) => {
     </>
   );
 };
+
+const CartButton = styled.button`
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 28px;
+  padding: 8px;
+`;
+
+const CartCount = styled.span`
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  border-radius: 50%;
+  padding: 6px 8px;
+`;
 
 export default NavBar;

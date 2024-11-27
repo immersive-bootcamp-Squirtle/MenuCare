@@ -10,11 +10,13 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-const MenuItem = ({ item }) => {
+
+const MenuItem = ({ item, onClick }) => { 
   const price = Math.trunc(item.price);
   const [expanded, setExpanded] = useState(false);
 
-  const handleExpandClick = () => {
+  const handleExpandClick = (event) => {
+    event.stopPropagation(); // アイテムのクリックイベントを区別
     setExpanded(!expanded);
   };
 
@@ -22,6 +24,7 @@ const MenuItem = ({ item }) => {
     <>
       <Box sx={{ position: "relative", marginBottom: expanded ? 4 : 2 }}>
         <Card
+          onClick={() => onClick(item)} 
           sx={{
             maxWidth: 300,
             borderRadius: 3,
