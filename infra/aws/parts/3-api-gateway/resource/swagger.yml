@@ -53,6 +53,12 @@ paths:
               method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
               method.response.header.Access-Control-Allow-Methods: "'GET, OPTOINS'"
               method.response.header.Access-Control-Allow-Origin: "'https://www.menu-care.com, https://admin.menu-care.com'"
+      x-amazon-apigateway-authtype: "cognito_user_pools"
+      x-amazon-apigateway-authorizer:
+        providerARNs:
+          - "arn:aws:cognito-idp:us-east-1:222634373866:userpool/us-east-1_zf3pB3CCo"
+          type: "cognito_user_pools"
+        
 
 
       
