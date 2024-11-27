@@ -207,6 +207,6 @@ data "aws_cognito_user_pools" "menucare" {
 resource "aws_api_gateway_authorizer" "cognito" {
   name          = "MENUCARE-COGNITO-AUTHORIER"
   type          = "COGNITO_USER_POOLS"
-  rest_api_id   = data.aws_api_gateway_rest_api.api_gateway.id
+  rest_api_id   = resource.aws_api_gateway_rest_api.api_gateway.id
   provider_arns = data.aws_cognito_user_pools.menucare.arns
 }
