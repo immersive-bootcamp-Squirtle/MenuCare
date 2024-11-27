@@ -53,7 +53,7 @@ module.exports = {
           restaurant_id: menuData.restaurant_id,
           menu_name: menuData.menu_name,
           price: menuData.price,
-          image_url: menuData.image_url,
+          image_url: menuData.imagePath,
           status: menuData.status,
           created_at: knex.fn.now(),
           updated_at: knex.fn.now(),
@@ -69,12 +69,15 @@ module.exports = {
 
   // アレルギー情報を登録する関数
   async addAllergyInfo(menu_id, allergies) {
+    console.log("menu_id in add model:",menu_id)
+    console.log("allergies in add model:",allergies)
     if (Array.isArray(allergies) && allergies.length > 0) {
       const allergyData = allergies.map((allergy_id) => ({
         menu_id: parseInt(menu_id, 10),
         allergy_id: parseInt(allergy_id, 10),
       }));
 
+      console.log("allergyData in add model:",allergyData)
       try {
         await knex("allergy_menu").insert(allergyData);
         // console.log("Allergy data successfully inserted.");
