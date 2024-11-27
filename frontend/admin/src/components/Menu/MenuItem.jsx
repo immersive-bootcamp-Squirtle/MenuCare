@@ -9,8 +9,6 @@ import {
   Collapse,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import sampleImage from "../../assets/egg.png";
-import Stack from "@mui/material/Stack";
 
 const MenuItem = ({ item }) => {
   const price = Math.trunc(item.price);
@@ -25,7 +23,7 @@ const MenuItem = ({ item }) => {
       <Box sx={{ position: "relative", marginBottom: expanded ? 4 : 2 }}>
         <Card
           sx={{
-            maxWidth: 300,
+            maxWidth: 286,
             borderRadius: 3,
             overflow: "hidden",
             textAlign: "left",
@@ -35,7 +33,7 @@ const MenuItem = ({ item }) => {
           <CardMedia
             component="img"
             alt={item.name}
-            height="140"
+            height="193"
             image={item.image_url}
             sx={{
               objectFit: "cover",
@@ -47,7 +45,7 @@ const MenuItem = ({ item }) => {
               fontWeight={700}
               sx={{
                 color: "#3c3a37",
-                fontSize: "clamp(18px, 4vw, 24px)",
+                fontSize: "clamp(16px, 4vw, 20px)",
               }}
             >
               {item.name}

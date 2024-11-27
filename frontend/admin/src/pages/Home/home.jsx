@@ -1,23 +1,22 @@
 import styled from "styled-components";
-import { useRecoilState } from "recoil";
-import { globalStateTest } from "../../globalState/globalStateTest";
 import MenuList from "../../components/Menu/MenuList";
-import NavBar from "../../components/Menu/NavBar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 import AllergyFilterModal from "../../components/allergyFilterModal/allergyFilterModal";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Box, CssBaseline } from "@mui/material";
+import AddCircleSharpIcon from "@mui/icons-material/AddCircleSharp";
 
-function Menu() {
-  // Global Stateの利用例です
-  const [test, setTest] = useRecoilState(globalStateTest);
+function Home() {
   const [menuItems, setMenuItems] = useState([]);
-  
+
   // Local Stateを定義
   const [allergies, setAllergies] = useState([]); // アレルギー情報を管理
   const [selectedAllergies, setSelectedAllergies] = useState([]); // 選択されたアレルギーを管理
-  const [selectedAllergiesOnFilter, setSelectedAllergiesOnFilter] = useState([]); // filter上で選択中のアレルギー情報を管理
+  const [selectedAllergiesOnFilter, setSelectedAllergiesOnFilter] = useState(
+    []
+  ); // filter上で選択中のアレルギー情報を管理
 
   // モーダルの開閉状態を管理
   const [isModalOpen, setModalOpen] = useState(false);
@@ -27,7 +26,7 @@ function Menu() {
     setModalOpen(false);
     // selectedAllergiesOnFilterをselectedAllergiesの値にリセットする ※ modalを開いた際の初期値を選択中のアレルギー情報にするため
     setSelectedAllergiesOnFilter(selectedAllergies);
-  }
+  };
 
   // アレルギーの選択状態を管理
   const handleToggleAllergy = (allergyName) => {
@@ -47,15 +46,6 @@ function Menu() {
     setModalOpen(false);
   };
 
-  // Menuページ全体のフォントを管理
-  const theme = createTheme({
-    typography: {
-      fontFamily: ['"Noto Sans JP"', '"Open Sans"', "Arial", "sans-serif"].join(
-        ","
-      ),
-    },
-  });
-
   useEffect(() => {
     try {
       const fetchMenuItems = async () => {
@@ -68,7 +58,50 @@ function Menu() {
         // setMenuItems(res.data);
 
         // backendを繋げていない環境ではこちら
-        const testData = [{"menu_id":1,"name":"目玉焼き","price":"1000.00","image_url":"src/assets/egg.png","allergies":["卵"]},{"menu_id":2,"name":"ガトーショコラ","price":"1500.00","image_url":"src/assets/cake.png","allergies":["卵","小麦","乳（牛乳）"]},{"menu_id":3,"name":"生ハムのサラダ","price":"800.00","image_url":"src/assets/salad.png","allergies":["卵","乳（牛乳）"]},{"menu_id":4,"name":"鶏肉のごま味噌焼き","price":"800.00","image_url":"src/assets/chicken.png","allergies":["ごま","鶏肉"]},{"menu_id":5,"name":"トマトパスタ","price":"1000.00","image_url":"src/assets/pasta.png","allergies":["小麦"]},{"menu_id":6,"name":"エビチリ","price":"700.00","image_url":"src/assets/ebichiri.png","allergies":["えび"]}];
+        const testData = [
+          {
+            menu_id: 1,
+            name: "目玉焼き",
+            price: "1000.00",
+            image_url: "../../../public/assets/egg.png",
+            allergies: ["卵"],
+          },
+          {
+            menu_id: 2,
+            name: "ガトーショコラ",
+            price: "1500.00",
+            image_url: "../../../public/assets/cake.png",
+            allergies: ["卵", "小麦", "乳（牛乳）"],
+          },
+          {
+            menu_id: 3,
+            name: "生ハムのサラダ",
+            price: "800.00",
+            image_url: "../../../public/assets/salad.png",
+            allergies: ["卵", "乳（牛乳）"],
+          },
+          {
+            menu_id: 4,
+            name: "鶏肉のごま味噌焼き",
+            price: "800.00",
+            image_url: "../../../public/assets/chicken.png",
+            allergies: ["ごま", "鶏肉"],
+          },
+          {
+            menu_id: 5,
+            name: "トマトパスタ",
+            price: "1000.00",
+            image_url: "../../../public/assets/pasta.png",
+            allergies: ["小麦"],
+          },
+          {
+            menu_id: 6,
+            name: "エビチリ",
+            price: "700.00",
+            image_url: "../../../public/assets/ebichiri.png",
+            allergies: ["えび"],
+          },
+        ];
         setMenuItems(testData);
       };
       fetchMenuItems();
@@ -84,9 +117,9 @@ function Menu() {
     const fetchAllergies = async () => {
       try {
         // local上での実行の際はこちら
-        const res = await axios.get(`${baseUrl}/allergies`);
-        console.log("alg:",res.data);
-        setAllergies(res.data);
+        // const res = await axios.get(`${baseUrl}/allergies`);
+        // console.log("alg:", res.data);
+        // setAllergies(res.data);
 
         // lambda上での実行の際はこちら
         // const res = await axios.get(`https://api.menu-care.com/api/allergies`);
@@ -136,20 +169,41 @@ function Menu() {
 
   return (
     <Frame>
-      <ThemeProvider theme={theme}>
-        <NavBar openModal={openModal} /> {/* NavBar にモーダル開閉状態を渡す */}
-        <MenuList items={menuItems} selectedAllergies={selectedAllergies}/>
-        {isModalOpen && (
-          <AllergyFilterModal
-            onClose={closeModal}
-            allergies={allergies}
-            selectedAllergies={selectedAllergies}
-            selectedAllergiesOnFilter={selectedAllergiesOnFilter}
-            onToggle={handleToggleAllergy} // onToggleとして渡す
-            onClick={handleConfirmAllergy}
-          />
-        )}
-      </ThemeProvider>
+      <MenuList items={menuItems} selectedAllergies={selectedAllergies} />
+      {isModalOpen && (
+        <AllergyFilterModal
+          onClose={closeModal}
+          allergies={allergies}
+          selectedAllergies={selectedAllergies}
+          selectedAllergiesOnFilter={selectedAllergiesOnFilter}
+          onToggle={handleToggleAllergy} // onToggleとして渡す
+          onClick={handleConfirmAllergy}
+        />
+      )}
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: "20px",
+          right: "20px",
+          zIndex: 1000,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "clamp(3.75rem, 3.214rem + 2.68vw, 5.625rem)",
+          height: "clamp(3.75rem, 3.214rem + 2.68vw, 5.625rem)",
+          borderRadius: "50%",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
+        }}
+      >
+        <AddCircleSharpIcon
+          alt="Account Icon"
+          sx={{
+            color: "#f2a24a",
+            width: "100%",
+            height: "100%",
+          }}
+        />
+      </Box>
     </Frame>
   );
 }
@@ -159,4 +213,4 @@ const Frame = styled.div`
   overflow: auto;
 `;
 
-export default Menu;
+export default Home;
