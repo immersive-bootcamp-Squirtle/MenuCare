@@ -23,6 +23,13 @@ jobs:
 
       - name: check directory
         run: pwd
+
+      - name: get cognito-config
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set default.region us-east-1
+          aws ssm get-parameter --name MENUCARE-COGNITO-CONFIG | jq -r .Parameter.Value > cognito_config.json
         
       - name: Install dependencies
         run: npm install
