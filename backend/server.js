@@ -11,8 +11,8 @@ const orderRoutes = require('./src/routes/orderRoutes'); // orders ルート
 //ミドルウェア
 app.use(express.json());
 app.use(cors({
-    origin:  ["http://localhost:5173", "https://www.menu-care.com"],
-    methods: ["GET", "POST"],
+    origin:  ["https://admin.menu-care.com", "https://www.menu-care.com"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: "Content-Type,Authorization"
 }))
 
