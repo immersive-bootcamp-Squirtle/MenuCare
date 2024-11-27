@@ -7,7 +7,6 @@ exports.seed = async function(knex) {
   await knex('menus').del()
   await knex('menus').insert([
     {
-      menu_id: 1, 
       restaurant_id: 1,
       menu_name: '目玉焼き',
       price: 1000,
@@ -17,7 +16,6 @@ exports.seed = async function(knex) {
       status: 'active',
     },
     {
-      menu_id: 2, 
       restaurant_id: 1,
       menu_name: 'ガトーショコラ',
       price: 1500,
@@ -27,7 +25,6 @@ exports.seed = async function(knex) {
       status: 'active',
     },
     {
-      menu_id: 3, 
       restaurant_id: 1,
       menu_name: '生ハムのサラダ',
       price: 800,
@@ -37,7 +34,6 @@ exports.seed = async function(knex) {
       status: 'active',
     },
     {
-      menu_id: 4, 
       restaurant_id: 1,
       menu_name: '鶏肉のごま味噌焼き',
       price: 800,
@@ -47,7 +43,6 @@ exports.seed = async function(knex) {
       status: 'active',
     },
     {
-      menu_id: 5, 
       restaurant_id: 1,
       menu_name: 'トマトパスタ',
       price: 1000,
@@ -57,7 +52,6 @@ exports.seed = async function(knex) {
       status: 'active',
     },
     {
-      menu_id: 6, 
       restaurant_id: 1,
       menu_name: 'エビチリ',
       price: 700,
