@@ -66,7 +66,7 @@ function Home() {
           // lambda上での実行の際はこちら
           const res = await axios.get(`https://api.menu-care.com/api/restaurants/1/menus`, {
             headers: {
-              Authorization: sessionStorage.getItem("idToken", AuthenticationResult.IdToken || ""),
+              Authorization: sessionStorage.getItem("idToken"),
             }
           });
           setMenuItems(res.data);
@@ -146,7 +146,7 @@ function Home() {
         // lambda上での実行の際はこちら
         const res = await axios.get(`https://api.menu-care.com/api/allergies`, {
           headers: {
-            Authorization: sessionStorage.getItem("idToken", AuthenticationResult.IdToken || ""),
+            Authorization: sessionStorage.getItem("idToken"),
           }
         });
         setAllergies(res.data);
