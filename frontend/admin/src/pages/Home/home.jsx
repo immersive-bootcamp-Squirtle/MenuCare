@@ -167,6 +167,9 @@ function Home() {
         ];
         setAllergies(testAllergies);
       } catch (err) {
+        if (err.response.status === 401) {
+          navigate("/login")
+        }
         console.error("Error fetching allergies:", err);
       }
     };
