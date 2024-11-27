@@ -8,7 +8,8 @@
 				"s3:*",
 				"sqs:*",
 				"elasticache:*",
-				"secretsmanager:*"
+				"secretsmanager:*",
+				"kms:*"
 			],
 			"Resource": [
 				"arn:aws:sqs:*:${account_id}:*",
@@ -16,7 +17,8 @@
 				"arn:aws:s3:::*",
 				"arn:aws:rds:*:${account_id}:db:*",
 				"arn:aws:rds:*:${account_id}:cluster:*",
-				"arn:aws:secretsmanager:*:${account_id}:*"
+				"arn:aws:secretsmanager:*:${account_id}:*",
+				"arn:aws:kms:us-east-1:${account_id}:key/*"
 			]
 		}
 	]
