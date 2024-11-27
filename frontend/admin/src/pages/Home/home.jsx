@@ -115,6 +115,10 @@ function Home() {
       };
       fetchMenuItems();
     } catch (err) {
+      if (err.response.status === 401) {
+        // 認証エラーが起きたらログイン画面へ遷移
+        navigate("/login")
+      };
       console.log("error");
     }
   }, []);
@@ -168,6 +172,7 @@ function Home() {
         setAllergies(testAllergies);
       } catch (err) {
         if (err.response.status === 401) {
+          // 認証エラーが起きたらログイン画面へ遷移
           navigate("/login")
         }
         console.error("Error fetching allergies:", err);
