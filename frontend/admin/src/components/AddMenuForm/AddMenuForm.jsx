@@ -81,7 +81,11 @@ const AddMenuForm = () => {
 
       console.log("Request Body:", reqBody);
 
+      // local実行時はこちら
       const res = await axios.post(`${baseUrl}/restaurants/1/menus`, reqBody);
+
+      // lambda実行時はこちら
+      // const res = await axios.post(`https://api.menu-care.com/api/restaurants/1/menus`, reqBody);
 
       console.log("Response:", res.data);
       alert("メニューが登録されました");
