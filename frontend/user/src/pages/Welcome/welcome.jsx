@@ -2,8 +2,33 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import logo from "/vite.svg"; // ロゴのパス
 import backgroundImage from "../../assets/background.jpg"; // 背景画像
+import {signUp, signIn} from "../../modules/authService";
+import { useLocation } from "react-router-dom";
 
 function Welcome() {
+
+  // 店舗向けのtokenを取得
+  const getToken = async (id) => {
+    try {
+      // signInを実行し、session storageにtokenを保持
+      const session = await signIn(id, id);
+      if (session && typeof session.AccessToken !== "undefined") {
+        // 以下の1行は不要ではないか
+        sessionStorage.setItem("accessToken", session.AccessToken);
+      } else {
+        console.error("SignIn session or AccessToken is undefined.");
+      }
+    } catch (error) {
+      alert(`Sign in failed: ${error}`);
+    }
+  }
+
+  const search = useLocation().search;
+  const query = new URLSearchParams(search);
+  const id = query.get('id')
+
+  getToken(id)
+  
   const navigate = useNavigate();
 
   const handleStartOrder = () => {

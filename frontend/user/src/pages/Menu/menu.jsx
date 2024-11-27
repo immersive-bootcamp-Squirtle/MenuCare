@@ -135,7 +135,11 @@ function Menu() {
         // setMenuItems(res.data);
 
         // lambda上での実行の際はこちら
-        const res = await axios.get(`https://api.menu-care.com/api/restaurants/1/menus`);
+        const res = await axios.get(`https://api.menu-care.com/api/restaurants/1/menus`, {
+          headers: {
+            Authorization: sessionStorage.getItem("idToken"),
+          }
+        });
         setMenuItems(res.data);
 
         // backendを繋げていない環境ではこちら
@@ -160,7 +164,11 @@ function Menu() {
         // setAllergies(res.data);
 
         // lambda上での実行の際はこちら
-        const res = await axios.get(`https://api.menu-care.com/api/allergies`);
+        const res = await axios.get(`https://api.menu-care.com/api/allergies`, {
+          headers: {
+            Authorization: sessionStorage.getItem("idToken"),
+          }
+        });
         setAllergies(res.data);
 
         // backendを繋げていない環境ではこちら
