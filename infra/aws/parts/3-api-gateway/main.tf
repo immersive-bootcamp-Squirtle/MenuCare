@@ -198,3 +198,15 @@ resource "aws_route53_record" "api_gateway_alias" {
     zone_id                = aws_api_gateway_domain_name.my_domain.regional_zone_id
   }
 }
+
+################# Cognito Authorizerのセット ################
+data "aws_cognito_user_pools" "menucare" {
+  name = local.cognito_user_pool_name
+}
+
+resource "aws_api_gateway_authorizer" "cognito" {
+  name          = "MENUCARE-COGNITO-AUTHORIER"
+  type          = "COGNITO_USER_POOLS"
+  rest_api_id   = aws_api_gateway_rest_api.api_gateway.id
+  provider_arns = data.aws_cognito_user_pools.menucare.arns
+}
