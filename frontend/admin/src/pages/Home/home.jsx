@@ -115,8 +115,12 @@ function Home() {
       };
       fetchMenuItems();
     } catch (err) {
+      console.log("api error!!!")
+      console.log(err)
       if (err.response.status === 401) {
         // 認証エラーが起きたらログイン画面へ遷移
+        console.log("api error!!!")
+        console.log(err)
         navigate("/login")
       };
       console.log("error");
