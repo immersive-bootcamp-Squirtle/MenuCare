@@ -91,6 +91,9 @@ const AddMenuForm = () => {
       alert("メニューが登録されました");
       navigate("/admin/home");
     } catch (err) {
+      if (!err.response) {
+        navigate("/login")
+      }
       console.error("Error submitting menu:", err);
       alert("エラーが発生しました。");
     }
@@ -142,6 +145,9 @@ const AddMenuForm = () => {
         // ];
         // setAllergies(testAllergies);
       } catch (err) {
+        if (!err.response) {
+          navigate("/login")
+        }
         console.error("Error fetching allergies:", err);
       }
     };
