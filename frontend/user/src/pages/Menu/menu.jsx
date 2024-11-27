@@ -8,27 +8,93 @@ import axios from "axios";
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 import AllergyFilterModal from "../../components/allergyFilterModal/allergyFilterModal";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import ProductModal from "../../components/ProductModal/ProductModal";
+import { useLocation } from "react-router-dom";
+
 
 function Menu() {
   // Global Stateの利用例です
   const [test, setTest] = useRecoilState(globalStateTest);
-  const [menuItems, setMenuItems] = useState([]);
 
-  // Local Stateを定義
+// Menu Item
+  const [menuItems, setMenuItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]); // カートの状態を管理
+  const [selectedProduct, setSelectedProduct] = useState(null); // 選択された商品
+  const [isProductModalOpen, setProductModalOpen] = useState(false);
+  
+// Allergy
   const [allergies, setAllergies] = useState([]); // アレルギー情報を管理
   const [selectedAllergies, setSelectedAllergies] = useState([]); // 選択されたアレルギーを管理
-  const [selectedAllergiesOnFilter, setSelectedAllergiesOnFilter] = useState(
-    []
-  ); // filter上で選択中のアレルギー情報を管理
-
-  // モーダルの開閉状態を管理
+  const [selectedAllergiesOnFilter, setSelectedAllergiesOnFilter] = useState([]); // filter上で選択中のアレルギー情報を管理
   const [isModalOpen, setModalOpen] = useState(false);
+
+//popup
+  const location = useLocation(); // `navigate` からのメッセージ受け取り
+  const [popupMessage, setPopupMessage] = useState(""); // ポップアップメッセージを管理
+
+  //ポップアップの表示処理
+  useEffect(() => {
+    if (location.state?.message) {
+      setPopupMessage(location.state.message);
+
+      // 3秒後にポップアップを非表示
+      const timer = setTimeout(() => setPopupMessage(""), 3000);
+      return () => clearTimeout(timer); // クリーンアップ
+    }
+  }, [location.state]);
+
+
+  // カート情報のローカルストレージ保存と取得
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  useEffect(() => {
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) {
+      try {
+        setCartItems(JSON.parse(savedCart));
+      } catch (error) {
+        console.error("Failed to parse cart data:", error);
+        setCartItems([]); 
+      }
+    }
+  }, []);
+
+  // アレルギーモーダルの開閉状態を管理
   const openModal = () => setModalOpen(true);
   const closeModal = () => {
     // modalを閉じる
     setModalOpen(false);
     // selectedAllergiesOnFilterをselectedAllergiesの値にリセットする ※ modalを開いた際の初期値を選択中のアレルギー情報にするため
     setSelectedAllergiesOnFilter(selectedAllergies);
+  }
+
+  // 商品モーダルの開閉状態を管理
+  const openProductModal = (product) => {
+    setSelectedProduct(product);
+    setProductModalOpen(true);
+  };
+
+  const closeProductModal = () => {
+    setSelectedProduct(null);
+    setProductModalOpen(false);
+  };
+
+  // カートに商品追加
+  const addToCart = (product, quantity) => {
+    setCartItems((prev) => {
+      const existingItem = prev.find((item) => item.menu_id === product.menu_id);
+      if (existingItem) {
+        return prev.map((item) =>
+          item.menu_id === product.menu_id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        );
+      }
+      return [...prev, { ...product, quantity }];
+    });
+    closeProductModal();
   };
 
   // アレルギーの選択状態を管理
@@ -58,20 +124,23 @@ function Menu() {
     },
   });
 
+
+
+
   useEffect(() => {
     try {
       const fetchMenuItems = async () => {
         // local実行の際はこちら
-        const res = await axios.get(`${baseUrl}/restaurants/1/menus`);
-        setMenuItems(res.data);
+        // const res = await axios.get(`${baseUrl}/restaurants/1/menus`);
+        // setMenuItems(res.data);
 
         // lambda上での実行の際はこちら
         // const res = await axios.get(`https://api.menu-care.com/api/restaurants/1/menus`);
         // setMenuItems(res.data);
 
         // backendを繋げていない環境ではこちら
-        // const testData = [{"menu_id":1,"name":"目玉焼き","price":"1000.00","image_url":"src/assets/egg.png","allergies":["卵"]},{"menu_id":2,"name":"ガトーショコラ","price":"1500.00","image_url":"src/assets/cake.png","allergies":["卵","小麦","乳（牛乳）"]},{"menu_id":3,"name":"生ハムのサラダ","price":"800.00","image_url":"src/assets/salad.png","allergies":["卵","乳（牛乳）"]},{"menu_id":4,"name":"鶏肉のごま味噌焼き","price":"800.00","image_url":"src/assets/chicken.png","allergies":["ごま","鶏肉"]},{"menu_id":5,"name":"トマトパスタ","price":"1000.00","image_url":"src/assets/pasta.png","allergies":["小麦"]},{"menu_id":6,"name":"エビチリ","price":"700.00","image_url":"src/assets/ebichiri.png","allergies":["えび"]}];
-        // setMenuItems(testData);
+        const testData = [{"menu_id":1,"name":"目玉焼き","price":"1000.00","image_url":"src/assets/egg.png","allergies":["卵"]},{"menu_id":2,"name":"ガトーショコラ","price":"1500.00","image_url":"src/assets/cake.png","allergies":["卵","小麦","乳（牛乳）"]},{"menu_id":3,"name":"生ハムのサラダ","price":"800.00","image_url":"src/assets/salad.png","allergies":["卵","乳（牛乳）"]},{"menu_id":4,"name":"鶏肉のごま味噌焼き","price":"800.00","image_url":"src/assets/chicken.png","allergies":["ごま","鶏肉"]},{"menu_id":5,"name":"トマトパスタ","price":"1000.00","image_url":"src/assets/pasta.png","allergies":["小麦"]},{"menu_id":6,"name":"エビチリ","price":"700.00","image_url":"src/assets/ebichiri.png","allergies":["えび"]}];
+        setMenuItems(testData);
       };
       fetchMenuItems();
     } catch (err) {
@@ -87,7 +156,7 @@ function Menu() {
       try {
         // local上での実行の際はこちら
         const res = await axios.get(`${baseUrl}/allergies`);
-        console.log("alg:", res.data);
+        console.log("alg:",res.data);
         setAllergies(res.data);
 
         // lambda上での実行の際はこちら
@@ -138,20 +207,45 @@ function Menu() {
 
   return (
     <Frame>
-      <ThemeProvider theme={theme}>
-        <NavBar openModal={openModal} /> {/* NavBar にモーダル開閉状態を渡す */}
-        <MenuList items={menuItems} selectedAllergies={selectedAllergies} />
-        {isModalOpen && (
-          <AllergyFilterModal
-            onClose={closeModal}
-            allergies={allergies}
-            selectedAllergies={selectedAllergies}
-            selectedAllergiesOnFilter={selectedAllergiesOnFilter}
-            onToggle={handleToggleAllergy} // onToggleとして渡す
-            onClick={handleConfirmAllergy}
-          />
-        )}
-      </ThemeProvider>
+      <NavBar
+        cartItemCount={cartItems.reduce((total, item) => total + item.quantity, 0)} // カート内の数量合計
+        openModal={openModal}
+      />
+      {/* ポップアップメッセージ */}
+      {popupMessage && <Popup>{popupMessage}</Popup>}
+
+      <MenuList
+        items={menuItems}
+        onItemClick={openProductModal}
+        selectedAllergies={selectedAllergies}
+      />
+      {isModalOpen && (
+        <AllergyFilterModal
+          onClose={closeModal}
+          allergies={allergies}
+          selectedAllergies={selectedAllergies}
+          selectedAllergiesOnFilter={selectedAllergiesOnFilter}
+          onToggle={(allergy) => {
+            setSelectedAllergiesOnFilter((prev) =>
+              prev.includes(allergy)
+                ? prev.filter((a) => a !== allergy)
+                : [...prev, allergy]
+            );
+          }}
+          onClick={(e) => {
+            e.preventDefault();
+            setSelectedAllergies(selectedAllergiesOnFilter);
+            setModalOpen(false);
+          }}
+        />
+      )}
+      {isProductModalOpen && (
+        <ProductModal
+          product={selectedProduct}
+          onClose={closeProductModal}
+          onAddToCart={addToCart}
+        />
+      )}
     </Frame>
   );
 }
@@ -159,6 +253,23 @@ function Menu() {
 const Frame = styled.div`
   height: 100vh; // 全画面の高さを確保
   overflow: auto;
+`;
+
+const Popup = styled.div`
+  width: 250px;
+  height: 180;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Noto Sans JP", sans-serif;
+  background: linear-gradient(90deg, #f2994a, #f2c94c); 
+  color: #fff;
+  padding: 15px 30px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 20px;
+  z-index: 1000;
 `;
 
 export default Menu;
