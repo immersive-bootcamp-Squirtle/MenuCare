@@ -160,7 +160,7 @@ paths:
 
 securityDefinitions:
   cognitoAuth:
-    type: 'apiKey'
+    type: 'COGNITO_USER_POOLS'
     x-amazon-apigateway-authtype: 'cognito_user_pools'  # Cognito Authorizerを指定
     x-amazon-apigateway-authorizer:
       authorizerUri: arn:aws:apigateway:us-east-1:authorizer:5x1cnp  # AuthorizerのARNを指定
