@@ -81,7 +81,7 @@ locals {
       # description
       "description" = "Lambda Function for API",
       # handler
-      "handler" = "index.handler",
+      "handler" = "lambda.handler",
       # runtime
       "runtime" = "nodejs20.x",
       # メモリサイズ
@@ -123,7 +123,12 @@ locals {
       layers = [],
       # 環境変数
       environment = {
-        variables = {}
+        variables = {
+          DB_HOST = "dummy",
+          DB_NAME = "dummy",
+          DB_USER = "dummy",
+          DB_PASSWORD = "dummy"
+        }
       }
     }
   ]
