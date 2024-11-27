@@ -64,6 +64,8 @@ function Home() {
 
         // lambda上での実行の際はこちら
         const res = await axios.get(`https://api.menu-care.com/api/restaurants/1/menus`);
+        console.log("res!!!")
+        console.log(res)
         setMenuItems(res.data);
 
         // backendを繋げていない環境ではこちら
