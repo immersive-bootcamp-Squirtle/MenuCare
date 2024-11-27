@@ -67,6 +67,7 @@ const MenuItem = ({ item }) => {
               sx={{
                 color: "#756e68",
                 paddingLeft: "5px",
+                fontSize: "15px",
               }}
             >
               アレルギー情報
@@ -104,7 +105,7 @@ const MenuItem = ({ item }) => {
                 sx={{
                   color: "#3c3a37",
                   fontFamily: "'Noto Sans JP', sans-serif",
-                  fontSize: "18px",
+                  fontSize: "clamp(15px, 3vw, 18px)",
                 }}
               >
                 {item.allergies && item.allergies.length > 0
