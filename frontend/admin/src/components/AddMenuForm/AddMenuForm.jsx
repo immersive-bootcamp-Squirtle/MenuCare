@@ -12,15 +12,17 @@ import {
   Button,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import AllergyList from "../AllergyList/AllergyList";
+import AllergyListCardForRegister from "../AllergyListCardForRegister/AllergyListCardForRegister";
 import axios from "axios";
 import UploadImage from "../UploadImage/UploadImage";
 import CategoryButton from "../CategoryButton/CategoryButton";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; 
+// import { useParams } from "react-router-dom";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 const AddMenuForm = () => {
-  const { restaurant_id } = useParams();
+  const navigate = useNavigate();
+  // const { restaurant_id } = useParams();
   const [menuName, setMenuName] = useState("");
   const [price, setPrice] = useState("");
   const [allergies, setAllergies] = useState([]);
@@ -69,7 +71,7 @@ const AddMenuForm = () => {
   const handleSubmit = async () => {
     try {
       const reqBody = {
-        restaurant_id: parseInt(restaurant_id, 10),
+        restaurant_id: 1,
         menu_name: menuName,
         price: parseInt(price),
         image_url: "/public/egg.png", // テスト用固定値
@@ -82,7 +84,8 @@ const AddMenuForm = () => {
       const res = await axios.post(`${baseUrl}/restaurants/1/menus`, reqBody);
 
       console.log("Response:", res.data);
-      alert("メニューが登録されました！");
+      alert("メニューが登録されました");
+      navigate("/admin/home");
     } catch (err) {
       console.error("Error submitting menu:", err);
       alert("エラーが発生しました。");
@@ -153,7 +156,7 @@ const AddMenuForm = () => {
             margin: "0 auto",
             padding: 2,
             borderRadius: "12px",
-            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", // 影を追加
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", // 影
             overflow: "hidden",
             backgroundColor: "#F2EDE5",
           }}
@@ -239,7 +242,7 @@ const AddMenuForm = () => {
               <Typography variant="subtitle1" gutterBottom>
                 アレルギー情報
               </Typography>
-              <AllergyList
+              <AllergyListCardForRegister
                 allergies={allergies}
                 selectedAllergies={selectedAllergies}
                 onClick={handleToggleAllergy}

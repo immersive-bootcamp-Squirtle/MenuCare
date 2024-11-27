@@ -8,6 +8,7 @@ function UploadImage({ image, handleImageUpload }) {
   //   console.log("list_alg:", allergies);
   return (
     <>
+    <Typography variant="h6">商品画像</Typography>
       <Box
         sx={{
           //   border: "2px dashed #dbd6cd",

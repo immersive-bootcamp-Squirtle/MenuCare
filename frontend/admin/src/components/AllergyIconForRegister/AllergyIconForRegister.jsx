@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Box } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
-function AllergyIcon({ name, isSelected, onClick }) {
+function AllergyIconForRegister({ name, isSelected, onClick }) {
   return (
     <Button
       onClick={onClick}
@@ -12,7 +12,7 @@ function AllergyIcon({ name, isSelected, onClick }) {
         textTransform: "none",
         borderRadius: "8px",
         justifyContent: "space-between", 
-        padding: "8px",
+        padding: "5px",
         border: "none", // 枠線を非表示
         outline: "none", // フォーカス時の青い枠を非表示
         backgroundColor: isSelected ? "#F2A24A" : "#fff", // SUNSETカラー（選択時）
@@ -47,4 +47,4 @@ function AllergyIcon({ name, isSelected, onClick }) {
   );
 }
 
-export default AllergyIcon;
+export default AllergyIconForRegister;

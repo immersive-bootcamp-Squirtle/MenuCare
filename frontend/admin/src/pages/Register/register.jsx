@@ -2,6 +2,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import RegisterButton from "../../components/RegisterButton/RegisterButton";
 import AddMenuForm from "../../components/AddMenuForm/AddMenuForm";
 import { Box, Typography } from "@mui/material";
+import NavBar from "../../components/GlobalComponents/NavBar";
 
 function Register() {
   // 全体のフォントを管理
@@ -14,6 +15,8 @@ function Register() {
   });
 
   return (
+    <>
+    <NavBar />
     <Box
       sx={{
         padding: 2,
@@ -38,6 +41,7 @@ function Register() {
         {/* <RegisterButton /> */}
       </ThemeProvider>
     </Box>
+    </>
   );
 }
 
