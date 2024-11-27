@@ -30,7 +30,11 @@ const CartActions = ({ onBack, cartItems, setCartItems }) => {
       // lambda実行時はこちら
       // const response = await axios.post(
       //   `https://api.menu-care.com/api/orders`,
-      //   orderData
+      //   orderData, {
+      //     headers: {
+      //       Authorization: sessionStorage.getItem("idToken"),
+      //     }
+      //   }
       // );
 
       console.log("Order placed successfully:", response.data);
