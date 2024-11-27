@@ -64,7 +64,11 @@ function Home() {
           // setMenuItems(res.data);
 
           // lambda上での実行の際はこちら
-          const res = await axios.get(`https://api.menu-care.com/api/restaurants/1/menus`);
+          const res = await axios.get(`https://api.menu-care.com/api/restaurants/1/menus`, {
+            headers: {
+              Authorization: essionStorage.getItem("idToken", AuthenticationResult.IdToken || ""),
+            }
+          });
           setMenuItems(res.data);
 
           // backendを繋げていない環境ではこちら
@@ -140,7 +144,11 @@ function Home() {
         // setAllergies(res.data);
 
         // lambda上での実行の際はこちら
-        const res = await axios.get(`https://api.menu-care.com/api/allergies`);
+        const res = await axios.get(`https://api.menu-care.com/api/allergies`, {
+          headers: {
+            Authorization: essionStorage.getItem("idToken", AuthenticationResult.IdToken || ""),
+          }
+        });
         setAllergies(res.data);
 
         // backendを繋げていない環境ではこちら
