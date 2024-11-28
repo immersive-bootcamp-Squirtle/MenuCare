@@ -5,8 +5,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 import AllergyFilterModal from "../../components/allergyFilterModal/allergyFilterModal";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Box, CssBaseline } from "@mui/material";
 import AddButton from "../../components/Button/AddButton";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/GlobalComponents/NavBar";
@@ -63,7 +61,8 @@ function Home() {
   };
 
   const handleEditMenu = (menuId) => {
-    navigate(`/admin/editor/${menuId}`); // 編集画面に遷移
+    const menuData = menuItems.find((menu) => menu.menu_id === menuId); // 該当するmenuを取得
+    navigate(`/admin/editor/${menuId}`, { state: {menuData, allergies} }); // menuDataをstateとして渡す
   };
 
   useEffect(() => {
@@ -71,16 +70,16 @@ function Home() {
       const fetchMenuItems = async () => {
         try {
           // local実行の際はこちら
-          // const res = await axios.get(`${baseUrl}/restaurants/1/menus`);
-          // setMenuItems(res.data);
+          const res = await axios.get(`${baseUrl}/restaurants/1/menus`);
+          setMenuItems(res.data);
 
           // lambda上での実行の際はこちら
-          const res = await axios.get(`https://api.menu-care.com/api/restaurants/1/menus`, {
-            headers: {
-              Authorization: sessionStorage.getItem("idToken"),
-            }
-          });
-          setMenuItems(res.data);
+          // const res = await axios.get(`https://api.menu-care.com/api/restaurants/1/menus`, {
+          //   headers: {
+          //     Authorization: sessionStorage.getItem("idToken"),
+          //   }
+          // });
+          // setMenuItems(res.data);
 
           // backendを繋げていない環境ではこちら
           // const testData = [
@@ -150,17 +149,17 @@ function Home() {
     const fetchAllergies = async () => {
       try {
         // local上での実行の際はこちら
-        // const res = await axios.get(`${baseUrl}/allergies`);
+        const res = await axios.get(`${baseUrl}/allergies`);
         // console.log("alg:", res.data);
-        // setAllergies(res.data);
+        setAllergies(res.data);
 
         // lambda上での実行の際はこちら
-        const res = await axios.get(`https://api.menu-care.com/api/allergies`, {
-          headers: {
-            Authorization: sessionStorage.getItem("idToken"),
-          }
-        });
-        setAllergies(res.data);
+        // const res = await axios.get(`https://api.menu-care.com/api/allergies`, {
+        //   headers: {
+        //     Authorization: sessionStorage.getItem("idToken"),
+        //   }
+        // });
+        // setAllergies(res.data);
 
         // backendを繋げていない環境ではこちら
         // const testAllergies = [
