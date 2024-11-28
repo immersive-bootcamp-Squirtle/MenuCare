@@ -2,4 +2,3 @@
 .DS*
 .DS*/
 node_modules/
-s3Config.js
