@@ -35,7 +35,7 @@ const EditMenuForm = () => {
         // const res = await axios.get(`${baseUrl}/restaurants/1/menus/${menuId}`);
         
         // lambda上での実行はこちら
-        const res = await axios.get(`https://api.menu-care.com/restaurants/1/menus/${menuId}`, {
+        const res = await axios.get(`https://api.menu-care.com/api/restaurants/1/menus/${menuId}`, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: sessionStorage.getItem("idToken"),
@@ -63,7 +63,7 @@ const EditMenuForm = () => {
         // const res = await axios.get(`${baseUrl}/categories`);
 
         // lambda上での実行はこちら
-        const res = await axios.get(`https://api.menu-care.com/categories`, {
+        const res = await axios.get(`https://api.menu-care.com/api/categories`, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: sessionStorage.getItem("idToken"),
@@ -123,7 +123,7 @@ const EditMenuForm = () => {
       // });
 
       // lambda実行時はこちら
-      await axios.put(`https://api.menu-care.com/restaurants/1/menus/${menuId}`, formData, {
+      await axios.put(`https://api.menu-care.com/api/restaurants/1/menus/${menuId}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: sessionStorage.getItem("idToken"),

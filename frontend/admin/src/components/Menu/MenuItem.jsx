@@ -39,7 +39,7 @@ const MenuItem = ({ item, onDelete, onEdit }) => {
       // await axios.delete(`${baseUrl}/restaurants/1/menus/${item.menu_id}`);
       
       // lambda上で実行時はこちら
-      await axios.delete(`https://api.menu-care.com/restaurants/1/menus/${item.menu_id}`, {
+      await axios.delete(`https://api.menu-care.com/api/restaurants/1/menus/${item.menu_id}`, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: sessionStorage.getItem("idToken"),
