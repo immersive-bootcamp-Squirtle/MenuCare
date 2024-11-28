@@ -36,14 +36,15 @@ const MenuItem = ({ item, onDelete, onEdit }) => {
     try {
       console.log("item.menu_id", item.menu_id);
       // local実行時はこちら
-      await axios.delete(`${baseUrl}/restaurants/1/menus/${item.menu_id}`);
+      // await axios.delete(`${baseUrl}/restaurants/1/menus/${item.menu_id}`);
+      
       // lambda上で実行時はこちら
-      // await axios.delete(`https://api.menu-care.com/restaurants/1/menus/${item.menu_id}`, {
-      //   headers: {
-      //     "Content-Type": "multipart/form-data",
-      //     Authorization: sessionStorage.getItem("idToken"),
-      //   }
-      // });
+      await axios.delete(`https://api.menu-care.com/api/restaurants/1/menus/${item.menu_id}`, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: sessionStorage.getItem("idToken"),
+        }
+      });
 
 
       onDelete(item.menu_id);

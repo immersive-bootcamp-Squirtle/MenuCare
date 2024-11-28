@@ -83,7 +83,6 @@ const AddMenuForm = () => {
     formData.append("price", parseInt(price));
     formData.append("status", "active");
     formData.append("category_id", selectedCategory);
-    formData.append("image", image); // ファイルを追加
     // formData.append("allergies", JSON.stringify(selectedAllergies));
     selectedAllergies.forEach((allergy) => {
       formData.append("allergies[]", allergy); // 配列を個別に追加
@@ -99,23 +98,39 @@ const AddMenuForm = () => {
       //   allergies: selectedAllergies,
       // };
 
-      // console.log("Request Body:", reqBody);
-
       // local実行時はこちら
       // const res = await axios.post(`${baseUrl}/restaurants/1/menus`, reqBody);
-      const res = await axios.post(`${baseUrl}/restaurants/1/menus`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      
-      // lambda実行時はこちら
-      // const res = await axios.post(`https://api.menu-care.com/api/restaurants/1/menus`, formData, {
+      // const res = await axios.post(`${baseUrl}/restaurants/1/menus`, formData, {
       //   headers: {
       //     "Content-Type": "multipart/form-data",
-      //     Authorization: sessionStorage.getItem("idToken"),
-      //   }
+      //   },
       // });
+      
+      // lambda実行時はこちら
+      const res = await axios.post(`https://api.menu-care.com/api/restaurants/1/menus`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: sessionStorage.getItem("idToken"),
+        }
+      });
+
+      // S3への画像アップロード
+      //// アップロード用の署名付きURL&Pathを取得
+      const preSignedUrlForS3Upload = res.data.preSignedUrlForS3Upload;
+
+      console.log("res.data");
+      console.log(res.data);
+      console.log("preSignedUrlForS3Upload")
+      console.log(preSignedUrlForS3Upload)
+      
+      //// アップロード
+      const result = await axios.put(preSignedUrlForS3Upload, image, {
+        headers: {
+            'Content-Type': image.type
+        }
+      })
+
+      console.log(result)
 
       console.log("Response:", res.data);
       alert("メニューが登録されました");
@@ -134,17 +149,17 @@ const AddMenuForm = () => {
     const fetchAllergies = async () => {
       try {
         // local上での実行の際はこちら
-        const res = await axios.get(`${baseUrl}/allergies`);
-        console.log("alg:", res.data);
-        setAllergies(res.data);
+        // const res = await axios.get(`${baseUrl}/allergies`);
+        // console.log("alg:", res.data);
+        // setAllergies(res.data);
 
         // lambda上での実行の際はこちら
-        // const res = await axios.get(`https://api.menu-care.com/api/allergies`, {
-        //   headers: {
-        //     Authorization: sessionStorage.getItem("idToken"),
-        //   }
-        // });
-        // setAllergies(res.data);
+        const res = await axios.get(`https://api.menu-care.com/api/allergies`, {
+          headers: {
+            Authorization: sessionStorage.getItem("idToken"),
+          }
+        });
+        setAllergies(res.data);
 
         // backendを繋げていない環境ではこちら
         // const testAllergies = [

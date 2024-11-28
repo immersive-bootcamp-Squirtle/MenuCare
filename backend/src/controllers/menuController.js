@@ -29,7 +29,6 @@ exports.getMenus = async (req, res) => {
 
 exports.createMenu = async (req, res) => {
   try {
-    const file = req.file;
     const {
       restaurant_id = 1,
       menu_name,
@@ -63,7 +62,8 @@ exports.createMenu = async (req, res) => {
     }
 
     // console.log("file:", file);
-    const imagePath = await s3Service.uploadToS3(file.buffer, file.mimetype);
+    // const imagePath = await s3Service.uploadToS3(file.buffer, file.mimetype);
+    const {preSignedUrlForS3Upload, path} = await s3Service.generateUploadUrl()
 
     // console.log("imagePath:",imagePath)
     // メニューを登録
@@ -71,7 +71,7 @@ exports.createMenu = async (req, res) => {
       restaurant_id,
       menu_name,
       price,
-      imagePath,
+      imagePath: path,
       status,
     });
 
@@ -84,6 +84,8 @@ exports.createMenu = async (req, res) => {
     res.status(201).json({
       message: "success",
       result,
+      preSignedUrlForS3Upload: preSignedUrlForS3Upload,
+      path: path
     });
   } catch (err) {
     console.error("Error adding menu:", err);

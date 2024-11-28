@@ -30,3 +30,25 @@ exports.generateDownloadUrl = async (key) => {
   const downloadUrl = await s3.getSignedUrlPromise("getObject", params);
   return downloadUrl;
 };
+
+// 署名付きURLを生成する（アップロード用）
+exports.generateUploadUrl = async () => {
+  try{
+    const uniqueKey = `images/${uuidv4()}`;
+    const params = {
+      Bucket: BUCKET_NAME,
+      Key: uniqueKey,
+      Expires: 3600, // 有効期限 
+    };
+
+    const uploadUrl = await s3.getSignedUrlPromise("putObject", params);
+    return {
+      preSignedUrlForS3Upload : uploadUrl,
+      path : uniqueKey
+    };
+  } catch (err) {
+    console.log("error in generateUploadUrl")
+    console.log(err)
+  }
+  
+};
