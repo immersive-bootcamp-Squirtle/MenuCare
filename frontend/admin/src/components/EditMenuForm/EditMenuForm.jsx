@@ -31,7 +31,16 @@ const EditMenuForm = () => {
     const fetchMenuData = async () => {
       try {
         // APIからメニュー情報を取得
+        // local実行はこちら
         const res = await axios.get(`${baseUrl}/restaurants/1/menus/${menuId}`);
+        // lambda上での実行はこちら
+        // const res = await axios.get(`https://api.menu-care.com/restaurants/1/menus/${menuId}`, {
+        //   headers: {
+        //     "Content-Type": "multipart/form-data",
+        //     Authorization: sessionStorage.getItem("idToken"),
+        //   }
+        // });
+
         const menu = res.data;
         setMenuName(menu.name);
         setPrice(menu.price);
@@ -39,6 +48,9 @@ const EditMenuForm = () => {
         setSelectedCategory(menu.category_id || null);
         setExistingImage(menu.image_url); // 既存画像URLをセット
       } catch (err) {
+        if (!err.response) {
+          navigate("/login")
+        }
         console.error("Failed to fetch menu data:", err);
         alert("メニュー情報の取得に失敗しました。");
       }
@@ -46,9 +58,21 @@ const EditMenuForm = () => {
 
     const fetchCategories = async () => {
       try {
+        // local上での実行はこちら
         const res = await axios.get(`${baseUrl}/categories`);
+        // lambda上での実行はこちら
+        // const res = await axios.get(`https://api.menu-care.com/categories`, {
+        //   headers: {
+        //     "Content-Type": "multipart/form-data",
+        //     Authorization: sessionStorage.getItem("idToken"),
+        //   }
+        // })
+
         setCategories(res.data);
       } catch (err) {
+        if (!err.response) {
+          navigate("/login")
+        }
         console.error("Failed to fetch categories:", err);
       }
     };
@@ -89,14 +113,26 @@ const EditMenuForm = () => {
     });
 
     try {
+      // local実行時はこちら
       await axios.put(`${baseUrl}/restaurants/1/menus/${menuId}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+      // lambda実行時はこちら
+      // await axios.put(`https://api.menu-care.com/restaurants/1/menus/${menuId}`, formData, {
+      //   headers: {
+      //     "Content-Type": "multipart/form-data",
+      //     Authorization: sessionStorage.getItem("idToken"),
+      //   },
+      // });
+
       alert("メニューが更新されました。");
       navigate("/admin/home"); // ホーム画面へ戻る
     } catch (err) {
+      if (!err.response) {
+        navigate("/login")
+      }
       console.error("Failed to update menu:", err);
       alert("メニュー更新に失敗しました。");
     }
