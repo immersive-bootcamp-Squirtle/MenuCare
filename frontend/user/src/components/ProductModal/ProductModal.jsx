@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Modal, IconButton } from "@mui/material";
+import { Modal, IconButton, Stack } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 const ProductModal = ({ product, onClose, onAddToCart }) => {
@@ -39,9 +39,21 @@ const ProductModal = ({ product, onClose, onAddToCart }) => {
 
         {/* 商品情報と数量管理 */}
         <Content>
-          <Price>価格: ¥{Math.trunc(product?.price)}</Price>
+          <Price>
+            <Stack
+              spacing={1}
+              direction="row"
+              sx={{
+                display: "flex",
+                alignItems: "baseline",
+              }}
+            >
+              <PriceLabel>単価:</PriceLabel>{" "}
+              <PriceDisplay>¥{Math.trunc(product?.price)}</PriceDisplay>
+            </Stack>
+          </Price>
           <QuantitySection>
-            <QuantityLabel>数量</QuantityLabel>
+            <QuantityLabel>数量:</QuantityLabel>
             <QuantitySelector>
               <QuantityButton onClick={() => handleQuantityChange("decrement")}>
                 -
@@ -56,7 +68,22 @@ const ProductModal = ({ product, onClose, onAddToCart }) => {
 
         {/* フッター */}
         <Footer>
-          <TotalPrice>合計: ¥{Math.trunc(product?.price) * quantity}</TotalPrice>
+          <TotalPrice>
+            <Stack
+              spacing={1}
+              direction="row"
+              sx={{
+                display: "flex",
+                alignItems: "baseline",
+              }}
+            >
+              <PriceLabel>合計:</PriceLabel>{" "}
+              <PriceDisplay>
+                {" "}
+                ¥{Math.trunc(product?.price) * quantity}
+              </PriceDisplay>
+            </Stack>
+          </TotalPrice>
           <AddToCartButton onClick={handleAddToCart}>
             カートに入れる
           </AddToCartButton>
@@ -70,15 +97,6 @@ const StyledModal = styled(Modal)`
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  animation: slideUp 0.3s ease-out;
-  @keyframes slideUp {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0);
-    }
-  }
 `;
 
 const ModalContent = styled.div`
@@ -88,6 +106,15 @@ const ModalContent = styled.div`
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease-out;
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
 `;
 
 const Header = styled.div`
@@ -101,7 +128,7 @@ const Header = styled.div`
 `;
 
 const ProductName = styled.h2`
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
   color: #333;
   margin: 0;
@@ -124,6 +151,19 @@ const Content = styled.div`
 `;
 
 const Price = styled.p`
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #333;
+`;
+
+const PriceLabel = styled.p`
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #333;
+`;
+
+const PriceDisplay = styled.p`
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 16px;
@@ -149,7 +189,8 @@ const QuantityButton = styled.button`
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  font-size: 18px;
+  font-size: 20px;
+  font-family: open-sans;
   font-weight: bold;
   cursor: pointer;
   display: flex;
@@ -169,7 +210,6 @@ const QuantityLabel = styled.span`
   color: #333;
 `;
 
-
 const Footer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -185,16 +225,16 @@ const TotalPrice = styled.p`
   color: #333;
 `;
 
-const AddToCartButton = styled.button` 
+const AddToCartButton = styled.button`
   padding: 10px 20px;
   font-size: 16px;
   font-family: "Noto Sans JP", sans-serif;
   color: #fff;
   border: none;
-  border-radius: 30px; 
+  border-radius: 30px;
   cursor: pointer;
   text-align: center;
-  background: linear-gradient(90deg, #f2994a, #f2c94c); 
+  background: linear-gradient(90deg, #f2994a, #f2c94c);
 `;
 
 export default ProductModal;
