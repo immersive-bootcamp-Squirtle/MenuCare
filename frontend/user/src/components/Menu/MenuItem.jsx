@@ -19,6 +19,8 @@ const MenuItem = ({ item, onClick }) => {
     setExpanded(!expanded);
   };
 
+  console.log("image_in_menuitem:",item.image_url)
+
   return (
     <>
       <Box sx={{ position: "relative", marginBottom: expanded ? 4 : 2 }}>

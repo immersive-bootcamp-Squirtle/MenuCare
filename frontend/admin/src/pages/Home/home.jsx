@@ -55,6 +55,17 @@ function Home() {
     navigate("/admin/register");
   };
 
+  // 削除ボタン
+  const handleDeleteMenu = (menuId) => {
+    setMenuItems((prevItems) =>
+      prevItems.filter((item) => item.menu_id !== menuId)
+    );
+  };
+
+  const handleEditMenu = (menuId) => {
+    navigate(`/admin/editor/${menuId}`); // 編集画面に遷移
+  };
+
   useEffect(() => {
     try {
       const fetchMenuItems = async () => {
@@ -195,12 +206,12 @@ function Home() {
     fetchAllergies();
   }, []);
 
-  console.log("allergies:", allergies);
+  // console.log("allergies:", allergies);
 
   return (
     <Frame>
       <NavBar />
-      <MenuList items={menuItems} selectedAllergies={selectedAllergies} />
+      <MenuList items={menuItems} selectedAllergies={selectedAllergies} onDelete={handleDeleteMenu} onEdit={handleEditMenu} />
       {isModalOpen && (
         <AllergyFilterModal
           onClose={closeModal}

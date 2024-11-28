@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -9,13 +9,39 @@ import {
   Collapse,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import axios from "axios";
+import DeleteButton from "../Button/DeleteButton";
+import DeleteConfirm from "../Dialog/DeleteConfirm";
+import EditButton from "../Button/EditButton";
 
-const MenuItem = ({ item }) => {
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
+const MenuItem = ({ item, onDelete, onEdit }) => {
   const price = Math.trunc(item.price);
   const [expanded, setExpanded] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const handleDeleteClick = () => {
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      console.log("item.menu_id", item.menu_id);
+      await axios.delete(`${baseUrl}/restaurants/1/menus/${item.menu_id}`);
+      onDelete(item.menu_id);
+      setDialogOpen(false);
+    } catch (err) {
+      console.error("Failed to delete menu:", err);
+      alert("削除に失敗しました");
+    }
   };
 
   return (
@@ -27,7 +53,7 @@ const MenuItem = ({ item }) => {
             borderRadius: 3,
             overflow: "hidden",
             textAlign: "left",
-            // height: "100%",
+            position: "relative",
           }}
         >
           <CardMedia
@@ -88,7 +114,6 @@ const MenuItem = ({ item }) => {
             timeout="auto"
             unmountOnExit
             sx={{
-              //   position: "absolute",
               position: "relative",
               width: "100%",
               zIndex: 1,
@@ -109,7 +134,7 @@ const MenuItem = ({ item }) => {
                 }}
               >
                 {item.allergies && item.allergies.length > 0
-                  ? item.allergies.join(", ") // リストの要素をカンマ区切りで表示
+                  ? item.allergies.join(", ") 
                   : "アレルギー情報なし"}
               </Typography>
               <Typography
@@ -124,8 +149,22 @@ const MenuItem = ({ item }) => {
               </Typography>
             </CardContent>
           </Collapse>
+
+          {/* 編集ボタン */}
+          <EditButton item={item} onEdit={onEdit}/>
+
+          {/* 削除ボタン */}
+          <DeleteButton handleDeleteClick={handleDeleteClick} />
         </Card>
       </Box>
+
+      {/* 削除確認ダイアログ */}
+      <DeleteConfirm
+        item={item}
+        dialogOpen={dialogOpen}
+        handleConfirmDelete={handleConfirmDelete}
+        handleCloseDialog={handleCloseDialog}
+      />
     </>
   );
 };

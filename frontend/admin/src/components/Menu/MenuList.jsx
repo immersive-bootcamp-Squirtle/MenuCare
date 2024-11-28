@@ -2,7 +2,7 @@ import React from "react";
 import MenuItem from "./MenuItem";
 import { Box, Typography } from "@mui/material";
 
-const MenuList = ({ items, selectedAllergies }) => {
+const MenuList = ({ items, selectedAllergies, onDelete, onEdit }) => {
   // アレルギーに基づいてソート
   const sortedItems = [...items].sort((a, b) => {
     const aHasAllergy = a.allergies.some((allergy) =>
@@ -39,8 +39,9 @@ const MenuList = ({ items, selectedAllergies }) => {
             textAlign: "left",
             color: "#3c3a37",
             fontSize: "clamp(22px, 4vw, 28px)",
-            padding:
-              "clamp(0.625rem, 0.511rem + 0.57vw, 0.938rem) clamp(0.625rem, 0.398rem + 1.14vw, 1.25rem)",
+            padding: "10px 50px",
+            width: "clamp(20rem, 100vw, 75rem)",
+            margin: "0 auto",
           }}
         >
           メニュー一覧
@@ -58,6 +59,7 @@ const MenuList = ({ items, selectedAllergies }) => {
             padding: "10px 50px",
             width: "clamp(20rem, 100vw, 75rem)",
             margin: "0 auto",
+            justifyContent: "center",
           }}
         >
           {sortedItems.map((item) => {
@@ -69,10 +71,11 @@ const MenuList = ({ items, selectedAllergies }) => {
               <Box
                 key={item.menu_id}
                 sx={{
-                  opacity: isGrayout ? 0.5 : 1, // グレーアウト
+                  opacity: isGrayout ? 0.5 : 1,
+                  // グレーアウト
                 }}
               >
-                <MenuItem item={item} />
+                <MenuItem item={item} onDelete={onDelete} onEdit={onEdit} />
               </Box>
             );
           })}
