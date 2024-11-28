@@ -116,12 +116,12 @@ const AddMenuForm = () => {
 
       // S3への画像アップロード
       //// アップロード用の署名付きURL&Pathを取得
-      const preSignedUrlForS3Upload = res.data.data.preSignedUrlForS3Upload;
+      // const preSignedUrlForS3Upload = res.data.data.preSignedUrlForS3Upload;
 
       console.log("res");
-      console.log(res.data.data);
-      console.log("preSignedUrlForS3Upload")
-      console.log(preSignedUrlForS3Upload)
+      console.log(res);
+      // console.log("preSignedUrlForS3Upload")
+      // console.log(preSignedUrlForS3Upload)
       
       //// アップロード
       const result = await axios.put(preSignedUrlForS3Upload, image, {
