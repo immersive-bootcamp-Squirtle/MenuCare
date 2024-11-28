@@ -7,16 +7,13 @@ import {
   Box,
   IconButton,
   Collapse,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Button,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
+import DeleteButton from "../Button/DeleteButton";
+import DeleteConfirm from "../Dialog/DeleteConfirm";
+import EditButton from "../Button/EditButton";
+
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 const MenuItem = ({ item, onDelete }) => {
   const price = Math.trunc(item.price);
@@ -37,11 +34,9 @@ const MenuItem = ({ item, onDelete }) => {
 
   const handleConfirmDelete = async () => {
     try {
-      console.log("item.menu_id",item.menu_id)
-      await axios.delete(
-        `${baseUrl}/restaurants/1/menus/${item.menu_id}`
-      );
-      onDelete(item.menu_id); 
+      console.log("item.menu_id", item.menu_id);
+      await axios.delete(`${baseUrl}/restaurants/1/menus/${item.menu_id}`);
+      onDelete(item.menu_id);
       setDialogOpen(false);
     } catch (err) {
       console.error("Failed to delete menu:", err);
@@ -51,14 +46,14 @@ const MenuItem = ({ item, onDelete }) => {
 
   return (
     <>
-      <Box sx={{ position: "relative", marginBottom: expanded ? 4 : 2, }}>
+      <Box sx={{ position: "relative", marginBottom: expanded ? 4 : 2 }}>
         <Card
           sx={{
             maxWidth: 286,
             borderRadius: 3,
             overflow: "hidden",
             textAlign: "left",
-            position: "relative", 
+            position: "relative",
           }}
         >
           <CardMedia
@@ -139,7 +134,7 @@ const MenuItem = ({ item, onDelete }) => {
                 }}
               >
                 {item.allergies && item.allergies.length > 0
-                  ? item.allergies.join(", ") // リストの要素をカンマ区切りで表示
+                  ? item.allergies.join(", ") 
                   : "アレルギー情報なし"}
               </Typography>
               <Typography
@@ -155,39 +150,21 @@ const MenuItem = ({ item, onDelete }) => {
             </CardContent>
           </Collapse>
 
+          {/* 編集ボタン */}
+          <EditButton item={item} />
+
           {/* 削除ボタン */}
-          <IconButton
-            sx={{
-              position: "absolute",
-              top: 8,
-              right: 8,
-              bgcolor: "#FFFFFFCC",
-              "&:hover": { bgcolor: "#F2A24A" },
-            }}
-            onClick={handleDeleteClick}
-          >
-            <DeleteIcon />
-          </IconButton>
+          <DeleteButton handleDeleteClick={handleDeleteClick} />
         </Card>
       </Box>
 
-      {/* 確認ダイアログ */}
-      <Dialog open={dialogOpen} onClose={handleCloseDialog}>
-        <DialogTitle>メニュー削除</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-             "{item.name}" を削除しますか？ 
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog} color="primary">
-            キャンセル
-          </Button>
-          <Button onClick={handleConfirmDelete} color="secondary">
-            削除
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {/* 削除確認ダイアログ */}
+      <DeleteConfirm
+        item={item}
+        dialogOpen={dialogOpen}
+        handleConfirmDelete={handleConfirmDelete}
+        handleCloseDialog={handleCloseDialog}
+      />
     </>
   );
 };

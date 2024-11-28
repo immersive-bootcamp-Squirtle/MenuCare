@@ -2,7 +2,7 @@ const AWS = require("aws-sdk");
 
 //lambda用
 AWS.config.update({
-  region: AWS_REGION,
+  region: process.env.AWS_REGION,
 });
 
 const s3 = new AWS.S3();
