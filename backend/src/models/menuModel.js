@@ -9,10 +9,13 @@ module.exports = {
         "menus.menu_name",
         "menus.price",
         "menus.image_url",
-        "allergy.allergy_name"
+        "allergy.allergy_name",
+        "category.category_name"
       )
       .leftJoin("allergy_menu", "menus.menu_id", "=", "allergy_menu.menu_id")
       .leftJoin("allergy", "allergy_menu.allergy_id", "=", "allergy.allergy_id")
+      .leftJoin("category_menu", "menus.menu_id", "=", "category_menu.menu_id")
+      .leftJoin("category", "category_menu.category_id", "=", "category.category_id")
       .where({ "menus.restaurant_id": restaurantID });
 
     const new_menu = {};
@@ -26,10 +29,14 @@ module.exports = {
           price: value.price,
           image_url: value.image_url,
           allergies: [],
+          categories: [], // カテゴリ情報を格納
         };
       }
       if (value.allergy_name) {
         new_menu[value.menu_id].allergies.push(value.allergy_name);
+      }
+      if (value.category_name && !new_menu[value.menu_id].categories.includes(value.category_name)) {
+        new_menu[value.menu_id].categories.push(value.category_name);
       }
     });
 

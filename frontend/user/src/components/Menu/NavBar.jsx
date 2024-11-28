@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import HistoryIcon from "@mui/icons-material/History"; // 履歴アイコンをインポート
 import IconButton from "@mui/material/IconButton";
 
-const NavBar = ({ openModal, cartItemCount }) => {
+const NavBar = ({ openModal, cartItemCount, onCategoryChange }) => {
   const navigate = useNavigate();
   // openModalを受け取る
   const categoryButtons = [
@@ -28,7 +28,7 @@ const NavBar = ({ openModal, cartItemCount }) => {
     { id: 5, label: "食事制限あり" },
   ];
 
-  const [selectedCategory, setSelectedCategory] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState("すべて");
   const [selectedFilters, setSelectedFilters] = useState([]);
 
   const selectedStyle = {
@@ -73,8 +73,11 @@ const NavBar = ({ openModal, cartItemCount }) => {
     },
   };
 
-  const handleCategoryClick = (id) => {
-    setSelectedCategory(id);
+  const handleCategoryClick = (label) => {
+    setSelectedCategory(label);
+    if (onCategoryChange) {
+      onCategoryChange(label); // 親コンポーネントに通知
+    }
   };
 
   const handleFilterClick = (id) => {
@@ -163,11 +166,11 @@ const NavBar = ({ openModal, cartItemCount }) => {
                   width: "clamp(5.625rem, 4.943rem + 3.41vw, 7.5rem)",
                   height: "clamp(2.5rem, 2.159rem + 1.7vw, 3.438rem)",
                   flexShrink: 0, // 横スクロール時に縮小させない
-                  ...(selectedCategory === button.id
+                  ...(selectedCategory === button.label
                     ? selectedStyle
                     : unselectedStyle),
                 }}
-                onClick={() => handleCategoryClick(button.id)}
+                onClick={() => handleCategoryClick(button.label)}
               >
                 {button.label}
               </button>

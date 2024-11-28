@@ -6,7 +6,19 @@ exports.getMenus = async (req, res) => {
     // console.log("id:", restaurant_id);
     const menus = await menuModel.findAllMenu(restaurant_id);
     // console.log(menus);
-    res.status(200).json(menus);
+    
+    // カテゴリごとにグループ化
+    const groupedByCategory = menus.reduce((acc, item) => {
+      item.categories.forEach((category) => {
+        if (!acc[category]) {
+          acc[category] = [];
+        }
+        acc[category].push(item);
+      });
+      return acc;
+    }, {});
+
+    res.status(200).json(groupedByCategory); // カテゴリ別のデータを返却
   } catch (err) {
     res.status(500).json({ error: "Failed to get menus" });
   }
