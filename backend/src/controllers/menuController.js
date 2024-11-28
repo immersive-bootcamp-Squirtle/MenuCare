@@ -63,7 +63,7 @@ exports.createMenu = async (req, res) => {
 
     // console.log("file:", file);
     // const imagePath = await s3Service.uploadToS3(file.buffer, file.mimetype);
-    const [preSignedUrlForS3Upload, path] = await s3Service.generateUploadUrl()
+    const {preSignedUrlForS3Upload, path} = await s3Service.generateUploadUrl()
 
     // console.log("imagePath:",imagePath)
     // メニューを登録
@@ -71,7 +71,7 @@ exports.createMenu = async (req, res) => {
       restaurant_id,
       menu_name,
       price,
-      path,
+      imagePath: path,
       status,
     });
 
