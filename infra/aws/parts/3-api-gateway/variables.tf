@@ -39,3 +39,8 @@ locals {
   throttling_burst_limit = 6
   throttling_rate_limit  = 6
 }
+
+// authorize関連の情報
+locals {
+  cognito_user_pool_name = "MENUCARE"
+}

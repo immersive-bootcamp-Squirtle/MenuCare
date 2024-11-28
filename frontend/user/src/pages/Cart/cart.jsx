@@ -5,6 +5,7 @@ import CartItem from "../../components/CartItem/CartItem";
 import CartSummary from "../../components/CartSummary/CartSummary";
 import CartActions from "../../components/CartActions/CartActions";
 
+
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
@@ -58,14 +59,14 @@ const Cart = () => {
   );
 };
 
-
+// スタイリング
 const Frame = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: 20px;
   background-color: #f9f4ee;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
 `;
 
 const Title = styled.h1`
@@ -73,13 +74,16 @@ const Title = styled.h1`
   font-weight: bold;
   text-align: center;
   color: #3c3a37;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 `;
 
 const CartContainer = styled.div`
   flex: 1;
   overflow-y: auto;
   margin-bottom: 20px;
+  background-color: #f9f4ee;
+  border-radius: 8px;
+  padding: 15px;
 `;
 
 const EmptyMessage = styled.p`

@@ -101,18 +101,29 @@ const AddMenuForm = () => {
 
       // console.log("Request Body:", reqBody);
 
+      // local実行時はこちら
       // const res = await axios.post(`${baseUrl}/restaurants/1/menus`, reqBody);
-
       const res = await axios.post(`${baseUrl}/restaurants/1/menus`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log("Request FormData:", formData);
-      // console.log("Response:", res.data);
+      
+      // lambda実行時はこちら
+      // const res = await axios.post(`https://api.menu-care.com/api/restaurants/1/menus`, reqBody, {
+      //   headers: {
+      //     "Content-Type": "multipart/form-data",
+      //     Authorization: sessionStorage.getItem("idToken"),
+      //   }
+      // });
+
+      console.log("Response:", res.data);
       alert("メニューが登録されました");
       navigate("/admin/home");
     } catch (err) {
+      if (!err.response) {
+        navigate("/login")
+      }
       console.error("Error submitting menu:", err);
       alert("エラーが発生しました。");
     }
@@ -124,11 +135,15 @@ const AddMenuForm = () => {
       try {
         // local上での実行の際はこちら
         const res = await axios.get(`${baseUrl}/allergies`);
-        // console.log("alg:", res.data);
+        console.log("alg:", res.data);
         setAllergies(res.data);
 
         // lambda上での実行の際はこちら
-        // const res = await axios.get(`https://api.menu-care.com/api/allergies`);
+        // const res = await axios.get(`https://api.menu-care.com/api/allergies`, {
+        //   headers: {
+        //     Authorization: sessionStorage.getItem("idToken"),
+        //   }
+        // });
         // setAllergies(res.data);
 
         // backendを繋げていない環境ではこちら
@@ -164,6 +179,9 @@ const AddMenuForm = () => {
         // ];
         // setAllergies(testAllergies);
       } catch (err) {
+        if (!err.response) {
+          navigate("/login")
+        }
         console.error("Error fetching allergies:", err);
       }
     };

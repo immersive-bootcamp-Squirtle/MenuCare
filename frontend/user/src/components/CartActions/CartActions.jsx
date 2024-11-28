@@ -21,10 +21,21 @@ const CartActions = ({ onBack, cartItems, setCartItems }) => {
       console.log("Sending orderData:", orderData);
 
       // サーバーにリクエストを送信
+      // local実行時はこちら
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/orders`,
         orderData
       );
+
+      // lambda実行時はこちら
+      // const response = await axios.post(
+      //   `https://api.menu-care.com/api/orders`,
+      //   orderData, {
+      //     headers: {
+      //       Authorization: sessionStorage.getItem("idToken"),
+      //     }
+      //   }
+      // );
 
       console.log("Order placed successfully:", response.data);
 

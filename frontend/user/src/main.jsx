@@ -7,6 +7,8 @@ import App from "./App.jsx";
 import Welcome from "./pages/Welcome/welcome.jsx";
 import Menu from "./pages/Menu/menu.jsx";
 import Cart from "./pages/Cart/cart.jsx";
+import OrderHistory from "./pages/OrderHistory/orderhistory.jsx";
+
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: "/cart", // Cartのルートを追加
     element: <Cart />,
+  },
+  {
+    path: "/order-history", // 注文履歴のルートを追加
+    element: <OrderHistory />,
   },
   {
     path: "not_available",
