@@ -8,6 +8,7 @@ import Register from "./pages/Register/register";
 import Login from "./pages/Login/login";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
+import NotFound from "./pages/NotFound/NotFound";
 
 const router = createBrowserRouter([
   {
@@ -23,8 +24,8 @@ const router = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: "not_available",
-    element: <h1>ただいま離席中です</h1>,
+    path: "*",
+    element: <NotFound/>,
   },
 ]);
 
