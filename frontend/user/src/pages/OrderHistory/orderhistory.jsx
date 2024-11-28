@@ -21,10 +21,9 @@ const OrderHistory = () => {
         });
         // lambda上での実行はこちら
         // const response = await axios.get(`https://api.menu-care.com/orders/history`, {
-        //   params: { customer_id: 1 },{
-        //     headers: {
-        //       Authorization: sessionStorage.getItem("idToken"),
-        //     }
+        //   params: { customer_id: 1 },
+        //   headers: {
+        //     Authorization: sessionStorage.getItem("idToken"),
         //   }
         // });
 
