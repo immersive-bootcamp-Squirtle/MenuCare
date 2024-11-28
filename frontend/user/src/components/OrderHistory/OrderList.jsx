@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import OrderItem from "./OrderItem";
-import dayjs from "dayjs";
+import {dayjs} from "dayjs";
 
 const OrderList = ({ orders }) => {
   const calculateOrderTotal = (order) =>
