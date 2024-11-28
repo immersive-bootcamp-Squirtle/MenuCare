@@ -110,7 +110,7 @@ const AddMenuForm = () => {
       });
       
       // lambda実行時はこちら
-      // const res = await axios.post(`https://api.menu-care.com/api/restaurants/1/menus`, reqBody, {
+      // const res = await axios.post(`https://api.menu-care.com/api/restaurants/1/menus`, formData, {
       //   headers: {
       //     "Content-Type": "multipart/form-data",
       //     Authorization: sessionStorage.getItem("idToken"),

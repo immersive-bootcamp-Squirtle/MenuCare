@@ -49,6 +49,17 @@ locals {
           prefix_list_ids = null
           self = null
           source_security_gorup_id = data.aws_security_group.security_group_for_aurora.id
+        },
+        {
+          description = "to external api"
+          from_port = 443
+          to_port = 443
+          protocol = "tcp"
+          cidr_blocks = "0.0.0.0/0"
+          ipv6_cidr_blocks = null
+          prefix_list_ids = null
+          self = null
+          source_security_gorup_id = null
         }
       ]
     },
@@ -127,7 +138,8 @@ locals {
           DB_HOST = "dummy",
           DB_NAME = "dummy",
           DB_USER = "dummy",
-          DB_PASSWORD = "dummy"
+          DB_PASSWORD = "dummy",
+          S3_BUCKET_NAME = "dummy"
         }
       }
     }
