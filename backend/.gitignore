@@ -1,4 +1,4 @@
 .env*
 .DS*
 .DS*/
-node_modules/
+node_modules/*
