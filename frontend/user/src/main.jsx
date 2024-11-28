@@ -7,8 +7,9 @@ import App from "./App.jsx";
 import Welcome from "./pages/Welcome/welcome.jsx";
 import Menu from "./pages/Menu/menu.jsx";
 import Cart from "./pages/Cart/cart.jsx";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
 import OrderHistory from "./pages/OrderHistory/orderhistory.jsx";
-
 
 const router = createBrowserRouter([
   {
@@ -37,10 +38,26 @@ const router = createBrowserRouter([
   },
 ]);
 
+const theme = createTheme({
+  palette: {
+    background: {
+      default: "#f2ede5", // 背景色を指定
+    },
+  },
+  typography: {
+    fontFamily: ['"Noto Sans JP"', '"Open Sans"', "Arial", "sans-serif"].join(
+      ","
+    ),
+  },
+});
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <RecoilRoot>
-      <RouterProvider router={router} />
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </RecoilRoot>
   </StrictMode>
 );
