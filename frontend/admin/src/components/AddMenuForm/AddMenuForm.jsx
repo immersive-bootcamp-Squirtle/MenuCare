@@ -120,6 +120,8 @@ const AddMenuForm = () => {
 
       console.log("res");
       console.log(res);
+      console.log("preSignedUrlForS3Upload")
+      console.log(preSignedUrlForS3Upload)
       
       //// アップロード
       const result = await axios.put(preSignedUrlForS3Upload, image, {
