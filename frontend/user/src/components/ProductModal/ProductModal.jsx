@@ -48,7 +48,7 @@ const ProductModal = ({ product, onClose, onAddToCart }) => {
                 alignItems: "baseline",
               }}
             >
-              <PriceLabel>単価:</PriceLabel>{" "}
+              <PriceLabel>単価:</PriceLabel>
               <PriceDisplay>¥{Math.trunc(product?.price)}</PriceDisplay>
             </Stack>
           </Price>
@@ -77,9 +77,8 @@ const ProductModal = ({ product, onClose, onAddToCart }) => {
                 alignItems: "baseline",
               }}
             >
-              <PriceLabel>合計:</PriceLabel>{" "}
+              <PriceLabel>合計:</PriceLabel>
               <PriceDisplay>
-                {" "}
                 ¥{Math.trunc(product?.price) * quantity}
               </PriceDisplay>
             </Stack>
