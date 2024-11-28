@@ -8,24 +8,23 @@ function AllergyFilterModal({
   selectedAllergies,
   selectedAllergiesOnFilter,
   onToggle,
-  onClick
+  onClick,
 }) {
-
   // 配列要素比較 (共通部品にしたい)
   const arraysHaveSameElements = (arr1, arr2) => {
     if (arr1.length !== arr2.length) {
-        return false;
+      return false;
     }
     const sortedArr1 = arr1.slice().sort();
     const sortedArr2 = arr2.slice().sort();
-    
+
     for (let i = 0; i < sortedArr1.length; i++) {
-        if (sortedArr1[i] !== sortedArr2[i]) {
-            return false;
-        }
+      if (sortedArr1[i] !== sortedArr2[i]) {
+        return false;
+      }
     }
     return true;
-}
+  };
 
   //onClose のみだと上手くいかない
   return (
@@ -57,7 +56,14 @@ function AllergyFilterModal({
       </Section> */}
 
         <Footer>
-          {arraysHaveSameElements(selectedAllergies, selectedAllergiesOnFilter) ? <InactiveButton disabled={true}>メニューを絞り込む</InactiveButton> : <ActiveButton onClick={onClick}>メニューを絞り込む</ActiveButton>}
+          {arraysHaveSameElements(
+            selectedAllergies,
+            selectedAllergiesOnFilter
+          ) ? (
+            <InactiveButton disabled={true}>選択してください</InactiveButton>
+          ) : (
+            <ActiveButton onClick={onClick}>メニューを絞り込む</ActiveButton>
+          )}
         </Footer>
       </ModalContent>
     </ModalWrapper>
@@ -72,17 +78,17 @@ const ModalWrapper = styled.div`
   height: 100%;
   background: rgba(0, 0, 0, 0.5); /* 背景を暗くする？ */
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: flex-end;
   z-index: 1000; /* 最前面に表示 */
 `;
 
 const ModalContent = styled.div`
   background: white;
-  padding: 20px;
+  padding: 15px;
   border-radius: 16px 16px 0 0;
   width: 100%;
-  max-width: 600px;
+  max-width: 95%;
   max-height: 80vh;
   overflow-y: auto;
   box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
@@ -91,7 +97,6 @@ const ModalContent = styled.div`
 
   @media (max-width: 768px) {
     padding: 15px;
-    max-width: 95%;
   }
 
   @keyframes slideUp {
@@ -171,8 +176,8 @@ const ActiveButton = styled.button`
   font-family: "Noto Sans JP", sans-serif;
   color: white;
   background: linear-gradient(90deg, #f2994a, #f2c94c);
-  border: none;
-  border-radius: 30px;
+  border: 0.15em solid #fff;
+  border-radius: 2em;
   cursor: pointer;
 `;
 
@@ -181,10 +186,10 @@ const InactiveButton = styled.button`
   font-size: 14px;
   font-weight: 500;
   font-family: "Noto Sans JP", sans-serif;
-  color: white;
-  background: gray
-  border: none;
-  border-radius: 30px;
+  color: #a3978c;
+  background: #fff;
+  border: 0.15em solid #dbd6cd;
+  border-radius: 2em;
   cursor: pointer;
 `;
 

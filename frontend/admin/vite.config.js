@@ -11,7 +11,7 @@ export default defineConfig({
       manifest: {
         name: "MenuCare",
         short_name: "MenuCare",
-        theme_color: "#8B4513", // ブラウンカラー
+        theme_color: "#f2ede5", // ベージュカラー
         icons: [
           {
             src: "/vite.svg",

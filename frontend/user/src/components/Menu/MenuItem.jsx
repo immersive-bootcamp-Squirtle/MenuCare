@@ -10,8 +10,7 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-
-const MenuItem = ({ item, onClick }) => { 
+const MenuItem = ({ item, onClick }) => {
   const price = Math.trunc(item.price);
   const [expanded, setExpanded] = useState(false);
 
@@ -24,13 +23,13 @@ const MenuItem = ({ item, onClick }) => {
     <>
       <Box sx={{ position: "relative", marginBottom: expanded ? 4 : 2 }}>
         <Card
-          onClick={() => onClick(item)} 
+          onClick={() => onClick(item)}
           sx={{
-            maxWidth: 300,
+            maxWidth: 286,
             borderRadius: 3,
             overflow: "hidden",
             textAlign: "left",
-            // height: "100%",
+            height: "auto",
           }}
         >
           <CardMedia
@@ -48,7 +47,7 @@ const MenuItem = ({ item, onClick }) => {
               fontWeight={700}
               sx={{
                 color: "#3c3a37",
-                fontSize: "clamp(18px, 4vw, 24px)",
+                fontSize: "clamp(16px, calc(1rem - 0.1vw), 24px)",
               }}
             >
               {item.name}
@@ -70,6 +69,7 @@ const MenuItem = ({ item, onClick }) => {
               sx={{
                 color: "#756e68",
                 paddingLeft: "5px",
+                fontSize: "clamp(0.75rem, 0.614rem + 0.68vw, 1.125rem)",
               }}
             >
               アレルギー情報
