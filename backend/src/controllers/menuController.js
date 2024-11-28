@@ -71,7 +71,7 @@ exports.createMenu = async (req, res) => {
       restaurant_id,
       menu_name,
       price,
-      image_url: path,
+      imagePath: path,
       status,
     });
 
