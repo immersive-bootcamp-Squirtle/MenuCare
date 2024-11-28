@@ -2,12 +2,11 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import logo from "/vite.svg"; // ロゴのパス
 import backgroundImage from "../../assets/background.jpg"; // 背景画像
-import {signUp, signIn} from "../../modules/authService";
+import { signUp, signIn } from "../../modules/authService";
 import { useLocation } from "react-router-dom";
 
 function Welcome() {
-
-  // 店舗向けのtokenを取得
+  // 店舗向けのtokenを取得;
   const getToken = async (id) => {
     try {
       // signInを実行し、session storageにtokenを保持
@@ -21,14 +20,14 @@ function Welcome() {
     } catch (error) {
       alert(`Sign in failed: ${error}`);
     }
-  }
+  };
 
   const search = useLocation().search;
   const query = new URLSearchParams(search);
-  const id = query.get('id')
+  const id = query.get("id");
 
-  getToken(id)
-  
+  getToken(id);
+
   const navigate = useNavigate();
 
   const handleStartOrder = () => {
@@ -73,12 +72,18 @@ const Header = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 60px; /* ロゴの幅 */
-  height: 60px;
+  width: 100px; /* ロゴの幅 */
+  height: 100px;
 
   @media (max-width: 768px) {
-    width: 100px; /* スマホでの幅調整 */
+    /* 大きめのスマホ */
+    width: 100px;
     height: 100px;
+  }
+  @media (max-width: 375px) {
+    /* 小さいスマホ */
+    width: 80px;
+    height: 80px;
   }
 `;
 
@@ -98,14 +103,19 @@ const Title = styled.h1`
   letter-spacing: 0.07em;
 
   @media (max-width: 768px) {
-    font-size: 48px;
+    /* 大きめのスマホ */
+    font-size: 44px;
+  }
+  @media (max-width: 375px) {
+    /* 小さいスマホ */
+    font-size: 40px;
   }
 `;
 
 const SubText = styled.p`
   position: relative;
-  padding: 1rem 1.8rem;
-  font-size: 24px;
+  padding: 0.8rem 1.8rem;
+  font-size: 22px;
   font-weight: 600;
   font-family: "Noto Sans JP", sans-serif;
   color: #5a380c;
@@ -116,71 +126,74 @@ const SubText = styled.p`
   &::before,
   &::after {
     position: absolute;
-    width: 15px;
-    height: 40px;
+    width: 14px;
+    height: 25px;
     content: "";
   }
 
   &::before {
-    border-left: solid 5px;
-    border-top: solid 5px;
+    border-left: solid 4.5px;
+    border-top: solid 4.5px;
     top: 0;
     left: 0;
   }
 
   &::after {
-    border-right: solid 5px;
-    border-bottom: solid 5px;
+    border-right: solid 4.5px;
+    border-bottom: solid 4.5px;
     bottom: 0;
     right: 0;
   }
 
   @media (max-width: 768px) {
+    /* 大きめのスマホ */
+    padding: 0.7rem 1.5rem;
     font-size: 18px;
 
     &::before,
     &::after {
       position: absolute;
-      width: 12px;
-      height: 30px;
+      width: 10px;
+      height: 18px;
       content: "";
     }
 
     &::before {
-      border-left: solid 5px;
-      border-top: solid 5px;
+      border-left: solid 3.5px;
+      border-top: solid 3.5px;
       top: 0;
       left: 0;
     }
 
     &::after {
-      border-right: solid 5px;
-      border-bottom: solid 5px;
+      border-right: solid 3.5px;
+      border-bottom: solid 3.5px;
       bottom: 0;
       right: 0;
     }
   }
   @media (max-width: 375px) {
-    padding: 1rem 1.5rem;
-    font-size: 15px;
+    /* 小さいスマホ */
+    padding: 0.5rem 1.2rem;
+    font-size: 16px;
     &::before,
     &::after {
       position: absolute;
-      width: 10px;
-      height: 25px;
+      width: 8px;
+      height: 14px;
       content: "";
     }
 
     &::before {
-      border-left: solid 4px;
-      border-top: solid 4px;
+      border-left: solid 3px;
+      border-top: solid 3px;
       top: 0;
       left: 0;
     }
 
     &::after {
-      border-right: solid 4px;
-      border-bottom: solid 4px;
+      border-right: solid 3px;
+      border-bottom: solid 3px;
       bottom: 0;
       right: 0;
     }

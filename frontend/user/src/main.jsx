@@ -10,6 +10,7 @@ import Cart from "./pages/Cart/cart.jsx";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import OrderHistory from "./pages/OrderHistory/orderhistory.jsx";
+import NotFound from "./pages/NotFound/NotFound.jsx";
 
 const router = createBrowserRouter([
   {
@@ -33,8 +34,8 @@ const router = createBrowserRouter([
     element: <OrderHistory />,
   },
   {
-    path: "not_available",
-    element: <h1>ただいま離席中です</h1>,
+    path: "*",
+    element: <NotFound/>,
   },
 ]);
 

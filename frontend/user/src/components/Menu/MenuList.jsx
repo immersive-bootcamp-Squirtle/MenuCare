@@ -59,6 +59,7 @@ const MenuList = ({ items, selectedAllergies, onItemClick }) => {
           padding: "20px clamp(0.938rem, -0.994rem + 9.66vw, 6.25rem)",
           width: "clamp(20rem, 100vw, 75rem)",
           margin: "0 auto",
+          minHeight: "800px", // メニューロード前に真っ黒になる問題への対処
         }}
       >
         {sortedItems.map((item) => {

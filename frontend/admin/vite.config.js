@@ -14,8 +14,8 @@ export default defineConfig({
         theme_color: "#f2ede5", // ベージュカラー
         icons: [
           {
-            src: "/vite.svg",
-            sizes: "512x512",
+            src: "./vite.svg",
+            sizes: "any",
             type: "image/svg+xml",
           },
         ],
