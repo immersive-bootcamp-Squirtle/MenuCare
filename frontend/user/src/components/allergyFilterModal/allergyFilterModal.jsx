@@ -27,6 +27,15 @@ function AllergyFilterModal({
     return true;
 }
 
+// 8品目と20品目を分類
+const primaryAllergies = ["卵", "乳（牛乳）", "小麦", "そば", "落花生（ピーナッツ）", "えび", "かに", "くるみ"];
+const primaryAllergyItems = allergies.filter((allergy) =>
+  primaryAllergies.includes(allergy.allergy_name)
+);
+const otherAllergyItems = allergies.filter(
+  (allergy) => !primaryAllergies.includes(allergy.allergy_name)
+);
+
   //onClose のみだと上手くいかない
   return (
     <ModalWrapper>
@@ -41,20 +50,25 @@ function AllergyFilterModal({
           選択された項目を含まないメニューを表示します
         </SupplementaryExplanation>
 
+         {/* 特定原材料8品目 */}
         <Section>
-          {/* <AllergyHeading>特定原材料8品目</AllergyHeading> */}
+        <AllergyHeading>特定原材料8品目</AllergyHeading>
           <AllergyList
-            allergies={allergies}
-            selectedAllergies={selectedAllergies}
+            allergies={primaryAllergyItems}
             selectedAllergiesOnFilter={selectedAllergiesOnFilter}
             onToggle={onToggle}
           />
         </Section>
 
-        {/* <Section>
-        <AllergyHeading>特定原材料に準ずるもの20品目</AllergyHeading>
-        <AllergyList />
-      </Section> */}
+        {/* 特定原材料に準ずるもの20品目 */}
+        <Section>
+          <AllergyHeading>特定原材料に準ずるもの20品目</AllergyHeading>
+          <AllergyList
+            allergies={otherAllergyItems}
+            selectedAllergiesOnFilter={selectedAllergiesOnFilter}
+            onToggle={onToggle}
+          />
+        </Section>
 
         <Footer>
           {arraysHaveSameElements(selectedAllergies, selectedAllergiesOnFilter) ? <InactiveButton disabled={true}>メニューを絞り込む</InactiveButton> : <ActiveButton onClick={onClick}>メニューを絞り込む</ActiveButton>}
