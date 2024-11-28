@@ -221,11 +221,14 @@ const CartCount = styled.span`
   position: absolute;
   top: -10px;
   right: -10px;
-  background: red;
+  background: #ff9500;
   color: white;
   font-size: 12px;
+  font-weight: 600;
   border-radius: 50%;
-  padding: 6px 8px;
+  padding: 4px 6px;
+  width: 20px;
+  height: 20px;
 `;
 
 const HistoryButton = styled.button`
