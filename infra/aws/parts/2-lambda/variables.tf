@@ -138,7 +138,8 @@ locals {
           DB_HOST = "dummy",
           DB_NAME = "dummy",
           DB_USER = "dummy",
-          DB_PASSWORD = "dummy"
+          DB_PASSWORD = "dummy",
+          S3_BUCKET_NAME = "dummy"
         }
       }
     }
