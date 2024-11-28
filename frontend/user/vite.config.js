@@ -1,23 +1,22 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import { VitePWA } from 'vite-plugin-pwa';
-
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { VitePWA } from "vite-plugin-pwa";
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [
+  plugins: [
     react(),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: "autoUpdate",
       manifest: {
-        name: 'MenuCare',
-        short_name: 'MenuCare',
-        theme_color: '#8B4513', // ブラウンカラー
+        name: "MenuCare",
+        short_name: "MenuCare",
+        theme_color: "#f2ede5", // ベージュカラー
         icons: [
           {
-            src: '/vite.svg',
-            sizes: '512x512',
-            type: 'image/svg+xml',
+            src: "/vite.svg",
+            sizes: "512x512",
+            type: "image/svg+xml",
           },
         ],
       },
@@ -25,9 +24,9 @@ export default defineConfig({
   ],
   server: {
     proxy: {
-      '/api' : {
-        target: 'http://localhost:3000'
-      }
-    }
-  }
-})
+      "/api": {
+        target: "http://localhost:3000",
+      },
+    },
+  },
+});

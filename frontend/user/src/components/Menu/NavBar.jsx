@@ -8,16 +8,19 @@ import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import HistoryIcon from "@mui/icons-material/History"; // 履歴アイコンをインポート
+import IconButton from "@mui/material/IconButton";
 
 const NavBar = ({ openModal, cartItemCount }) => {
   const navigate = useNavigate();
   // openModalを受け取る
   const categoryButtons = [
     { id: 1, label: "すべて" },
-    { id: 2, label: "フード" },
-    { id: 3, label: "ドリンク" },
+    { id: 2, label: "前菜" },
+    { id: 3, label: "メイン" },
+    { id: 4, label: "デザート" },
+    { id: 5, label: "ドリンク" },
   ];
 
   const filterButtons = [
@@ -29,7 +32,7 @@ const NavBar = ({ openModal, cartItemCount }) => {
   const [selectedFilters, setSelectedFilters] = useState([]);
 
   const selectedStyle = {
-    padding: "0.8em 1.4em",
+    padding: "0.6em 1.2em",
     fontSize: "clamp(14px, 2vw, 18px)",
     color: "#fff",
     background: "linear-gradient(90deg, #f2994a, #f2c94c)",
@@ -50,7 +53,7 @@ const NavBar = ({ openModal, cartItemCount }) => {
   };
 
   const unselectedStyle = {
-    padding: "0.8em 1.4em",
+    padding: "0.6em 1.2em",
     fontSize: "clamp(14px, 2vw, 18px)",
     color: "#dbd6cd",
     background: "#fff",
@@ -103,38 +106,67 @@ const NavBar = ({ openModal, cartItemCount }) => {
           }}
         />
         <Toolbar sx={{ justifyContent: "space-between" }}>
+          <Box sx={{ width: "33%", visibility: "hidden" }}>
+            {/* 左側のダミーアイコン */}
+            <IconButton>
+              <ShoppingCartIcon />
+            </IconButton>
+            <IconButton>
+              <HistoryIcon />
+            </IconButton>
+          </Box>
           <Typography
             variant="h6"
             component="div"
             fontWeight={700}
             sx={{
-              flexGrow: 0,
+              flexGrow: 1,
               color: "#3c3a37",
               fontSize: "clamp(18px, 4vw, 28px)",
+              textAlign: "center",
             }}
           >
             メニュー一覧
           </Typography>
-          {/* カートアイコン */}
-        <CartButton onClick={() => navigate("/cart")}> 
-          <ShoppingCartIcon />
-          {cartItemCount > 0 && <CartCount>{cartItemCount}</CartCount>}
-        </CartButton>
-        {/* 履歴アイコン */}
-        <HistoryButton onClick={() => navigate("/order-history")}>
+          <Box
+            sx={{ width: "33%", display: "flex", justifyContent: "flex-end" }}
+          >
+            {/* カートアイコン */}
+            <CartButton onClick={() => navigate("/cart")}>
+              <ShoppingCartIcon />
+              {cartItemCount > 0 && <CartCount>{cartItemCount}</CartCount>}
+            </CartButton>
+            {/* 履歴アイコン */}
+            <HistoryButton onClick={() => navigate("/order-history")}>
               <HistoryIcon />
             </HistoryButton>
+          </Box>
         </Toolbar>
         <Container>
-          <Stack spacing={2} direction="row">
+          <Stack
+            spacing={2}
+            direction="row"
+            sx={{
+              overflowX: "auto", // 横スクロール
+              whiteSpace: "nowrap", // 折り返し無効
+              "-webkit-overflow-scrolling": "touch", // スムーズにスクロール
+              scrollbarWidth: "none", // Firefoxでスクロールバーを非表示
+              "&::-webkit-scrollbar": {
+                display: "none", // Chrome/Safariでスクロールバーを非表示
+              },
+            }}
+          >
             {categoryButtons.map((button) => (
               <button
                 key={button.id}
-                style={
-                  selectedCategory === button.id
+                style={{
+                  width: "clamp(5.625rem, 4.943rem + 3.41vw, 7.5rem)",
+                  height: "clamp(2.5rem, 2.159rem + 1.7vw, 3.438rem)",
+                  flexShrink: 0, // 横スクロール時に縮小させない
+                  ...(selectedCategory === button.id
                     ? selectedStyle
-                    : unselectedStyle
-                }
+                    : unselectedStyle),
+                }}
                 onClick={() => handleCategoryClick(button.id)}
               >
                 {button.label}
@@ -142,18 +174,29 @@ const NavBar = ({ openModal, cartItemCount }) => {
             ))}
           </Stack>
 
-          <Stack spacing={2} direction="row" sx={{ marginTop: "10px" }}>
+          <Stack
+            spacing={2}
+            direction="row"
+            sx={{
+              marginTop: "10px",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
             {filterButtons.map((button) => (
               <button
                 key={button.id}
-                style={
-                  selectedFilters.includes(button.id)
+                style={{
+                  ...(selectedFilters.includes(button.id)
                     ? selectedStyle
-                    : unselectedStyle
-                }
+                    : unselectedStyle),
+                  display: "flex",
+                  alignItems: "center",
+                }}
                 onClick={() => handleFilterClick(button.id)}
               >
                 {button.label}
+                <ExpandMoreIcon />
               </button>
             ))}
           </Stack>
@@ -170,7 +213,7 @@ const CartButton = styled.button`
   cursor: pointer;
   display: flex;
   align-items: center;
-  font-size: 30px;
+  font-size: 28px;
   padding: 8px;
 `;
 

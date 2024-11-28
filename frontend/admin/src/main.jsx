@@ -36,7 +36,7 @@ const router = createBrowserRouter([
 const theme = createTheme({
   palette: {
     background: {
-      default: "#f9f7f2", // 背景色を指定
+      default: "#f2ede5", // 背景色を指定
     },
   },
   typography: {
