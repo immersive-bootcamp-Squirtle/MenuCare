@@ -116,19 +116,19 @@ const AddMenuForm = () => {
 
       // local実行時はこちら
       // const res = await axios.post(`${baseUrl}/restaurants/1/menus`, reqBody);
-      const res = await axios.post(`${baseUrl}/restaurants/1/menus`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      
-      // lambda実行時はこちら
-      // const res = await axios.post(`https://api.menu-care.com/api/restaurants/1/menus`, formData, {
+      // const res = await axios.post(`${baseUrl}/restaurants/1/menus`, formData, {
       //   headers: {
       //     "Content-Type": "multipart/form-data",
-      //     Authorization: sessionStorage.getItem("idToken"),
-      //   }
+      //   },
       // });
+      
+      // lambda実行時はこちら
+      const res = await axios.post(`https://api.menu-care.com/api/restaurants/1/menus`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: sessionStorage.getItem("idToken"),
+        }
+      });
 
       console.log("Response:", res.data);
       alert("メニューが登録されました");
@@ -147,17 +147,17 @@ const AddMenuForm = () => {
     const fetchAllergies = async () => {
       try {
         // local上での実行の際はこちら
-        const res = await axios.get(`${baseUrl}/allergies`);
-        console.log("alg:", res.data);
-        setAllergies(res.data);
+        // const res = await axios.get(`${baseUrl}/allergies`);
+        // console.log("alg:", res.data);
+        // setAllergies(res.data);
 
         // lambda上での実行の際はこちら
-        // const res = await axios.get(`https://api.menu-care.com/api/allergies`, {
-        //   headers: {
-        //     Authorization: sessionStorage.getItem("idToken"),
-        //   }
-        // });
-        // setAllergies(res.data);
+        const res = await axios.get(`https://api.menu-care.com/api/allergies`, {
+          headers: {
+            Authorization: sessionStorage.getItem("idToken"),
+          }
+        });
+        setAllergies(res.data);
 
         // backendを繋げていない環境ではこちら
         // const testAllergies = [

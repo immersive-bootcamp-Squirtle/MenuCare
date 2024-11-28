@@ -16,16 +16,17 @@ const OrderHistory = () => {
       try {
         setLoading(true);
         // local上での実行はこちら
-        const response = await axios.get(`${baseUrl}/orders/history`, {
-          params: { customer_id: 1 },
-        });
-        // lambda上での実行はこちら
-        // const response = await axios.get(`https://api.menu-care.com/orders/history`, {
+        // const response = await axios.get(`${baseUrl}/orders/history`, {
         //   params: { customer_id: 1 },
-        //   headers: {
-        //     Authorization: sessionStorage.getItem("idToken"),
-        //   }
         // });
+
+        // lambda上での実行はこちら
+        const response = await axios.get(`https://api.menu-care.com/orders/history`, {
+          params: { customer_id: 1 },
+          headers: {
+            Authorization: sessionStorage.getItem("idToken"),
+          }
+        });
 
         setOrders(response.data);
       } catch (error) {
