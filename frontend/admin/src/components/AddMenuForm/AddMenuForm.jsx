@@ -99,7 +99,20 @@ const AddMenuForm = () => {
       //   allergies: selectedAllergies,
       // };
 
-      // console.log("Request Body:", reqBody);
+      // S3への画像アップロード
+      //// アップロード用の署名付きURL&Pathを取得
+      const {preSignedUrlForS3Upload, path} = {
+        preSignedUrlForS3Upload: "https://menucare-menu-images.s3.us-east-1.amazonaws.com/images/test01?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIATHVQK6LVDQMTBJ67%2F20241128%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20241128T115750Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjELP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIAer2YsyNsG0EybNE62HcsEbheTaA7uSso%2BCTe7T8lt6AiEA%2F51lrKrMiddjuxGrBsZKaaZg01KumeGG4ANwrvFbUrkqugUIXBAAGgwyMjI2MzQzNzM4NjYiDPn6NsPGnRCAdHfswCqXBb7vbPU8CULtvVYKrtclLdPSGimoKKbRduHd4h1QJ7acA3qrQaxlTsxBEMcEmxmB6Pm9QZlF9QbnA%2FMWDPUGQ%2Bd45Ow5ooP8j8P9OLnkbFpRye0tZ0XvRCSuzScrgiK9pOL34Qhe26cM8s49XDqkJZVmdegAEjv0nAzhYVcvL9OEA0cHnZlmd24su6cTmqcNsZRscLXo1A8GuLGqVLQ720yTMSAQ04UC%2ByZ892yLF38ZJAiafe%2FLg13pzL%2BcGkGLR6ngwWXo9YYVkCpV1xuPRlioNzQ%2FqK7FHGnt07CHXlO2x%2BaoIwQWU%2BJwYf%2FZPUIqRPdOAzpX1%2FwWI5rUj9emYUN%2FAPD6nDM5JbUWLkKs%2BSk2KOg5feVV9LJJVeSV1Ar8dM0O7CcF%2Fuw9T2qBtZztvX02gKJKtzVW2le%2BxLGBC4j0EyDhbpgL50FCNCibbjp%2B0af5ETm1JSWgdyDtzL4EhZTI2hkhJ0Y7g3zYdJpssgZITrtNszTTY%2BiQ0ttkM9oxjWiGV7VhDEsBAfu7yjU1ZjH1EFsCU5dYurUIAlUezJB%2BmIt8vmvcljNyhyFoZYZihgCs3%2FxJO3zQ%2BVmrFL5VByVzoxmBmc5FpvZYhwUIRaK0FPN4ffiYpSlFPo4Ij7P9fFq5Hkn6z4kH84BWrzLNdr1eWzoxR3am5TNxgiu5Q0iIFVM1V%2B1DFNaStwqZ49z9LosozzViNke8Fbggt8J1eKoIWFP1asbfPQjk%2B6bajsSou0qldgdO3ti%2BPP8xWty%2BxLaBFTrUPRSUgUxjVRKS64RDKJrCu%2BYvQsVIXbPE1Uha%2F9t3bkQrbH25xDm%2FBku4%2FqflpYvATKFf3YBHwDLHLtPSrWbuMaY4PjF2Pla%2FQYBNVJNISYbkizCgm6G6BjqxASV6r6xlWCe8lzNCNwRv0iWfOORq0%2FXy8NHfDe1ti75ZG9gGA129OSAOvdn0vSj1vCi2%2Fz75GiwB5K6%2ByYFVRpPf51B5NYLKnTSCBVFT3grYsbTSKej%2FaQOhVhvi1A5tkP3rrdvx7dCBK8taWBB47qWG01ZkbD42PkICiN5uKkbQX3kJd5NJ%2BJ1VQftBn0eulONpIedrxP8yTNyJN3nWG%2F%2FjKjdIRZl0WByozD91jJr%2F5Q%3D%3D&X-Amz-Signature=0bb0988e8184d57c59cd684208074e87bfd731d31e7ff62f79a3b69852d6990a&X-Amz-SignedHeaders=host&x-id=PutObject",
+        path: "image/test01"
+      };
+      //// アップロード
+      const result = await axios.put(preSignedUrlForS3Upload, image, {
+        headers: {
+            'Content-Type': image.type
+        }
+      })
+
+      console.log(result)
 
       // local実行時はこちら
       // const res = await axios.post(`${baseUrl}/restaurants/1/menus`, reqBody);
