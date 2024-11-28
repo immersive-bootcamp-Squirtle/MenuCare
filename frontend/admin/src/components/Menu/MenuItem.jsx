@@ -15,7 +15,7 @@ import DeleteConfirm from "../Dialog/DeleteConfirm";
 import EditButton from "../Button/EditButton";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
-const MenuItem = ({ item, onDelete }) => {
+const MenuItem = ({ item, onDelete, onEdit }) => {
   const price = Math.trunc(item.price);
   const [expanded, setExpanded] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -151,7 +151,7 @@ const MenuItem = ({ item, onDelete }) => {
           </Collapse>
 
           {/* 編集ボタン */}
-          <EditButton item={item} />
+          <EditButton item={item} onEdit={onEdit}/>
 
           {/* 削除ボタン */}
           <DeleteButton handleDeleteClick={handleDeleteClick} />

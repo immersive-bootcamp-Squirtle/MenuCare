@@ -2,7 +2,7 @@ import React from "react";
 import {IconButton,} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
-function EditButton({item}) {
+function EditButton({item,onEdit}) {
   return (
     <IconButton
     onClick={(e) => {

@@ -55,10 +55,15 @@ function Home() {
     navigate("/admin/register");
   };
 
+  // 削除ボタン
   const handleDeleteMenu = (menuId) => {
     setMenuItems((prevItems) =>
       prevItems.filter((item) => item.menu_id !== menuId)
     );
+  };
+
+  const handleEditMenu = (menuId) => {
+    navigate(`/admin/editor/${menuId}`); // 編集画面に遷移
   };
 
   useEffect(() => {
@@ -185,7 +190,7 @@ function Home() {
   return (
     <Frame>
       <NavBar />
-      <MenuList items={menuItems} selectedAllergies={selectedAllergies} onDelete={handleDeleteMenu} />
+      <MenuList items={menuItems} selectedAllergies={selectedAllergies} onDelete={handleDeleteMenu} onEdit={handleEditMenu} />
       {isModalOpen && (
         <AllergyFilterModal
           onClose={closeModal}

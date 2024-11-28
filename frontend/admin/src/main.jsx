@@ -6,6 +6,7 @@ import "./index.css";
 import Home from "./pages/Home/home";
 import Register from "./pages/Register/register";
 import Login from "./pages/Login/login";
+import Editor from "./pages/Editor/editor";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/admin/register",
     element: <Register />,
+  },
+  {
+    path: "/admin/editor/:menuId",
+    element: <Editor />,
   },
   {
     path: "not_available",
