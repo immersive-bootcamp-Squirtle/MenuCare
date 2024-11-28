@@ -6,6 +6,15 @@ import { Box, CardMedia, Typography } from "@mui/material";
 
 function UploadImage({ image, handleImageUpload }) {
   //   console.log("list_alg:", allergies);
+  const [preview, setPreview] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setPreview(URL.createObjectURL(file)); // 画像のプレビューを設定
+      handleImageUpload(event); // 親コンポーネントにアップロード処理を通知
+    }
+  };
   return (
     <>
     <Typography variant="h6">商品画像</Typography>
@@ -25,10 +34,10 @@ function UploadImage({ image, handleImageUpload }) {
           <CardMedia
             component="img"
             alt="Menu Image"
-            image={image} // プレビュー画像
+            image={preview} // プレビュー画像
             sx={{
-              width: "413px",
-              height: "277px",
+              width: "412.5px",
+              height: "245px",
               objectFit: "cover",
               borderRadius: "4px",
             }}
@@ -49,7 +58,7 @@ function UploadImage({ image, handleImageUpload }) {
         <input
           type="file"
           accept="image/*"
-          onChange={handleImageUpload}
+          onChange={handleFileChange}
           style={{
             position: "absolute",
             width: "100%",
@@ -66,3 +75,4 @@ function UploadImage({ image, handleImageUpload }) {
 }
 
 export default UploadImage;
+

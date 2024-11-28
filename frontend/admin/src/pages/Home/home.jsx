@@ -55,63 +55,69 @@ function Home() {
     navigate("/admin/register");
   };
 
+  const handleDeleteMenu = (menuId) => {
+    setMenuItems((prevItems) =>
+      prevItems.filter((item) => item.menu_id !== menuId)
+    );
+  };
+
   useEffect(() => {
     try {
       const fetchMenuItems = async () => {
         // local実行の際はこちら
-        // const res = await axios.get(`${baseUrl}/restaurants/1/menus`);
-        // setMenuItems(res.data);
+        const res = await axios.get(`${baseUrl}/restaurants/1/menus`);
+        setMenuItems(res.data);
 
         // lambda上での実行の際はこちら
         // const res = await axios.get(`https://api.menu-care.com/api/restaurants/1/menus`);
         // setMenuItems(res.data);
 
         // backendを繋げていない環境ではこちら
-        const testData = [
-          {
-            menu_id: 1,
-            name: "目玉焼き",
-            price: "1000.00",
-            image_url: "../../../public/assets/egg.png",
-            allergies: ["卵"],
-          },
-          {
-            menu_id: 2,
-            name: "ガトーショコラ",
-            price: "1500.00",
-            image_url: "../../../public/assets/cake.png",
-            allergies: ["卵", "小麦", "乳（牛乳）"],
-          },
-          {
-            menu_id: 3,
-            name: "生ハムのサラダ",
-            price: "800.00",
-            image_url: "../../../public/assets/salad.png",
-            allergies: ["卵", "乳（牛乳）"],
-          },
-          {
-            menu_id: 4,
-            name: "鶏肉のごま味噌焼き",
-            price: "800.00",
-            image_url: "../../../public/assets/chicken.png",
-            allergies: ["ごま", "鶏肉"],
-          },
-          {
-            menu_id: 5,
-            name: "トマトパスタ",
-            price: "1000.00",
-            image_url: "../../../public/assets/pasta.png",
-            allergies: ["小麦"],
-          },
-          {
-            menu_id: 6,
-            name: "エビチリ",
-            price: "700.00",
-            image_url: "../../../public/assets/ebichiri.png",
-            allergies: ["えび"],
-          },
-        ];
-        setMenuItems(testData);
+        // const testData = [
+        //   {
+        //     menu_id: 1,
+        //     name: "目玉焼き",
+        //     price: "1000.00",
+        //     image_url: "../../../public/assets/egg.png",
+        //     allergies: ["卵"],
+        //   },
+        //   {
+        //     menu_id: 2,
+        //     name: "ガトーショコラ",
+        //     price: "1500.00",
+        //     image_url: "../../../public/assets/cake.png",
+        //     allergies: ["卵", "小麦", "乳（牛乳）"],
+        //   },
+        //   {
+        //     menu_id: 3,
+        //     name: "生ハムのサラダ",
+        //     price: "800.00",
+        //     image_url: "../../../public/assets/salad.png",
+        //     allergies: ["卵", "乳（牛乳）"],
+        //   },
+        //   {
+        //     menu_id: 4,
+        //     name: "鶏肉のごま味噌焼き",
+        //     price: "800.00",
+        //     image_url: "../../../public/assets/chicken.png",
+        //     allergies: ["ごま", "鶏肉"],
+        //   },
+        //   {
+        //     menu_id: 5,
+        //     name: "トマトパスタ",
+        //     price: "1000.00",
+        //     image_url: "../../../public/assets/pasta.png",
+        //     allergies: ["小麦"],
+        //   },
+        //   {
+        //     menu_id: 6,
+        //     name: "エビチリ",
+        //     price: "700.00",
+        //     image_url: "../../../public/assets/ebichiri.png",
+        //     allergies: ["えび"],
+        //   },
+        // ];
+        // setMenuItems(testData);
       };
       fetchMenuItems();
     } catch (err) {
@@ -174,12 +180,12 @@ function Home() {
     fetchAllergies();
   }, []);
 
-  console.log("allergies:", allergies);
+  // console.log("allergies:", allergies);
 
   return (
     <Frame>
       <NavBar />
-      <MenuList items={menuItems} selectedAllergies={selectedAllergies} />
+      <MenuList items={menuItems} selectedAllergies={selectedAllergies} onDelete={handleDeleteMenu} />
       {isModalOpen && (
         <AllergyFilterModal
           onClose={closeModal}

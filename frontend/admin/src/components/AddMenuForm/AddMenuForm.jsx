@@ -16,7 +16,7 @@ import AllergyListCardForRegister from "../AllergyListCardForRegister/AllergyLis
 import axios from "axios";
 import UploadImage from "../UploadImage/UploadImage";
 import CategoryButton from "../CategoryButton/CategoryButton";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 // import { useParams } from "react-router-dom";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
@@ -46,12 +46,20 @@ const AddMenuForm = () => {
   };
 
   //アップロードされたファイルをプレビューする
+  // const handleImageUpload = (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     setImage(URL.createObjectURL(file)); // ファイルのプレビュー用URLを発行
+  //   }
+  // };
+
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setImage(URL.createObjectURL(file)); // ファイルのプレビュー用URLを発行
+      setImage(file); // ファイルを保持
     }
   };
+
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -69,21 +77,39 @@ const AddMenuForm = () => {
   }, []);
 
   const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append("restaurant_id", 1); // 仮のID
+    formData.append("menu_name", menuName);
+    formData.append("price", parseInt(price));
+    formData.append("status", "active");
+    formData.append("category_id", selectedCategory);
+    formData.append("image", image); // ファイルを追加
+    // formData.append("allergies", JSON.stringify(selectedAllergies));
+    selectedAllergies.forEach((allergy) => {
+      formData.append("allergies[]", allergy); // 配列を個別に追加
+    });
+    
     try {
-      const reqBody = {
-        restaurant_id: 1,
-        menu_name: menuName,
-        price: parseInt(price),
-        image_url: "/public/egg.png", // テスト用固定値
-        status: "active",
-        allergies: selectedAllergies,
-      };
+      // const reqBody = {
+      //   restaurant_id: 1,
+      //   menu_name: menuName,
+      //   price: parseInt(price),
+      //   image_url: "/public/egg.png", // テスト用固定値
+      //   status: "active",
+      //   allergies: selectedAllergies,
+      // };
 
-      console.log("Request Body:", reqBody);
+      // console.log("Request Body:", reqBody);
 
-      const res = await axios.post(`${baseUrl}/restaurants/1/menus`, reqBody);
+      // const res = await axios.post(`${baseUrl}/restaurants/1/menus`, reqBody);
 
-      console.log("Response:", res.data);
+      const res = await axios.post(`${baseUrl}/restaurants/1/menus`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("Request FormData:", formData);
+      // console.log("Response:", res.data);
       alert("メニューが登録されました");
       navigate("/admin/home");
     } catch (err) {
@@ -255,10 +281,9 @@ const AddMenuForm = () => {
             variant="contained"
             color="primary"
             onClick={handleSubmit}
-            
             sx={{
               borderRadius: "16px",
-              backgroundColor:"#F2A24A"
+              backgroundColor: "#F2A24A",
             }}
           >
             メニューを登録
