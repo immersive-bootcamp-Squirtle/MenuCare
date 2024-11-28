@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useNavigate } from "react-router-dom"; 
+import HistoryIcon from "@mui/icons-material/History"; // 履歴アイコンをインポート
 
 const NavBar = ({ openModal, cartItemCount }) => {
   const navigate = useNavigate();
@@ -119,6 +120,10 @@ const NavBar = ({ openModal, cartItemCount }) => {
           <ShoppingCartIcon />
           {cartItemCount > 0 && <CartCount>{cartItemCount}</CartCount>}
         </CartButton>
+        {/* 履歴アイコン */}
+        <HistoryButton onClick={() => navigate("/order-history")}>
+              <HistoryIcon />
+            </HistoryButton>
         </Toolbar>
         <Container>
           <Stack spacing={2} direction="row">
@@ -165,7 +170,7 @@ const CartButton = styled.button`
   cursor: pointer;
   display: flex;
   align-items: center;
-  font-size: 28px;
+  font-size: 30px;
   padding: 8px;
 `;
 
@@ -178,6 +183,17 @@ const CartCount = styled.span`
   font-size: 12px;
   border-radius: 50%;
   padding: 6px 8px;
+`;
+
+const HistoryButton = styled.button`
+  margin-left: 0px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 30px;
+  padding: 8px;
 `;
 
 export default NavBar;
