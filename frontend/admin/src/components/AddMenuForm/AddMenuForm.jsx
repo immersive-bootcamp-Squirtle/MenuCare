@@ -83,7 +83,6 @@ const AddMenuForm = () => {
     formData.append("price", parseInt(price));
     formData.append("status", "active");
     formData.append("category_id", selectedCategory);
-    formData.append("image", image); // ファイルを追加
     // formData.append("allergies", JSON.stringify(selectedAllergies));
     selectedAllergies.forEach((allergy) => {
       formData.append("allergies[]", allergy); // 配列を個別に追加
@@ -98,21 +97,6 @@ const AddMenuForm = () => {
       //   status: "active",
       //   allergies: selectedAllergies,
       // };
-
-      // S3への画像アップロード
-      //// アップロード用の署名付きURL&Pathを取得
-      const {preSignedUrlForS3Upload, path} = {
-        preSignedUrlForS3Upload: "https://menucare-menu-images.s3.us-east-1.amazonaws.com/images/test01?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIATHVQK6LVNCWPS6PR%2F20241128%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20241128T122312Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjELX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJIMEYCIQDm%2BJbg8niEuc1WFkzhkPrxXRfGMgNEs7w5WWUwvvIN4AIhAIKEgbYCCtpjNLkaIV25BKEIaq0hBJcRGQwzrTNRL064KroFCF0QABoMMjIyNjM0MzczODY2Igz0IjXUlvSmOOTXR0UqlwXrgVuPwOZa956j4tpi2e1RpqlLcEdZGL3ZIcTNRvwob5y1iaXtztZysLmdN2aKKix71WckRmp9EQAUe5zvz7xAT3TH1pJQiYBin4BVxr78%2B7Ows%2F9DFc4VAj7RzVV8fI6O%2BnWc1906UwNmaKDHWY2KYfoA0TT82CnrCoy%2FgdRtWzcE6R2K33wHXTvV%2BMhJMyzcmG9ulchl5RhD6bVFifsiw8XEMyoOX5TI0OlY3oojoCZi1CIinmRgevlw1Na%2FAJ2JsKqYYN6I6OyhzynbK33ztXFezr7X8Pw4QT%2Bq4W%2FeNB5EQ7Jkq7KOjI0SVH4407w6lDkvMQYtRP7%2BXwAZ%2Bz37Njc7%2B57cNIBJehfCLq7LXzVP%2FpZE7ZBV%2BekXfWRZmPKmvRLRU5scaV4xl%2FV87VdamKRybcozgVVzZ9c3YigF667G6dt%2F81u9V5n%2FAzFqL3ImV7hoaGD3JvXqZt28apC%2BT9k37f9%2F2zwgh2u59vcgF8s1DRNo%2FdOgx0dQP%2BeaGmHV6uq1RQz0f%2FWwNM7egkPhoxCF5CPDUUCifn3jvtUzxBQpSXgI0CpHD3Ez5tlqaOYoUOC8zjU5FNTIqk4ILQwzJv8BBJLsxnHDwt76HpalhxLtfKVvZxYpjxH7Yyq9vvJP5hGhfvInq%2Bb%2Bgh3lnlIDDobpXYGOhexEqirhlIj3u%2B%2F85QTqqwJR06%2BLsP51nTOteGuKcDi5ZwtlyN75maH2KsEoliUsCNpbUahYqTqEjOw7hazRHt7ezn3sEmUJzoOptgZD9QKdiT5N8NdEWtTtdA791dvBZAAChEfY5BNxkzEYyZR9RgPL4jwVz6Aw8fbIS3FHJAXc3d3kdXDHPZBci%2FcWaqsvPwxy%2FQO%2F3nhSwZfyDXYUt3IwkLmhugY6sAHl6VXOVImoF62VfVj4zHZwfyG6LSxn3GqIQNb3aGw047gr9LPyq5pyJHUJBh3nYQx92TPp4CffkgDZnXP7oqv96QRzuxv9pNLAag%2FwdKqcWeWWgJ%2Fa9KcQzTIn46ZPFqWkvkp3PxxXMts7EX2QFO7tc8XohTmzAqKNJHnIwJBP4XWSOJg5NEWj6vfQHsF06A50t1zONtX1AMKs963S5YSdfrSU%2FCDkIqQdTo2f8r8EWg%3D%3D&X-Amz-Signature=5b105d06ddae666d63d4ee6275e62bdc17c7cdd7954bc753976756d032b39be4&X-Amz-SignedHeaders=host&x-id=PutObject",
-        path: "image/test01"
-      };
-      //// アップロード
-      const result = await axios.put(preSignedUrlForS3Upload, image, {
-        headers: {
-            'Content-Type': image.type
-        }
-      })
-
-      console.log(result)
 
       // local実行時はこちら
       // const res = await axios.post(`${baseUrl}/restaurants/1/menus`, reqBody);
@@ -129,6 +113,19 @@ const AddMenuForm = () => {
           Authorization: sessionStorage.getItem("idToken"),
         }
       });
+
+      // S3への画像アップロード
+      //// アップロード用の署名付きURL&Pathを取得
+      const { preSignedUrlForS3Upload } = res;
+      
+      //// アップロード
+      const result = await axios.put(preSignedUrlForS3Upload, image, {
+        headers: {
+            'Content-Type': image.type
+        }
+      })
+
+      console.log(result)
 
       console.log("Response:", res.data);
       alert("メニューが登録されました");
