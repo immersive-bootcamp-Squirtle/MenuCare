@@ -9,6 +9,7 @@ import Menu from "./pages/Menu/menu.jsx";
 import Cart from "./pages/Cart/cart.jsx";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
+import OrderHistory from "./pages/OrderHistory/orderhistory.jsx";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "/cart", // Cartのルートを追加
     element: <Cart />,
+  },
+  {
+    path: "/order-history", // 注文履歴のルートを追加
+    element: <OrderHistory />,
   },
   {
     path: "not_available",

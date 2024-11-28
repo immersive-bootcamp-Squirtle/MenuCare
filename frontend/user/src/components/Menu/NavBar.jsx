@@ -9,6 +9,8 @@ import Box from "@mui/material/Box";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useNavigate } from "react-router-dom";
+import HistoryIcon from "@mui/icons-material/History"; // 履歴アイコンをインポート
+import IconButton from "@mui/material/IconButton";
 
 const NavBar = ({ openModal, cartItemCount }) => {
   const navigate = useNavigate();
@@ -104,7 +106,15 @@ const NavBar = ({ openModal, cartItemCount }) => {
           }}
         />
         <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Box sx={{ width: "33%" }} />
+          <Box sx={{ width: "33%", visibility: "hidden" }}>
+            {/* 左側のダミーアイコン */}
+            <IconButton>
+              <ShoppingCartIcon />
+            </IconButton>
+            <IconButton>
+              <HistoryIcon />
+            </IconButton>
+          </Box>
           <Typography
             variant="h6"
             component="div"
@@ -118,14 +128,18 @@ const NavBar = ({ openModal, cartItemCount }) => {
           >
             メニュー一覧
           </Typography>
-          {/* カートアイコン */}
           <Box
             sx={{ width: "33%", display: "flex", justifyContent: "flex-end" }}
           >
+            {/* カートアイコン */}
             <CartButton onClick={() => navigate("/cart")}>
               <ShoppingCartIcon />
               {cartItemCount > 0 && <CartCount>{cartItemCount}</CartCount>}
             </CartButton>
+            {/* 履歴アイコン */}
+            <HistoryButton onClick={() => navigate("/order-history")}>
+              <HistoryIcon />
+            </HistoryButton>
           </Box>
         </Toolbar>
         <Container>
@@ -212,6 +226,17 @@ const CartCount = styled.span`
   font-size: 12px;
   border-radius: 50%;
   padding: 6px 8px;
+`;
+
+const HistoryButton = styled.button`
+  margin-left: 0px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 30px;
+  padding: 8px;
 `;
 
 export default NavBar;
