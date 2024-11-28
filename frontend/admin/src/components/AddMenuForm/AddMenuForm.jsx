@@ -118,8 +118,8 @@ const AddMenuForm = () => {
       //// アップロード用の署名付きURL&Pathを取得
       // const preSignedUrlForS3Upload = res.data.data.preSignedUrlForS3Upload;
 
-      console.log("res");
-      console.log(res);
+      console.log("res.data");
+      console.log(res.data);
       // console.log("preSignedUrlForS3Upload")
       // console.log(preSignedUrlForS3Upload)
       
