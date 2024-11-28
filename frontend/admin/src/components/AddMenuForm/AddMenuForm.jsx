@@ -116,10 +116,10 @@ const AddMenuForm = () => {
 
       // S3への画像アップロード
       //// アップロード用の署名付きURL&Pathを取得
-      const { preSignedUrlForS3Upload } = res;
+      const { preSignedUrlForS3Upload } = res.data;
 
       console.log("res");
-      console.log(res);
+      console.log(res.data);
       console.log("preSignedUrlForS3Upload")
       console.log(preSignedUrlForS3Upload)
       
