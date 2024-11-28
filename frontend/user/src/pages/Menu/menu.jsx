@@ -158,9 +158,9 @@ function Menu() {
     const fetchAllergies = async () => {
       try {
         // local上での実行の際はこちら
-        // const res = await axios.get(`${baseUrl}/allergies`);
-        // console.log("alg:",res.data);
-        // setAllergies(res.data);
+        const res = await axios.get(`${baseUrl}/allergies`);
+        console.log("alg:",res.data);
+        setAllergies(res.data);
 
         // lambda上での実行の際はこちら
         // const res = await axios.get(`https://api.menu-care.com/api/allergies`, {

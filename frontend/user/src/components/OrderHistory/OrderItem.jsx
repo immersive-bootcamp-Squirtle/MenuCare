@@ -3,7 +3,8 @@ import styled from "styled-components";
 
 const OrderItem = ({ item }) => {
   const itemTotal = item.quantity * item.total_price;
-
+  // const image_url = "https://menucare-menu-images.s3.amazonaws.com/images/b3c61ea4-c599-4f9a-9fc1-8a5e94a2c7a5.jpg?AWSAccessKeyId=AKIATHVQK6LVMX6JC54R&Expires=1732766776&Signature=1gcT8uP1wTWZeOu42Rfbqy5YblY%3D"
+  console.log("image:", item.image_url)
   return (
     <ItemContainer>
       <Image src={item.image_url} alt={item.name} />
