@@ -48,6 +48,7 @@ exports.createMenu = async (req, res) => {
       price,
       // image_url,
       status = "active",
+      category_id,
     } = req.body;
     let allergies = req.body.allergies;
 
@@ -94,6 +95,10 @@ exports.createMenu = async (req, res) => {
       await menuModel.addAllergyInfo(result.menu_id, allergies);
     }
 
+    if (category_id) {
+      await menuModel.addCategoryInfo(result.menu_id, category_id);
+    }
+    
     res.status(201).json({
       message: "success",
       result,
@@ -111,7 +116,7 @@ exports.updateMenu = async (req, res) => {
   console.log("req.file:", req.file); // デバッグ用
 
   const menu_id = parseInt(req.params.menu_id, 10);
-  const { menu_name, price, status = "active"} = req.body;
+  const { menu_name, price, status = "active", category_id } = req.body;
 
   let allergies = req.body.allergies;
 
@@ -162,7 +167,11 @@ exports.updateMenu = async (req, res) => {
       await menuModel.updateAllergyInfo(menu_id, allergies);
     }
 
-    
+    if (category_id) {
+      await menuModel.addCategoryInfo(menu_id, category_id);
+    }
+
+
     res.status(200).json({
       message: "success",
       result,
