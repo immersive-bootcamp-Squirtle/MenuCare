@@ -105,12 +105,22 @@ const EditMenuForm = () => {
         },
       });
 
-      const preSignedUrlForS3Upload = res.data.preSignedUrlForS3Upload;
+      // 画像が更新されている場合、画像アップロード処理を実行する
+      if (image) {
+        const preSignedUrlForS3Upload = res.data.preSignedUrlForS3Upload;
 
-      console.log("res.data");
-      console.log(res.data);
-      console.log("preSignedUrlForS3Upload")
-      console.log(preSignedUrlForS3Upload)
+        console.log("res.data");
+        console.log(res.data);
+        console.log("preSignedUrlForS3Upload")
+        console.log(preSignedUrlForS3Upload)
+
+        //// アップロード
+        const result = await axios.put(preSignedUrlForS3Upload, image, {
+          headers: {
+              'Content-Type': image.type
+          }
+        })
+      }
 
       alert("メニューが更新されました。");
       navigate("/admin/home"); // ホーム画面へ戻る
