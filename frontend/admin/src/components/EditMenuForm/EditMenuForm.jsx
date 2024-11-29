@@ -98,7 +98,7 @@ const EditMenuForm = () => {
       // });
 
       // lambda実行時はこちら
-      await axios.put(`https://api.menu-care.com/api/restaurants/1/menus/${menuId}`, formData, {
+      const res = await axios.put(`https://api.menu-care.com/api/restaurants/1/menus/${menuId}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: sessionStorage.getItem("idToken"),
