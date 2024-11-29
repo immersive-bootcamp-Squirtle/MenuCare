@@ -21,12 +21,15 @@ const OrderHistory = () => {
         // });
 
         // lambda上での実行はこちら
-        const response = await axios.get(`https://api.menu-care.com/api/orders/history`, {
-          params: { customer_id: 1 },
-          headers: {
-            Authorization: sessionStorage.getItem("idToken"),
+        const response = await axios.get(
+          `https://api.menu-care.com/api/orders/history`,
+          {
+            params: { customer_id: 1 },
+            headers: {
+              Authorization: sessionStorage.getItem("idToken"),
+            },
           }
-        });
+        );
 
         setOrders(response.data);
       } catch (error) {
@@ -80,7 +83,7 @@ const LoadingContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  height: 100vh;
   font-size: 18px;
   color: #555;
 `;

@@ -2,7 +2,12 @@ import React from "react";
 import MenuItem from "./MenuItem";
 import { Box, Typography } from "@mui/material";
 
-const MenuList = ({ items, selectedAllergies, selectedCategory, onItemClick }) => {
+const MenuList = ({
+  items,
+  selectedAllergies,
+  selectedCategory,
+  onItemClick,
+}) => {
   // 空データ処理
   if (!items || Object.keys(items).length === 0) {
     return (
@@ -12,6 +17,8 @@ const MenuList = ({ items, selectedAllergies, selectedCategory, onItemClick }) =
           textAlign: "center",
           marginTop: "20px",
           color: "#3c3a37",
+          fontWeight: 400,
+          fontFamily: "'Noto Sans JP', sans-serif",
         }}
       >
         メニューがありません
@@ -45,7 +52,11 @@ const MenuList = ({ items, selectedAllergies, selectedCategory, onItemClick }) =
       }}
     >
       {Object.entries(items)
-        .filter(([category]) => selectedCategory === "すべて" || translateCategory(category) === selectedCategory) // 選択されたカテゴリのみ表示
+        .filter(
+          ([category]) =>
+            selectedCategory === "すべて" ||
+            translateCategory(category) === selectedCategory
+        ) // 選択されたカテゴリのみ表示
         .map(([category, menuList]) => {
           // アレルギー一致のアイテムを後ろに並べ替える
           const sortedMenuList = menuList.sort((a, b) => {
@@ -88,9 +99,10 @@ const MenuList = ({ items, selectedAllergies, selectedCategory, onItemClick }) =
                   },
                   gap: 2,
                   padding: "20px",
-                  backgroundColor: "#f2ede5",
+                  backgroundColor: "#f9f4ee",
                   width: "clamp(20rem, 100vw, 75rem)",
                   margin: "0 auto",
+                  minHeight: "800px", // メニューロード前に真っ黒になる問題への対処
                 }}
               >
                 {sortedMenuList.map((item) => {
