@@ -20,7 +20,7 @@ const NavBar = ({ openModal, cartItemCount, onCategoryChange }) => {
     { id: 2, label: "前菜" },
     { id: 3, label: "メイン" },
     { id: 4, label: "デザート" },
-    { id: 5, label: "ドリンク" },
+    { id: 5, label: "飲み物" },
   ];
 
   const filterButtons = [

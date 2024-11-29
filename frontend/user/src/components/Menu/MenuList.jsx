@@ -32,7 +32,7 @@ const MenuList = ({ items, selectedAllergies, selectedCategory, onItemClick }) =
     categoryTranslations[category] || category;
 
   // カテゴリごとにグループ化
-  const groupedByCategory = items.reduce((acc, item) => {
+  let groupedByCategory = items.reduce((acc, item) => {
     item.categories.forEach((category) => {
       const translatedCategory = translateCategory(category);
       if (!acc[translatedCategory]) {
@@ -42,6 +42,14 @@ const MenuList = ({ items, selectedAllergies, selectedCategory, onItemClick }) =
     });
     return acc;
   }, {});
+
+  // カテゴリの順番を変える
+  groupedByCategory = {
+    "前菜": groupedByCategory["前菜"] ? groupedByCategory["前菜"] : [],
+    "メイン": groupedByCategory["メイン"] ? groupedByCategory["メイン"] : [],
+    "デザート": groupedByCategory["デザート"] ? groupedByCategory["デザート"] : [],
+    "飲み物": groupedByCategory["飲み物"] ? groupedByCategory["飲み物"] : [],
+  }
 
   return (
     <Box
