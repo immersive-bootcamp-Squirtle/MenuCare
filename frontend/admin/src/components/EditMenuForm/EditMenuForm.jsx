@@ -106,7 +106,7 @@ const EditMenuForm = () => {
       });
 
       // 画像が更新されている場合、画像アップロード処理を実行する
-      if (!image) {
+      if (image) {
         const preSignedUrlForS3Upload = res.data.preSignedUrlForS3Upload;
 
         console.log("res.data");
