@@ -29,6 +29,19 @@ function Menu() {
   ); // filter上で選択中のアレルギー情報を管理
   const [isModalOpen, setModalOpen] = useState(false);
 
+  // カテゴリ選択
+  const [selectedCategory, setSelectedCategory] = useState("すべて");
+
+  // カテゴリ変更時のハンドラー
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+  };
+
+  // カテゴリに基づいてフィルタリング
+  const filteredMenuItems = Array.isArray(menuItems)
+  ? menuItems.filter((item) => item.category_name === selectedCategory)
+  : [];
+
   //popup
   const location = useLocation(); // `navigate` からのメッセージ受け取り
   const [popupMessage, setPopupMessage] = useState(""); // ポップアップメッセージを管理
@@ -130,16 +143,16 @@ function Menu() {
     try {
       const fetchMenuItems = async () => {
         // local実行の際はこちら
-        // const res = await axios.get(`${baseUrl}/restaurants/1/menus`);
-        // setMenuItems(res.data);
+        const res = await axios.get(`${baseUrl}/restaurants/1/menus`);
+        setMenuItems(res.data);
 
         // lambda上での実行の際はこちら
-        const res = await axios.get(`https://api.menu-care.com/api/restaurants/1/menus`, {
-          headers: {
-            Authorization: sessionStorage.getItem("idToken"),
-          }
-        });
-        setMenuItems(res.data);
+        // const res = await axios.get(`https://api.menu-care.com/api/restaurants/1/menus`, {
+        //   headers: {
+        //     Authorization: sessionStorage.getItem("idToken"),
+        //   }
+        // });
+        // setMenuItems(res.data);
 
         // backendを繋げていない環境ではこちら
         // const testData = [{"menu_id":1,"name":"目玉焼き","price":"1000.00","image_url":"src/assets/egg.png","allergies":["卵"]},{"menu_id":2,"name":"ガトーショコラ","price":"1500.00","image_url":"src/assets/cake.png","allergies":["卵","小麦","乳（牛乳）"]},{"menu_id":3,"name":"生ハムのサラダ","price":"800.00","image_url":"src/assets/salad.png","allergies":["卵","乳（牛乳）"]},{"menu_id":4,"name":"鶏肉のごま味噌焼き","price":"800.00","image_url":"src/assets/chicken.png","allergies":["ごま","鶏肉"]},{"menu_id":5,"name":"トマトパスタ","price":"1000.00","image_url":"src/assets/pasta.png","allergies":["小麦"]},{"menu_id":6,"name":"エビチリ","price":"700.00","image_url":"src/assets/ebichiri.png","allergies":["えび"]}];
@@ -158,17 +171,17 @@ function Menu() {
     const fetchAllergies = async () => {
       try {
         // local上での実行の際はこちら
-        // const res = await axios.get(`${baseUrl}/allergies`);
-        // console.log("alg:",res.data);
-        // setAllergies(res.data);
+        const res = await axios.get(`${baseUrl}/allergies`);
+        console.log("alg:",res.data);
+        setAllergies(res.data);
 
         // lambda上での実行の際はこちら
-        const res = await axios.get(`https://api.menu-care.com/api/allergies`, {
-          headers: {
-            Authorization: sessionStorage.getItem("idToken"),
-          }
-        });
-        setAllergies(res.data);
+        // const res = await axios.get(`https://api.menu-care.com/api/allergies`, {
+        //   headers: {
+        //     Authorization: sessionStorage.getItem("idToken"),
+        //   }
+        // });
+        // setAllergies(res.data);
 
         // backendを繋げていない環境ではこちら
         // const testAllergies = [
@@ -220,6 +233,7 @@ function Menu() {
           0
         )} // カート内の数量合計
         openModal={openModal}
+        onCategoryChange={handleCategoryChange} // カテゴリ変更ハンドラーを渡す
       />
       {/* ポップアップメッセージ */}
       {popupMessage && <Popup>{popupMessage}</Popup>}
@@ -228,6 +242,7 @@ function Menu() {
         items={menuItems}
         onItemClick={openProductModal}
         selectedAllergies={selectedAllergies}
+        selectedCategory={selectedCategory} // 選択カテゴリを渡す
       />
       {isModalOpen && (
         <AllergyFilterModal
