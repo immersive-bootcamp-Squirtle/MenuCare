@@ -32,6 +32,47 @@ const OrderHistory = () => {
         );
 
         setOrders(response.data);
+
+        //backendがつながっていない場合
+        // const testData = [
+        //   {
+        //     order_id: 1,
+        //     date: "2024-11-22 11:11:11",
+        //     items: [
+        //       {
+        //         name: "目玉焼き",
+        //         quantity: 1,
+        //         image_url: "src/assets/egg.png",
+        //         total_price: "1000.00",
+        //       },
+        //       {
+        //         name: "目玉焼き",
+        //         quantity: 1,
+        //         image_url: "src/assets/egg.png",
+        //         total_price: "1000.00",
+        //       },
+        //       {
+        //         name: "生ハムのサラダ",
+        //         quantity: 1,
+        //         image_url: "src/assets/salad.png",
+        //         total_price: "800.00",
+        //       },
+        //     ],
+        //   },
+        //   {
+        //     order_id: 1,
+        //     date: "2024-11-22 11:11:11",
+        //     items: [
+        //       {
+        //         name: "目玉焼き",
+        //         quantity: 2,
+        //         image_url: "src/assets/egg.png",
+        //         total_price: "1000.00",
+        //       },
+        //     ],
+        //   },
+        // ];
+        // setOrders(testData);
       } catch (error) {
         console.error("Failed to fetch orders:", error);
       } finally {
@@ -89,23 +130,30 @@ const LoadingContainer = styled.div`
 `;
 
 const Footer = styled.div`
+  // スマホから見ると「戻る」ボタンが下すぎて見えなかった問題の解消
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  bottom: 30px;
+  background-color: #f9f4ee;
+  padding-top: 15px;
+  padding-bottom: 25px;
+  border-top: 2px solid #dbd6cd;
+  gap: 20px;
+  width: 100%;
 `;
 
 const BackButton = styled.button`
-  flex: 1; 
-  padding: 15px 0; 
+  width: clamp(9.375rem, 0.804rem + 42.86vw, 11.25rem); // ボタン幅の調整
+  padding: 15px 0;
   font-size: 16px;
   font-family: "Noto Sans JP", sans-serif;
-  color: #fff;
-  border: none;
-  border-radius: 30px; 
   cursor: pointer;
   text-align: center;
-  background: linear-gradient(90deg, #f2994a, #f2c94c); 
-  }
+  // ボタンのスタイル変更
+  color: #dbd6cd;
+  background: #fff;
+  border: 0.15em solid #dbd6cd;
+  border-radius: 2em;
 `;
 
 export default OrderHistory;

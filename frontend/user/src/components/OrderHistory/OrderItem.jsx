@@ -4,7 +4,7 @@ import styled from "styled-components";
 const OrderItem = ({ item }) => {
   const itemTotal = item.quantity * item.total_price;
   // const image_url = "https://menucare-menu-images.s3.amazonaws.com/images/b3c61ea4-c599-4f9a-9fc1-8a5e94a2c7a5.jpg?AWSAccessKeyId=AKIATHVQK6LVMX6JC54R&Expires=1732766776&Signature=1gcT8uP1wTWZeOu42Rfbqy5YblY%3D"
-  console.log("image:", item.image_url)
+  console.log("image:", item.image_url);
   return (
     <ItemContainer>
       <Image src={item.image_url} alt={item.name} />
@@ -35,8 +35,9 @@ const Image = styled.img`
 const Details = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center; 
-  gap: 5px; 
+  justify-content: center;
+  gap: 5px;
+  text-align: left; // メニュー名、数量、小計を左揃えに
 `;
 
 const Name = styled.p`
@@ -48,8 +49,8 @@ const Name = styled.p`
 
 const QuantityAndPrice = styled.div`
   display: flex;
-  flex-direction: column; 
-  gap: 3px; 
+  flex-direction: column;
+  gap: 3px;
 `;
 
 const Quantity = styled.p`
