@@ -3,8 +3,7 @@ import MenuItem from "./MenuItem";
 import { Box, Typography } from "@mui/material";
 
 const MenuList = ({ items, selectedAllergies, selectedCategory, onItemClick }) => {
-  // 空データ処理
-  if (!items || Object.keys(items).length === 0) {
+  if (!items || items.length === 0) {
     return (
       <Typography
         variant="h6"
@@ -19,7 +18,6 @@ const MenuList = ({ items, selectedAllergies, selectedCategory, onItemClick }) =
     );
   }
 
-  // カテゴリ翻訳
   const categoryTranslations = {
     Appetizers: "前菜",
     Main: "メイン",
@@ -30,6 +28,18 @@ const MenuList = ({ items, selectedAllergies, selectedCategory, onItemClick }) =
 
   const translateCategory = (category) =>
     categoryTranslations[category] || category;
+
+  // カテゴリごとにグループ化
+  const groupedByCategory = items.reduce((acc, item) => {
+    item.categories.forEach((category) => {
+      const translatedCategory = translateCategory(category);
+      if (!acc[translatedCategory]) {
+        acc[translatedCategory] = [];
+      }
+      acc[translatedCategory].push(item);
+    });
+    return acc;
+  }, {});
 
   return (
     <Box
@@ -44,8 +54,8 @@ const MenuList = ({ items, selectedAllergies, selectedCategory, onItemClick }) =
         width: "100%",
       }}
     >
-      {Object.entries(items)
-        .filter(([category]) => selectedCategory === "すべて" || translateCategory(category) === selectedCategory) // 選択されたカテゴリのみ表示
+      {Object.entries(groupedByCategory)
+        .filter(([category]) => selectedCategory === "すべて" || category === selectedCategory) // 選択されたカテゴリのみ表示
         .map(([category, menuList]) => {
           // アレルギー一致のアイテムを後ろに並べ替える
           const sortedMenuList = menuList.sort((a, b) => {
@@ -62,7 +72,6 @@ const MenuList = ({ items, selectedAllergies, selectedCategory, onItemClick }) =
 
           return (
             <Box key={category} sx={{ marginBottom: "40px" }}>
-              {/* カテゴリヘッダー */}
               <Typography
                 variant="h5"
                 fontWeight={700}
@@ -75,9 +84,8 @@ const MenuList = ({ items, selectedAllergies, selectedCategory, onItemClick }) =
                   borderBottom: "2px solid #e0e0e0",
                 }}
               >
-                {translateCategory(category)}
+                {category}
               </Typography>
-              {/* カテゴリ内のメニューアイテム */}
               <Box
                 sx={{
                   display: "grid",
