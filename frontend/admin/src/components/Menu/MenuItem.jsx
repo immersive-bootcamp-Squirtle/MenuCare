@@ -20,6 +20,7 @@ const MenuItem = ({ item, onDelete, onEdit }) => {
   const [expanded, setExpanded] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
 
+  const updated_date = new Date(item.updated_at).toLocaleDateString("ja-JP");
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -159,7 +160,7 @@ const MenuItem = ({ item, onDelete, onEdit }) => {
                   fontSize: "12px",
                 }}
               >
-                (最終更新日:2024/11/20)
+                (最終更新日:{updated_date})
               </Typography>
             </CardContent>
           </Collapse>

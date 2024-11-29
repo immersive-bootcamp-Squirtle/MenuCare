@@ -10,7 +10,7 @@ router.get('/:id/menus', menuController.getMenus);
 router.post('/:id/menus', upload.single("image"), menuController.createMenu);
 
 //メニュー更新
-router.put('/:id/menus/:menu_id', menuController.updateMenu);
+router.put('/:id/menus/:menu_id',upload.single("image"), menuController.updateMenu);
 
 //メニュー削除(RESTful)
 router.delete("/:id/menus/:menu_id", menuController.deleteMenu);

@@ -5,8 +5,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 import AllergyFilterModal from "../../components/allergyFilterModal/allergyFilterModal";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Box, CssBaseline } from "@mui/material";
 import AddButton from "../../components/Button/AddButton";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/GlobalComponents/NavBar";
@@ -63,7 +61,8 @@ function Home() {
   };
 
   const handleEditMenu = (menuId) => {
-    navigate(`/admin/editor/${menuId}`); // 編集画面に遷移
+    const menuData = menuItems.find((menu) => menu.menu_id === menuId); // 該当するmenuを取得
+    navigate(`/admin/editor/${menuId}`, { state: {menuData, allergies} }); // menuDataをstateとして渡す
   };
 
   useEffect(() => {

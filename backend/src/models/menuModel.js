@@ -9,6 +9,7 @@ module.exports = {
         "menus.menu_name",
         "menus.price",
         "menus.image_url",
+        "menus.updated_at",
         "allergy.allergy_name"
       )
       .leftJoin("allergy_menu", "menus.menu_id", "=", "allergy_menu.menu_id")
@@ -25,6 +26,7 @@ module.exports = {
           name: value.menu_name,
           price: value.price,
           image_url: value.image_url,
+          updated_at: value.updated_at,
           allergies: [],
         };
       }

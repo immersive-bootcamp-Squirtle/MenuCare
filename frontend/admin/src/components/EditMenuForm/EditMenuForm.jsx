@@ -1,83 +1,53 @@
 import React, { useEffect, useState } from "react";
-import {
-  Card,
-  Typography,
-  Box,
-  TextField,
-  Button,
-} from "@mui/material";
+import { Card, Typography, Box, TextField, Button } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import UploadImage from "../UploadImage/UploadImage";
 import CategoryButton from "../CategoryButton/CategoryButton";
 import AllergyListCardForRegister from "../AllergyListCardForRegister/AllergyListCardForRegister";
+import { useLocation } from "react-router-dom";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const EditMenuForm = () => {
   const { menuId } = useParams(); // パラメータからmenuIdを取得
   const navigate = useNavigate();
+  const { state } = useLocation();
 
-  const [menuName, setMenuName] = useState("");
-  const [price, setPrice] = useState("");
-  const [allergies, setAllergies] = useState([]);
+  const menuData = state?.menuData || {};
+  const allergies = state?.allergies || [];
+
+  const [menuName, setMenuName] = useState(menuData?.name || "");
+  const [price, setPrice] = useState(menuData?.price || "");
   const [selectedAllergies, setSelectedAllergies] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(
+    menuData?.category_id || null
+  );
   const [image, setImage] = useState(null);
-  const [existingImage, setExistingImage] = useState(null); // 既存画像用
+  const [existingImage, setExistingImage] = useState(menuData?.image_url || "");
+  console.log("existingImage:", existingImage);
+  const [categories, setCategories] = useState([]);
+
+  console.log("allergies_inedit:", allergies);
 
   useEffect(() => {
-    const fetchMenuData = async () => {
-      try {
-        // APIからメニュー情報を取得
-        // local実行はこちら
-        // const res = await axios.get(`${baseUrl}/restaurants/1/menus/${menuId}`);
-        
-        // lambda上での実行はこちら
-        const res = await axios.get(`https://api.menu-care.com/api/restaurants/1/menus/${menuId}`, {
-          headers: {
-            Authorization: sessionStorage.getItem("idToken"),
-          }
-        });
-
-        const menu = res.data;
-        setMenuName(menu.name);
-        setPrice(menu.price);
-        setSelectedAllergies(menu.allergies || []);
-        setSelectedCategory(menu.category_id || null);
-        setExistingImage(menu.image_url); // 既存画像URLをセット
-      } catch (err) {
-        if (!err.response) {
-          navigate("/login")
-        }
-        console.error("Failed to fetch menu data:", err);
-        alert("メニュー情報の取得に失敗しました。");
-      }
-    };
-
     const fetchCategories = async () => {
       try {
-        // local上での実行はこちら
-        // const res = await axios.get(`${baseUrl}/categories`);
-
-        // lambda上での実行はこちら
-        const res = await axios.get(`https://api.menu-care.com/api/categories`, {
-          headers: {
-            Authorization: sessionStorage.getItem("idToken"),
-          }
-        })
-
-        setCategories(res.data);
+        const testCategories = [
+          { category_id: 1, category_name: "前菜" },
+          { category_id: 2, category_name: "メイン" },
+          { category_id: 3, category_name: "デザート" },
+          { category_id: 3, category_name: "飲み物" },
+        ];
+        setCategories(testCategories);
       } catch (err) {
         if (!err.response) {
-          navigate("/login")
+          navigate("/login");
         }
         console.error("Failed to fetch categories:", err);
       }
     };
 
-    fetchMenuData();
     fetchCategories();
   }, [menuId]);
 
@@ -105,16 +75,23 @@ const EditMenuForm = () => {
     formData.append("menu_name", menuName);
     formData.append("price", parseInt(price));
     formData.append("category_id", selectedCategory);
+
     if (image) {
-      formData.append("image", image); // 新しい画像をアップロード
+      formData.append("image", image); 
     }
     selectedAllergies.forEach((allergy) => {
       formData.append("allergies[]", allergy);
     });
 
     try {
+      console.log("allergy:", selectedAllergies);
+      console.log("formdata:");
+      for (const [key, value] of formData.entries()) {
+        console.log(`${key}:`, value);
+      }
       // local実行時はこちら
-      // await axios.put(`${baseUrl}/restaurants/1/menus/${menuId}`, formData, {
+      // const res = await axios.post(`${baseUrl}/restaurants/1/menus`, reqBody);
+      // const res = await axios.put(`${baseUrl}/restaurants/1/menus/${menuId}`, formData, {
       //   headers: {
       //     "Content-Type": "multipart/form-data",
       //   },
@@ -128,11 +105,18 @@ const EditMenuForm = () => {
         },
       });
 
+      const preSignedUrlForS3Upload = res.data.preSignedUrlForS3Upload;
+
+      console.log("res.data");
+      console.log(res.data);
+      console.log("preSignedUrlForS3Upload")
+      console.log(preSignedUrlForS3Upload)
+
       alert("メニューが更新されました。");
       navigate("/admin/home"); // ホーム画面へ戻る
     } catch (err) {
       if (!err.response) {
-        navigate("/login")
+        navigate("/admin/home")
       }
       console.error("Failed to update menu:", err);
       alert("メニュー更新に失敗しました。");

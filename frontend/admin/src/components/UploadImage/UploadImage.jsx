@@ -8,13 +8,20 @@ function UploadImage({ image, handleImageUpload }) {
   //   console.log("list_alg:", allergies);
   const [preview, setPreview] = useState(null);
 
+  useEffect(() => {
+    if (image && !preview) {
+      setPreview(image);
+    }
+  }, [image]);
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setPreview(URL.createObjectURL(file)); // 画像のプレビューを設定
+      setPreview(URL.createObjectURL(file)); // 変更時にプレビューを更新
       handleImageUpload(event); // 親コンポーネントにアップロード処理を通知
     }
   };
+
   return (
     <>
     <Typography variant="h6">商品画像</Typography>

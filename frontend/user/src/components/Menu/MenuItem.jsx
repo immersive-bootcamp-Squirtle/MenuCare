@@ -19,7 +19,8 @@ const MenuItem = ({ item, onClick }) => {
     setExpanded(!expanded);
   };
 
-  console.log("image_in_menuitem:",item.image_url)
+  // console.log("image_in_menuitem:",item.image_url)
+  const updated_date = new Date(item.updated_at).toLocaleDateString("ja-JP");
 
   return (
     <>
@@ -124,7 +125,7 @@ const MenuItem = ({ item, onClick }) => {
                   fontSize: "12px",
                 }}
               >
-                (最終更新日:2024/11/20)
+                (最終更新日:{updated_date})
               </Typography>
             </CardContent>
           </Collapse>

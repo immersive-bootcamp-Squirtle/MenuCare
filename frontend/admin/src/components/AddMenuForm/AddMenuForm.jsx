@@ -45,13 +45,6 @@ const AddMenuForm = () => {
     setSelectedCategory(categoryId); // カテゴリを選択
   };
 
-  //アップロードされたファイルをプレビューする
-  // const handleImageUpload = (event) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     setImage(URL.createObjectURL(file)); // ファイルのプレビュー用URLを発行
-  //   }
-  // };
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -65,8 +58,10 @@ const AddMenuForm = () => {
     const fetchCategories = async () => {
       try {
         const testCategories = [
-          { category_id: 1, category_name: "フード" },
-          { category_id: 2, category_name: "ドリンク" },
+          { category_id: 1, category_name: "前菜" },
+          { category_id: 2, category_name: "メイン" },
+          { category_id: 3, category_name: "デザート" },
+          { category_id: 3, category_name: "飲み物" },
         ];
         setCategories(testCategories);
       } catch (err) {
@@ -137,7 +132,7 @@ const AddMenuForm = () => {
       navigate("/admin/home");
     } catch (err) {
       if (!err.response) {
-        navigate("/login")
+        navigate("/admin/home")
       }
       console.error("Error submitting menu:", err);
       alert("エラーが発生しました。");
