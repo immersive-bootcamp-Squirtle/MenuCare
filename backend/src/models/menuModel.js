@@ -97,6 +97,24 @@ module.exports = {
     }
   },
 
+  async addCategoryInfo(menu_id, category_id) {
+    console.log("menu_id in add model:", menu_id);
+    console.log("category_id in add model:", category_id);
+    const categoryData = {
+      menu_id: parseInt(menu_id, 10),
+      category_id: parseInt(category_id, 10),
+    };
+
+    console.log("categoryData in add model:", categoryData);
+    try {
+      await knex("category_menu").insert(categoryData);
+      // console.log("Allergy data successfully inserted.");
+    } catch (error) {
+      // console.error("Error inserting allergy data:", error);
+      throw error;
+    }
+  },
+  
   async updateMenu(menu_id, menuData) {
     try {
       await knex("menus").where({ menu_id }).update({
