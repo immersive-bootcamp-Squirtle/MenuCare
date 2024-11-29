@@ -21,7 +21,20 @@ exports.getMenus = async (req, res) => {
       })
     );
 
-    res.status(200).json(menusWithSignedUrls);
+    // カテゴリごとにグループ化
+    const groupedByCategory = menusWithSignedUrls.reduce((acc, item) => {
+      item.categories.forEach((category) => {
+        if (!acc[category]) {
+          acc[category] = [];
+        }
+        acc[category].push(item);
+      });
+      return acc;
+    }, {});
+
+    res.status(200).json(groupedByCategory); // カテゴリ別のデータを返却
+
+    //res.status(200).json(menusWithSignedUrls);
   } catch (err) {
     res.status(500).json({ error: "Failed to get menus" });
   }
