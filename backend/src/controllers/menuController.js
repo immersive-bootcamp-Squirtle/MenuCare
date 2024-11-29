@@ -122,11 +122,12 @@ exports.updateMenu = async (req, res) => {
 
   const {preSignedUrlForS3Upload, path} = await s3Service.generateUploadUrl()
 
+  let result;
   try {
     // 画像更新がある場合
     if (req.file) {
       console.log("画像更新あり")
-      const result =await menuModel.updateMenu(menu_id, {
+      result =await menuModel.updateMenu(menu_id, {
         menu_name,
         price,
         image_url:path,
@@ -135,7 +136,7 @@ exports.updateMenu = async (req, res) => {
     }
     else {
       console.log("画像更新なし")
-      const result =await menuModel.updateMenuWithoutImage(menu_id, {
+      result =await menuModel.updateMenuWithoutImage(menu_id, {
         menu_name,
         price,
         status,
