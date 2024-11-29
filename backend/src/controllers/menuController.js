@@ -21,20 +21,7 @@ exports.getMenus = async (req, res) => {
       })
     );
 
-    // カテゴリごとにグループ化
-    const groupedByCategory = menusWithSignedUrls.reduce((acc, item) => {
-      item.categories.forEach((category) => {
-        if (!acc[category]) {
-          acc[category] = [];
-        }
-        acc[category].push(item);
-      });
-      return acc;
-    }, {});
-
-    res.status(200).json(groupedByCategory); // カテゴリ別のデータを返却
-
-    //res.status(200).json(menusWithSignedUrls);
+    res.status(200).json(menusWithSignedUrls);
   } catch (err) {
     res.status(500).json({ error: "Failed to get menus" });
   }
@@ -48,6 +35,7 @@ exports.createMenu = async (req, res) => {
       price,
       // image_url,
       status = "active",
+      category_id,
     } = req.body;
     let allergies = req.body.allergies;
 
@@ -94,6 +82,10 @@ exports.createMenu = async (req, res) => {
       await menuModel.addAllergyInfo(result.menu_id, allergies);
     }
 
+    if (category_id) {
+      await menuModel.addCategoryInfo(result.menu_id, category_id);
+    }
+    
     res.status(201).json({
       message: "success",
       result,
@@ -111,7 +103,7 @@ exports.updateMenu = async (req, res) => {
   console.log("req.file:", req.file); // デバッグ用
 
   const menu_id = parseInt(req.params.menu_id, 10);
-  const { menu_name, price, status = "active"} = req.body;
+  const { menu_name, price, status = "active", category_id } = req.body;
 
   let allergies = req.body.allergies;
 
@@ -162,7 +154,11 @@ exports.updateMenu = async (req, res) => {
       await menuModel.updateAllergyInfo(menu_id, allergies);
     }
 
-    
+    if (category_id) {
+      await menuModel.addCategoryInfo(menu_id, category_id);
+    }
+
+
     res.status(200).json({
       message: "success",
       result,
