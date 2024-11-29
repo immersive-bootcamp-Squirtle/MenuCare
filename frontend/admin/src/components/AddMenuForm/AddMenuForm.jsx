@@ -61,7 +61,7 @@ const AddMenuForm = () => {
           { category_id: 1, category_name: "前菜" },
           { category_id: 2, category_name: "メイン" },
           { category_id: 3, category_name: "デザート" },
-          { category_id: 3, category_name: "飲み物" },
+          { category_id: 4, category_name: "飲み物" },
         ];
         setCategories(testCategories);
       } catch (err) {

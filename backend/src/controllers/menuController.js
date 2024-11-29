@@ -21,20 +21,7 @@ exports.getMenus = async (req, res) => {
       })
     );
 
-    // カテゴリごとにグループ化
-    const groupedByCategory = menusWithSignedUrls.reduce((acc, item) => {
-      item.categories.forEach((category) => {
-        if (!acc[category]) {
-          acc[category] = [];
-        }
-        acc[category].push(item);
-      });
-      return acc;
-    }, {});
-
-    res.status(200).json(groupedByCategory); // カテゴリ別のデータを返却
-
-    //res.status(200).json(menusWithSignedUrls);
+    res.status(200).json(menusWithSignedUrls);
   } catch (err) {
     res.status(500).json({ error: "Failed to get menus" });
   }
@@ -48,6 +35,7 @@ exports.createMenu = async (req, res) => {
       price,
       // image_url,
       status = "active",
+      category_id,
     } = req.body;
     let allergies = req.body.allergies;
 
@@ -76,7 +64,8 @@ exports.createMenu = async (req, res) => {
 
     // console.log("file:", file);
     // const imagePath = await s3Service.uploadToS3(file.buffer, file.mimetype);
-    const {preSignedUrlForS3Upload, path} = await s3Service.generateUploadUrl()
+    const { preSignedUrlForS3Upload, path } =
+      await s3Service.generateUploadUrl();
 
     // console.log("imagePath:",imagePath)
     // メニューを登録
@@ -94,11 +83,15 @@ exports.createMenu = async (req, res) => {
       await menuModel.addAllergyInfo(result.menu_id, allergies);
     }
 
+    if (category_id) {
+      await menuModel.addCategoryInfo(result.menu_id, category_id);
+    }
+
     res.status(201).json({
       message: "success",
       result,
       preSignedUrlForS3Upload: preSignedUrlForS3Upload,
-      path: path
+      path: path,
     });
   } catch (err) {
     console.error("Error adding menu:", err);
@@ -111,10 +104,9 @@ exports.updateMenu = async (req, res) => {
   console.log("req.file:", req.file); // デバッグ用
 
   const menu_id = parseInt(req.params.menu_id, 10);
-  const { menu_name, price, status = "active"} = req.body;
+  const { menu_name, price, status = "active", category_id } = req.body;
 
   let allergies = req.body.allergies;
-
 
   if (!Array.isArray(allergies)) {
     if (typeof allergies === "string") {
@@ -127,49 +119,38 @@ exports.updateMenu = async (req, res) => {
   if (!menu_id) {
     return res.status(400).json({ error: "menu_id is required." });
   }
-  if (!menu_name || !price ) {
+  if (!menu_name || !price) {
     return res.status(400).json({
       error: "menu_name, price are required.",
     });
   }
+  console.log("category", category_id);
+  const { preSignedUrlForS3Upload, path } = await s3Service.generateUploadUrl();
 
-  const {preSignedUrlForS3Upload, path} = await s3Service.generateUploadUrl()
-
-  let result;
   try {
-    // 画像更新がある場合
-    if (req.file) {
-      console.log("画像更新あり")
-      result =await menuModel.updateMenu(menu_id, {
-        menu_name,
-        price,
-        image_url:path,
-        status,
-      });
-    }
-    else {
-      console.log("画像更新なし")
-      result =await menuModel.updateMenuWithoutImage(menu_id, {
-        menu_name,
-        price,
-        status,
-      });
-    }
+    const result = await menuModel.updateMenu(menu_id, {
+      menu_name,
+      price,
+      image_url: path,
+      status,
+    });
 
     // console.log("MenuID:", menu_id);
 
     if (Array.isArray(allergies)) {
       await menuModel.updateAllergyInfo(menu_id, allergies);
     }
-
     
+    if (category_id) {
+      await menuModel.addCategoryInfo(menu_id, category_id);
+    }
+
     res.status(200).json({
       message: "success",
       result,
       preSignedUrlForS3Upload: preSignedUrlForS3Upload,
-      path: path
+      path: path,
     });
-
   } catch (err) {
     console.error("Error updating menu:", err);
     res.status(500).json({ error: "Failed to update menu" });

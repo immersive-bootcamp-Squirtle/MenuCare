@@ -10,13 +10,10 @@ module.exports = {
         "menus.price",
         "menus.image_url",
         "menus.updated_at",
-        "allergy.allergy_name",
-        "category.category_name" 
+        "allergy.allergy_name"
       )
       .leftJoin("allergy_menu", "menus.menu_id", "=", "allergy_menu.menu_id")
       .leftJoin("allergy", "allergy_menu.allergy_id", "=", "allergy.allergy_id")
-      .leftJoin("category_menu", "menus.menu_id", "=", "category_menu.menu_id")
-      .leftJoin("category", "category_menu.category_id", "=", "category.category_id")
       .where({ "menus.restaurant_id": restaurantID });
 
     const new_menu = {};
@@ -31,14 +28,10 @@ module.exports = {
           image_url: value.image_url,
           updated_at: value.updated_at,
           allergies: [],
-          categories: [], // カテゴリ情報を格納
         };
       }
       if (value.allergy_name) {
         new_menu[value.menu_id].allergies.push(value.allergy_name);
-      }
-      if (value.category_name && !new_menu[value.menu_id].categories.includes(value.category_name)) {
-        new_menu[value.menu_id].categories.push(value.category_name);
       }
     });
 
@@ -78,15 +71,15 @@ module.exports = {
 
   // アレルギー情報を登録する関数
   async addAllergyInfo(menu_id, allergies) {
-    console.log("menu_id in add model:",menu_id)
-    console.log("allergies in add model:",allergies)
+    console.log("menu_id in add model:", menu_id);
+    console.log("allergies in add model:", allergies);
     if (Array.isArray(allergies) && allergies.length > 0) {
       const allergyData = allergies.map((allergy_id) => ({
         menu_id: parseInt(menu_id, 10),
         allergy_id: parseInt(allergy_id, 10),
       }));
 
-      console.log("allergyData in add model:",allergyData)
+      console.log("allergyData in add model:", allergyData);
       try {
         await knex("allergy_menu").insert(allergyData);
         // console.log("Allergy data successfully inserted.");
@@ -94,6 +87,24 @@ module.exports = {
         // console.error("Error inserting allergy data:", error);
         throw error;
       }
+    }
+  },
+
+  async addCategoryInfo(menu_id, category_id) {
+    console.log("menu_id in add model:", menu_id);
+    console.log("category_id in add model:", category_id);
+    const categoryData = {
+      menu_id: parseInt(menu_id, 10),
+      category_id: parseInt(category_id, 10),
+    };
+
+    console.log("categoryData in add model:", categoryData);
+    try {
+      await knex("category_menu").insert(categoryData);
+      // console.log("Allergy data successfully inserted.");
+    } catch (error) {
+      // console.error("Error inserting allergy data:", error);
+      throw error;
     }
   },
 
@@ -113,24 +124,9 @@ module.exports = {
     }
   },
 
-  async updateMenuWithoutImage(menu_id, menuData) {
-    try {
-      await knex("menus").where({ menu_id }).update({
-        menu_name: menuData.menu_name,
-        price: menuData.price,
-        status: menuData.status,
-        updated_at: knex.fn.now(),
-      });
-      console.log(`Menu updated successfully. * without image `);
-    } catch (error) {
-      console.error("Error updating menu:", error);
-      throw error;
-    }
-  },
-
   async updateAllergyInfo(menu_id, allergies) {
     console.log("Updating allergies for menu_id:", menu_id);
-  
+
     try {
       // 既存のアレルギー情報を削除
       await knex("allergy_menu").where({ menu_id }).del();
@@ -140,14 +136,14 @@ module.exports = {
         allergy_id,
       }));
       await knex("allergy_menu").insert(allergyData);
-  
+
       console.log(`Allergies updated successfully.`);
     } catch (error) {
       console.error("Error updating allergy info:", error);
       throw error;
     }
   },
-  
+
   async deleteMenu(menu_id) {
     try {
       await knex("menus").where({ menu_id }).del();
