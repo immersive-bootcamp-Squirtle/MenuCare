@@ -89,7 +89,7 @@ const BackButton = styled(Button)`
   color: #dbd6cd;
   background: #fff;
   border: 0.15em solid #dbd6cd;
-  borderradius: 2em;
+  border-radius: 2em;
 `;
 
 const ConfirmButton = styled(Button)`
