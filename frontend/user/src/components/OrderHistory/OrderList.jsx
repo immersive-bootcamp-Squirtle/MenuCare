@@ -5,7 +5,10 @@ import dayjs from "dayjs";
 
 const OrderList = ({ orders }) => {
   const calculateOrderTotal = (order) =>
-    order.items.reduce((sum, item) => sum + item.quantity * item.total_price, 0);
+    order.items.reduce(
+      (sum, item) => sum + item.quantity * item.total_price,
+      0
+    );
 
   const calculateOverallTotal = (orders) => {
     const subtotal = orders.reduce(
@@ -23,18 +26,18 @@ const OrderList = ({ orders }) => {
       <List>
         {orders.map((order) => (
           <Card key={order.order_id}>
+            <OrderDate>
+              {dayjs(order.date).format("YYYY/MM/DD HH:mm")}
+            </OrderDate>
             {order.items.map((item, index) => (
               <OrderItem key={index} item={item} />
             ))}
-            <OrderDate>
-              注文日時: {dayjs(order.date).format("YYYY年MM月DD日 HH:mm")}
-            </OrderDate>
           </Card>
         ))}
       </List>
       <Footer>
         <Summary>
-          <SummaryRow>全体の小計: ¥{subtotal.toLocaleString()}</SummaryRow>
+          <SummaryRow>合計: ¥{subtotal.toLocaleString()}</SummaryRow>
           <SummaryRow>消費税: ¥{tax.toLocaleString()}</SummaryRow>
           <SummaryTotal>総合計: ¥{total.toLocaleString()}</SummaryTotal>
         </Summary>
@@ -43,13 +46,12 @@ const OrderList = ({ orders }) => {
   );
 };
 
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
   overflow-y: auto;
-  height: calc(100vh - 150px); 
+  height: calc(100vh - 150px);
   padding-bottom: 0;
   margin-bottom: 0;
 `;
@@ -65,14 +67,15 @@ const Card = styled.div`
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 15px;
+  padding-top: 5px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
 const OrderDate = styled.p`
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 500;
   color: #000;
-  margin-top: 15px;
-  text-align: right; 
+  text-align: left;
 `;
 
 const Footer = styled.div`
@@ -82,14 +85,13 @@ const Footer = styled.div`
   padding: 15px 10px;
   border-top: 1px solid #ddd;
   margin: 0;
-
 `;
 
 const Summary = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  align-items: flex-end; 
+  align-items: flex-end;
 `;
 
 const SummaryRow = styled.p`

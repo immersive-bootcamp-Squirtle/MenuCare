@@ -10,10 +10,13 @@ module.exports = {
         "menus.price",
         "menus.image_url",
         "menus.updated_at",
-        "allergy.allergy_name"
+        "allergy.allergy_name",
+        "category.category_name" 
       )
       .leftJoin("allergy_menu", "menus.menu_id", "=", "allergy_menu.menu_id")
       .leftJoin("allergy", "allergy_menu.allergy_id", "=", "allergy.allergy_id")
+      .leftJoin("category_menu", "menus.menu_id", "=", "category_menu.menu_id")
+      .leftJoin("category", "category_menu.category_id", "=", "category.category_id")
       .where({ "menus.restaurant_id": restaurantID });
 
     const new_menu = {};
@@ -28,10 +31,14 @@ module.exports = {
           image_url: value.image_url,
           updated_at: value.updated_at,
           allergies: [],
+          categories: [], // カテゴリ情報を格納
         };
       }
       if (value.allergy_name) {
         new_menu[value.menu_id].allergies.push(value.allergy_name);
+      }
+      if (value.category_name && !new_menu[value.menu_id].categories.includes(value.category_name)) {
+        new_menu[value.menu_id].categories.push(value.category_name);
       }
     });
 
@@ -90,6 +97,24 @@ module.exports = {
     }
   },
 
+  async addCategoryInfo(menu_id, category_id) {
+    console.log("menu_id in add model:", menu_id);
+    console.log("category_id in add model:", category_id);
+    const categoryData = {
+      menu_id: parseInt(menu_id, 10),
+      category_id: parseInt(category_id, 10),
+    };
+
+    console.log("categoryData in add model:", categoryData);
+    try {
+      await knex("category_menu").insert(categoryData);
+      // console.log("Allergy data successfully inserted.");
+    } catch (error) {
+      // console.error("Error inserting allergy data:", error);
+      throw error;
+    }
+  },
+  
   async updateMenu(menu_id, menuData) {
     try {
       await knex("menus").where({ menu_id }).update({

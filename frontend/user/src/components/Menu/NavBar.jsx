@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import HistoryIcon from "@mui/icons-material/History"; // 履歴アイコンをインポート
 import IconButton from "@mui/material/IconButton";
 
-const NavBar = ({ openModal, cartItemCount }) => {
+const NavBar = ({ openModal, cartItemCount, onCategoryChange }) => {
   const navigate = useNavigate();
   // openModalを受け取る
   const categoryButtons = [
@@ -20,7 +20,7 @@ const NavBar = ({ openModal, cartItemCount }) => {
     { id: 2, label: "前菜" },
     { id: 3, label: "メイン" },
     { id: 4, label: "デザート" },
-    { id: 5, label: "ドリンク" },
+    { id: 5, label: "飲み物" },
   ];
 
   const filterButtons = [
@@ -28,7 +28,7 @@ const NavBar = ({ openModal, cartItemCount }) => {
     { id: 5, label: "食事制限あり" },
   ];
 
-  const [selectedCategory, setSelectedCategory] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState("すべて");
   const [selectedFilters, setSelectedFilters] = useState([]);
 
   const selectedStyle = {
@@ -73,8 +73,11 @@ const NavBar = ({ openModal, cartItemCount }) => {
     },
   };
 
-  const handleCategoryClick = (id) => {
-    setSelectedCategory(id);
+  const handleCategoryClick = (label) => {
+    setSelectedCategory(label);
+    if (onCategoryChange) {
+      onCategoryChange(label); // 親コンポーネントへ通知
+    }
   };
 
   const handleFilterClick = (id) => {
@@ -95,13 +98,13 @@ const NavBar = ({ openModal, cartItemCount }) => {
         position="sticky"
         sx={{
           backgroundColor: "#f2ede5",
-          height: "clamp(184px, 25vh, 236px)",
+          height: "clamp(10.625rem, 9.716rem + 4.55vw, 13.125rem)",
           zIndex: 900,
         }}
       >
         <Box
           sx={{
-            height: "clamp(30px, 4vh, 50px)", // 上部スペースを調整
+            height: "clamp(5px, 4vh, 10px)", // 上部スペースを調整
             backgroundColor: "#f2ede5",
           }}
         />
@@ -163,11 +166,11 @@ const NavBar = ({ openModal, cartItemCount }) => {
                   width: "clamp(5.625rem, 4.943rem + 3.41vw, 7.5rem)",
                   height: "clamp(2.5rem, 2.159rem + 1.7vw, 3.438rem)",
                   flexShrink: 0, // 横スクロール時に縮小させない
-                  ...(selectedCategory === button.id
+                  ...(selectedCategory === button.label
                     ? selectedStyle
                     : unselectedStyle),
                 }}
-                onClick={() => handleCategoryClick(button.id)}
+                onClick={() => handleCategoryClick(button.label)}
               >
                 {button.label}
               </button>
@@ -215,6 +218,9 @@ const CartButton = styled.button`
   align-items: center;
   font-size: 28px;
   padding: 8px;
+  svg {
+    color: #3c3a37;
+  }
 `;
 
 const CartCount = styled.span`
@@ -240,6 +246,9 @@ const HistoryButton = styled.button`
   align-items: center;
   font-size: 30px;
   padding: 8px;
+  svg {
+    color: #3c3a37;
+  }
 `;
 
 export default NavBar;
