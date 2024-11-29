@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Stack } from "@mui/material";
 
 const CartItem = ({ item }) => {
   const itemTotal = Math.floor(item.price) * item.quantity; // 合計価格を計算
@@ -9,8 +10,32 @@ const CartItem = ({ item }) => {
       <ItemDetails>
         <ItemName>{item.name}</ItemName>
         <ItemAllergies>{item.allergies.join(", ")}</ItemAllergies>
-        <ItemQuantity>数量: {item.quantity}</ItemQuantity>
-        <ItemPrice>価格: ¥{itemTotal.toLocaleString()}</ItemPrice>
+        <ItemQuantity>
+          <Stack
+            spacing={1}
+            direction="row"
+            sx={{
+              display: "flex",
+              alignItems: "baseline",
+            }}
+          >
+            <ItemQuantityLabel>数量:</ItemQuantityLabel>{" "}
+            <ItemQuantityDisplay>{item.quantity}</ItemQuantityDisplay>
+          </Stack>
+        </ItemQuantity>
+        <ItemPrice>
+          <Stack
+            spacing={1}
+            direction="row"
+            sx={{
+              display: "flex",
+              alignItems: "baseline",
+            }}
+          >
+            <ItemPriceLabel>価格:</ItemPriceLabel>
+            <ItemPriceDisplay>¥{itemTotal.toLocaleString()}</ItemPriceDisplay>
+          </Stack>
+        </ItemPrice>
       </ItemDetails>
     </Item>
   );
@@ -37,33 +62,48 @@ const ItemImage = styled.img`
 const ItemDetails = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center; 
-  gap: 5px; 
+  justify-content: center;
+  gap: 5px;
+  text-align: left;
 `;
 
 const ItemName = styled.p`
   font-size: 20px;
   font-weight: bold;
   color: #3c3a37;
-  margin: 0; 
+  margin: 0;
 `;
 
 const ItemAllergies = styled.p`
   font-size: 16px;
   color: #e74c3c;
-  margin: 0; 
+  margin: 0;
 `;
 
 const ItemQuantity = styled.p`
-  font-size: 16px;
   color: #333;
-  margin: 0; 
+  margin: 0;
+`;
+const ItemQuantityLabel = styled.p`
+  font-size: 16px;
+`;
+const ItemQuantityDisplay = styled.p`
+  font-size: 18px;
+  font-weight: bold;
 `;
 
 const ItemPrice = styled.p`
-  font-size: 16px;
   color: #333;
-  margin: 0; 
+  margin: 0;
+`;
+
+const ItemPriceLabel = styled.p`
+  font-size: 16px;
+`;
+
+const ItemPriceDisplay = styled.p`
+  font-size: 18px;
+  font-weight: bold;
 `;
 
 export default CartItem;
