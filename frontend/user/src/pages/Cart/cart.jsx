@@ -5,7 +5,6 @@ import CartItem from "../../components/CartItem/CartItem";
 import CartSummary from "../../components/CartSummary/CartSummary";
 import CartActions from "../../components/CartActions/CartActions";
 
-
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
@@ -42,19 +41,19 @@ const Cart = () => {
       <Title>注文内容の確認</Title>
       <CartContainer>
         {cartItems.length > 0 ? (
-          cartItems.map((item) => (
-            <CartItem key={item.menu_id} item={item} />
-          ))
+          cartItems.map((item) => <CartItem key={item.menu_id} item={item} />)
         ) : (
           <EmptyMessage>カートに商品がありません</EmptyMessage>
         )}
       </CartContainer>
-      <CartSummary subtotal={subtotal} tax={tax} totalPrice={totalPrice} />
-      <CartActions
-        onBack={handleBack}
-        cartItems={cartItems}
-        setCartItems={setCartItems}
-      />
+      <CartBottomFixedContents>
+        <CartSummary subtotal={subtotal} tax={tax} totalPrice={totalPrice} />
+        <CartActions
+          onBack={handleBack}
+          cartItems={cartItems}
+          setCartItems={setCartItems}
+        />
+      </CartBottomFixedContents>
     </Frame>
   );
 };
@@ -63,10 +62,10 @@ const Cart = () => {
 const Frame = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px;
   background-color: #f9f4ee;
   height: 100vh;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding-bottom: 120px;
 `;
 
 const Title = styled.h1`
@@ -86,10 +85,22 @@ const CartContainer = styled.div`
   padding: 15px;
 `;
 
+const CartBottomFixedContents = styled.div`
+  // 合計金額がボタンに隠れないように追加
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  background-color: #f9f4ee;
+`;
+
 const EmptyMessage = styled.p`
   text-align: center;
   font-size: 18px;
-  color: #888;
+  color: #756e68;
   margin-top: 20px;
 `;
 
