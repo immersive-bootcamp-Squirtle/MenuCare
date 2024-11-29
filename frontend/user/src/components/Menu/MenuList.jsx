@@ -11,6 +11,8 @@ const MenuList = ({ items, selectedAllergies, selectedCategory, onItemClick }) =
           textAlign: "center",
           marginTop: "20px",
           color: "#3c3a37",
+          fontWeight: 400,
+          fontFamily: "'Noto Sans JP', sans-serif",
         }}
       >
         メニューがありません
@@ -96,9 +98,10 @@ const MenuList = ({ items, selectedAllergies, selectedCategory, onItemClick }) =
                   },
                   gap: 2,
                   padding: "20px",
-                  backgroundColor: "#f2ede5",
+                  backgroundColor: "#f9f4ee",
                   width: "clamp(20rem, 100vw, 75rem)",
                   margin: "0 auto",
+                  minHeight: "800px", // メニューロード前に真っ黒になる問題への対処
                 }}
               >
                 {sortedMenuList.map((item) => {

@@ -30,10 +30,11 @@ const CartActions = ({ onBack, cartItems, setCartItems }) => {
       // lambda実行時はこちら
       const response = await axios.post(
         `https://api.menu-care.com/api/orders`,
-        orderData, {
+        orderData,
+        {
           headers: {
             Authorization: sessionStorage.getItem("idToken"),
-          }
+          },
         }
       );
 
@@ -64,7 +65,8 @@ const ActionsContainer = styled.div`
   justify-content: center;
   bottom: 30px;
   background-color: #f9f4ee;
-  padding: 10px 0;
+  padding-top: 15px; // スマホから見ると「注文を確定する」ボタンが下すぎて窮屈だった問題の解消
+  padding-bottom: 25px; // スマホから見ると「注文を確定する」ボタンが下すぎて窮屈だった問題の解消
   border-top: 2px solid #dbd6cd;
   gap: 20px;
   width: 100%;

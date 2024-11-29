@@ -98,13 +98,13 @@ const NavBar = ({ openModal, cartItemCount, onCategoryChange }) => {
         position="sticky"
         sx={{
           backgroundColor: "#f2ede5",
-          height: "clamp(184px, 25vh, 236px)",
+          height: "clamp(10.625rem, 9.716rem + 4.55vw, 13.125rem)",
           zIndex: 900,
         }}
       >
         <Box
           sx={{
-            height: "clamp(30px, 4vh, 50px)", // 上部スペースを調整
+            height: "clamp(5px, 4vh, 10px)", // 上部スペースを調整
             backgroundColor: "#f2ede5",
           }}
         />
@@ -218,6 +218,9 @@ const CartButton = styled.button`
   align-items: center;
   font-size: 28px;
   padding: 8px;
+  svg {
+    color: #3c3a37;
+  }
 `;
 
 const CartCount = styled.span`
@@ -243,6 +246,9 @@ const HistoryButton = styled.button`
   align-items: center;
   font-size: 30px;
   padding: 8px;
+  svg {
+    color: #3c3a37;
+  }
 `;
 
 export default NavBar;
