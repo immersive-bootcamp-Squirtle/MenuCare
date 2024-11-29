@@ -106,6 +106,21 @@ module.exports = {
     }
   },
 
+  async updateMenuWithoutImage(menu_id, menuData) {
+    try {
+      await knex("menus").where({ menu_id }).update({
+        menu_name: menuData.menu_name,
+        price: menuData.price,
+        status: menuData.status,
+        updated_at: knex.fn.now(),
+      });
+      console.log(`Menu updated successfully. * without image `);
+    } catch (error) {
+      console.error("Error updating menu:", error);
+      throw error;
+    }
+  },
+
   async updateAllergyInfo(menu_id, allergies) {
     console.log("Updating allergies for menu_id:", menu_id);
   
